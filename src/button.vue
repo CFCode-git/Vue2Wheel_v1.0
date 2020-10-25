@@ -13,7 +13,11 @@
     name: 'diff-button',
     props: {
       icon: {type: String},
-      iconPosition: {type: String, default: 'left'}
+      iconPosition: {
+        type: String,
+        default: 'left',
+        validator(value) { return value === 'left' || value === 'right' }
+      }
     },
     mounted() {
       // console.log(this.icon)
