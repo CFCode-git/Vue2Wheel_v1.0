@@ -1,8 +1,6 @@
 <template>
   <button class="diff-button" :class="{[`icon-${iconPosition}`]:true}">
-    <svg class="diff-icon" v-if="icon">
-      <use :xlink:href=`#i-${icon}`></use>
-    </svg>
+    <diff-icon v-if="icon" :icon-name="icon"></diff-icon>
     <div class="diff-content">
       <slot></slot>
     </div>
@@ -20,7 +18,6 @@
       }
     },
     mounted() {
-      // console.log(this.icon)
     }
   }
 </script>
