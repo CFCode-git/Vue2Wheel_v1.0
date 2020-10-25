@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/CFCode-git/Vue2Wheel_v1.0/issues"
   },
-  "homepage": "https://github.com/CFCode-git/Vue2Wheel_v1.0#readme"
+  "homepage": "https://github.com/CFCode-git/Vue2Wheel_v1.0#readme",
+  "dependencies": {
+    "vue": "^2.6.12"
+  }
 }
