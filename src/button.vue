@@ -1,7 +1,7 @@
 <template>
   <button class="diff-button"
           :class="{[`icon-${iconPosition}`]:true}"
-          @click="$emit('hi')"
+          @click="$emit('click')"
   >
     <diff-icon v-if="icon && !loading" :icon-name="icon"></diff-icon>
     <diff-icon class="button-loading" v-if="loading" icon-name="loading"></diff-icon>
