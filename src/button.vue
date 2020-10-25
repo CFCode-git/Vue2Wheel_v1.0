@@ -1,6 +1,10 @@
 <template>
-  <button class="diff-button" :class="{[`icon-${iconPosition}`]:true}">
-    <diff-icon v-if="icon" :icon-name="icon"></diff-icon>
+  <button class="diff-button"
+          :class="{[`icon-${iconPosition}`]:true}"
+          @click="$emit('hi')"
+  >
+    <diff-icon v-if="icon && !loading" :icon-name="icon"></diff-icon>
+    <diff-icon class="button-loading" v-if="loading" icon-name="loading"></diff-icon>
     <div class="diff-content">
       <slot></slot>
     </div>
@@ -15,6 +19,10 @@
         type: String,
         default: 'left',
         validator(value) { return value === 'left' || value === 'right' }
+      },
+      loading: {
+        type: Boolean,
+        default: false
       }
     },
     mounted() {
@@ -22,6 +30,10 @@
   }
 </script>
 <style lang="scss">
+  @keyframes spin {
+    0% {transform: rotate(0deg)}
+    100% {transform: rotate(360deg)}
+  }
   .diff-button {
     height: var(--button-height); padding: 0 .8em; font: inherit;
     border-radius: var(--button-radius); border: 1px solid var(--border-color);
@@ -37,6 +49,9 @@
       > .diff-icon { order: 2; margin-left: .3em;margin-right: 0;}
       > .diff-content {order: 1;}
     }
+  }
+  .button-loading {
+    animation: spin 1s infinite linear;
   }
 
 

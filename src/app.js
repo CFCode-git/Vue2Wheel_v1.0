@@ -6,5 +6,8 @@ Vue.component('diff-button', Button)
 Vue.component('diff-icon', Icon)
 
 new Vue({
-  el: '#app'
+  el: '#app',
+  data:{
+    loadingDemo:false
+  }
 })
