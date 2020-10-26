@@ -6,6 +6,17 @@
 <script>
   export default {
     name: 'buttonGroup',
+    mounted() {
+      // console.log(this.$el.children)
+      // console.log(this.$children)
+      for (let node of this.$el.children) {
+        let name = node.nodeName.toLowerCase()
+        // console.log(node.nodeName)
+        if (node.nodeName !== 'BUTTON') {
+          console.warn(`diff-button-group 的子元素只能是 diff-button,但你写的是 ${name}`)
+        }
+      }
+    }
   }
 </script>
 <style lang="scss">
