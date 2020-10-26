@@ -1,13 +1,18 @@
 const expect = chai.expect
 import Vue from 'vue'
 import Button from '../src/button'
+// 打包后相当于 Vue 的源码和 Button 的源码拷到这里
+// package.json ”parcel build test/*“ 即打包 test 目录下的所有文件
+// describe it 属于 mocha（引入BDD）；expect 属于 chai（引入断言）
+// https://www.chaijs.com/guide/styles/#expect
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
 
 describe('Button', () => {
+  // BDD 行为驱动测试
   it('存在.', () => {
-    expect(Button).to.be.ok
+    expect(Button).to.be.exist
   })
   it('可以设置icon.', () => {
     const Constructor = Vue.extend(Button)
@@ -74,6 +79,5 @@ describe('Button', () => {
     vm.$on('click', callback)
     vm.$el.click()
     expect(callback).to.have.been.called
-
   })
 })
