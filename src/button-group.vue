@@ -24,7 +24,10 @@
     display: inline-flex;
     > .diff-button {
       border-radius: 0;
-      margin-left:-1px;
+      margin-left: -1px;
+      &:not(:first-child) {
+        margin-left: 0;
+      }
       &:first-child {
         border-top-left-radius: var(--button-radius);
         border-bottom-left-radius: var(--button-radius);
@@ -33,7 +36,7 @@
         border-top-right-radius: var(--button-radius);
         border-bottom-right-radius: var(--button-radius);
       }
-      &:hover{
+      &:hover {
         position: relative;
         z-index:1;
       }
