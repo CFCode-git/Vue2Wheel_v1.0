@@ -22,6 +22,7 @@
 <style lang="scss">
   .diff-button-group {
     display: inline-flex;
+    vertical-align: middle; /*和别人对齐*/
     > .diff-button {
       border-radius: 0;
       margin-left: -1px;
