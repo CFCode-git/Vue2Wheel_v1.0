@@ -16,6 +16,7 @@
       --button-radius: 4px;
       --color: #333;
       --border-color: #999;
+      /*--border-color-hover: red;*/
       --border-color-hover: #666;
     }
     #app {
@@ -41,8 +42,23 @@
   >
     按钮
   </diff-button>
+  <hr>
+  <diff-button-group>
+    <diff-button icon="left">上一页</diff-button>
+    <diff-button icon="right" icon-position="right">下一页</diff-button>
+  </diff-button-group>
+  <hr>
+  <diff-button-group>
+    <diff-button icon="left">上一页</diff-button>
+    <diff-button>中间</diff-button>
+    <diff-button icon="right" icon-position="right">下一页</diff-button>
+  </diff-button-group>
+
 </div>
+<hr>
 </body>
+
 <script src="./src/app.js"></script>
 <script src="//at.alicdn.com/t/font_2156714_cl9xrf5t18g.js"></script>
+
 </html>
