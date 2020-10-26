@@ -17,8 +17,11 @@ new Vue({
 
 // 单元测试
 import chai from 'chai'
+import spies from 'chai-spies'
 
+chai.use(spies)
 const expect = chai.expect
+
 { // console.log(Button) // 对象
   const constructor = Vue.extend(Button) // 把 Button 组件变成一个构造函数
   // console.log(constructor)
@@ -86,24 +89,24 @@ const expect = chai.expect
   vm.$destroy()
 }
 
-// { // 测试 Button 是否被点击，mock
-//   // console.log(Button) // 对象
-//   const constructor = Vue.extend(Button) // 把 Button 组件变成一个构造函数
-//   // console.log(constructor)
-//   const vm = new constructor({
-//     propsData: {icon: 'setting'}
-//   })
-//   const div = document.createElement('div')
-//   document.body.appendChild(div)
-//   vm.$mount(div) // 动态生成按钮 // 这里为了测试 order，要挂载到页面，页面如果不渲染这个元素，css就不会在这个button上面
-//   vm.$on('click', function () {
-//     console.log(1)
-//   })
-//   let button = vm.$el
-//   button.click()
-//   vm.$el.remove()
-//   vm.$destroy()
-// }
+{ // 测试 Button 是否被点击，用 chai-spies 监听回调函数
+  // console.log(Button) // 对象
+  const constructor = Vue.extend(Button) // 把 Button 组件变成一个构造函数
+  // console.log(constructor)
+  const vm = new constructor({
+    propsData: {icon: 'setting'}
+  })
+  const div = document.createElement('div')
+  document.body.appendChild(div)
+  vm.$mount(div) // 动态生成按钮 // 这里为了测试 order，要挂载到页面，页面如果不渲染这个元素，css就不会在这个button上面
+  let spy = chai.spy(function () {/*console.log(1)*/})
+  vm.$on('click', spy)
+  let button = vm.$el
+  button.click()
+  expect(spy).to.have.been.called()
+  vm.$el.remove()
+  vm.$destroy()
+}
 
 
 
