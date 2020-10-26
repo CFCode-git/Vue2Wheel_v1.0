@@ -11,8 +11,12 @@
   </button>
 </template>
 <script>
+  import Icon from './icon.vue'
   export default {
     name: 'diff-button',
+    components:{
+      'diff-icon':Icon
+    },
     props: {
       icon: {type: String},
       iconPosition: {
