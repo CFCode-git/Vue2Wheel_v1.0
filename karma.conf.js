@@ -5,6 +5,7 @@ module.exports = function (config) {
     basePath: '',
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+    // 默认引入 mocha 和 sinon-chai 两个库
     frameworks: ['mocha', 'sinon-chai'],
     client: {
       chai: {
