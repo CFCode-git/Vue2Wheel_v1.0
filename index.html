@@ -25,37 +25,49 @@
     body {
       font-style: var(--font-size);
     }
+    .box{
+      margin:20px;
+    }
   </style>
   <style>
   </style>
 </head>
 <body>
 <div id="app">
-  <diff-button> 按钮</diff-button>
-  <diff-button icon="setting"> 按钮</diff-button>
-  <diff-button icon="setting" icon-position="right" loading> 按钮</diff-button>
-  <diff-button
-    icon="setting"
-    icon-position="right"
-    :loading="loadingDemo"
-    @click="loadingDemo = !loadingDemo"
-  >
-    按钮
-  </diff-button>
-  <diff-button-group>
-    <diff-button icon="left">上一页</diff-button>
-    <diff-button icon="right" icon-position="right">下一页</diff-button>
-  </diff-button-group>
-  <diff-button-group>
-    <diff-button icon="left">上一页</diff-button>
-    <diff-button>中间</diff-button>
-    <diff-button icon="right" icon-position="right">下一页</diff-button>
-  </diff-button-group>
-<!--  <div id="test"></div>-->
+  <div class="box">
+    <diff-input value="张三"></diff-input>
+    <diff-input value="李四" disabled></diff-input>
+    <diff-input value="readonly" readonly></diff-input>
+  </div>
+  <div class="box">
+    <diff-input value="王五" error-message="错了弟弟"></diff-input>
+  </div>
+  <div class="box">
+    <diff-button>按钮</diff-button>
+    <diff-button icon="setting">按钮</diff-button>
+    <diff-button icon="setting" icon-position="right" loading> 按钮</diff-button>
+    <diff-button
+      icon="setting"
+      icon-position="right"
+      :loading="loadingDemo"
+      @click="loadingDemo = !loadingDemo"
+    >
+      按钮
+    </diff-button>
+    <diff-button-group>
+      <diff-button icon="left">上一页</diff-button>
+      <diff-button icon="right" icon-position="right">下一页</diff-button>
+    </diff-button-group>
+    <diff-button-group>
+      <diff-button icon="left">上一页</diff-button>
+      <diff-button>中间</diff-button>
+      <diff-button icon="right" icon-position="right">下一页</diff-button>
+    </diff-button-group>
+  </div>
 </div>
 </body>
 
 <script src="./src/app.js"></script>
-<script src="//at.alicdn.com/t/font_2156714_cl9xrf5t18g.js"></script>
+<script src="//at.alicdn.com/t/font_2156714_mndj4vc4h3n.js"></script>
 
 </html>
