@@ -72,10 +72,17 @@ describe('Input', () => {
         // Input 组件内部的 input 需要触发原生的 change/input/focus/blur 事件
         // Start: 触发 input 的 change/input/focus/blur 事件，需要用 js 模拟一个
         let event = new Event(eventName)
+        // 由于这里 mock 的 event 没有 target，需要手动给 event.target 添加 value
+        // event.target 是只读属性，
+        // 不能用 event.target = { value:'hi'}，只能用 Object.definedProperty
+        // https://stackoverflow.com/questions/27108094/how-to-set-target-property-when-simulating-mouseclick-in-javascript
+        Object.defineProperty(event,'target',{
+          value:{value:'test v-model'},enumerable:true
+        })
         let inputElement = vm.$el.querySelector('input')
         inputElement.dispatchEvent(event)
         // End
-        expect(callback).to.have.been.calledWith(event)// 回调会带上原生 change/input/focus/blur 事件
+        expect(callback).to.have.been.calledWith('test v-model')// 回调会带上原生事件的值 event.target.value
       })
     })
   })
