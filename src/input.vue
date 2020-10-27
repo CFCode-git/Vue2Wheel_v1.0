@@ -5,7 +5,11 @@
       :value="value"
       :disabled="disabled"
       :readonly="readonly"
-    >
+      @change="$emit('change',$event)"
+      @input="$emit('input',$event)"
+      @focus="$emit('focus',$event)"
+      @blur="$emit('blur',$event)"
+    > <!-- $event 即浏览器原生触发的 change 事件-->
     <template v-if="errorMessage">
       <diff-icon icon-name="warning" class="icon-warning"></diff-icon>
       <span class="errorMessage">{{errorMessage}}</span>
