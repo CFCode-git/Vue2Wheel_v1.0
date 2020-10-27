@@ -5,7 +5,7 @@
 </template>
 <script>
   export default {
-    name: 'buttonGroup',
+    name: 'diffButtonGroup',
     mounted() {
       // console.log(this.$el.children)
       // console.log(this.$children)
@@ -19,7 +19,7 @@
     }
   }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   .diff-button-group {
     display: inline-flex;
     vertical-align: middle; /*和别人对齐*/
