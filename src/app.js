@@ -13,11 +13,15 @@ Vue.component('diff-input', Input)
 new Vue({
   el: '#app',
   data: {
-    loadingDemo: false
+    loadingDemo: false,
+    message: 'v-model'
   },
   methods: {
-    inputChange(e) {
-      console.log(e.target.value)
+    inputChange(value) {
+      console.log(value)
+    },
+    inputInput(value) {
+      console.log(value)
     }
   }
 })
