@@ -59,44 +59,20 @@ describe('Input', () => {
     afterEach(() => {
       vm.$destroy()
     })
-    it('支持 change', () => {
-      vm = new Constructor({}).$mount()
-      const callback = sinon.fake()
-      vm.$on('change', callback)
-      // 当 Input 的 change 事件触发时，Input 组件内部的 input 需要出发 change 事件
-      // Start: 触发 input 的 change 事件，需要用 js 模拟一个
-      let event = new Event('change')
-      let inputElement = vm.$el.querySelector('input')
-      inputElement.dispatchEvent(event)
-      // End
-      expect(callback).to.have.been.calledWith(event)// 回调会带上原生 change 事件
-    })
-    it('支持 input', () => {
-      vm = new Constructor({}).$mount()
-      const callback = sinon.fake()
-      vm.$on('input', callback)
-      let event = new Event('input')
-      let inputElement = vm.$el.querySelector('input')
-      inputElement.dispatchEvent(event)
-      expect(callback).to.have.been.calledWith(event)
-    })
-    it('支持 focus', () => {
-      vm = new Constructor({}).$mount()
-      const callback = sinon.fake()
-      vm.$on('focus', callback)
-      let event = new Event('focus')
-      let inputElement = vm.$el.querySelector('input')
-      inputElement.dispatchEvent(event)
-      expect(callback).to.have.been.calledWith(event)
-    })
-    it('支持 blur', () => {
-      vm = new Constructor({}).$mount()
-      const callback = sinon.fake()
-      vm.$on('blur', callback)
-      let event = new Event('blur')
-      let inputElement = vm.$el.querySelector('input')
-      inputElement.dispatchEvent(event)
-      expect(callback).to.have.been.calledWith(event)
+    it('支持 change/input/focus/blur', () => {
+      ['change','input','focus','blur'].forEach(eventName=>{
+        vm = new Constructor({}).$mount()
+        const callback = sinon.fake()
+        vm.$on(eventName, callback)
+        // 当 Input 的 change/input/focus/blur 事件触发时，
+        // Input 组件内部的 input 需要触发原生的 change/input/focus/blur 事件
+        // Start: 触发 input 的 change/input/focus/blur 事件，需要用 js 模拟一个
+        let event = new Event(eventName)
+        let inputElement = vm.$el.querySelector('input')
+        inputElement.dispatchEvent(event)
+        // End
+        expect(callback).to.have.been.calledWith(event)// 回调会带上原生 change/input/focus/blur 事件
+      })
     })
   })
 })
