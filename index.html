@@ -27,26 +27,47 @@
 <body>
 
 <div id="app">
-  <diff-row>
-    <diff-col></diff-col>
-    <diff-col></diff-col>
-  </diff-row>
-  <diff-row>
-    <diff-col></diff-col>
-    <diff-col></diff-col>
-    <diff-col></diff-col>
-  </diff-row>
-  <diff-row>
-    <diff-col></diff-col>
-    <diff-col></diff-col>
-    <diff-col></diff-col>
-    <diff-col></diff-col>
-  </diff-row>
-  <diff-row>
-    <diff-col :span="2">1</diff-col>
-    <diff-col :span="22">11</diff-col>
-  </diff-row>
-
+  <div style="border:1px solid black;">
+    <diff-row gutter="20">
+      <diff-col>1</diff-col>
+      <diff-col>1</diff-col>
+    </diff-row>
+    <diff-row gutter="20">
+      <diff-col>1</diff-col>
+      <diff-col>1</diff-col>
+      <diff-col>1</diff-col>
+    </diff-row>
+    <diff-row gutter="20">
+      <diff-col>1</diff-col>
+      <diff-col>1</diff-col>
+      <diff-col>1</diff-col>
+      <diff-col>1</diff-col>
+    </diff-row>
+    <diff-row gutter="20">
+      <diff-col :span="2">1</diff-col>
+      <diff-col :span="22">1</diff-col>
+    </diff-row>
+    <diff-row gutter="20">
+      <diff-col :span="2">1</diff-col>
+      <diff-col :span="20" :offset="2">1</diff-col>
+    </diff-row>
+    <diff-row>
+      <diff-col :span="1">1</diff-col>
+      <diff-col :span="20" :offset="3">1</diff-col>
+    </diff-row>
+    <diff-row gutter="20">
+      <diff-col :span="4">1</diff-col>
+      <diff-col :span="20">1</diff-col>
+    </diff-row>
+    <diff-row gutter="20">
+      <diff-col :span="4">1</diff-col>
+      <diff-col :span="18" :offset="2">1</diff-col>
+    </diff-row>
+    <diff-row gutter="20">
+      <diff-col :span="8">1</diff-col>
+      <diff-col :span="8" :offset="8">1</diff-col>
+    </diff-row>
+  </div>
   <hr>
   <div class="box">
     <diff-input value="change事件" @change="inputChange"></diff-input>
