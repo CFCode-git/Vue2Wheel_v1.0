@@ -1,5 +1,5 @@
 <template>
-  <div class="row" :style="{marginLeft:-gutter/2 + 'px',marginRight:-gutter/2 + 'px'}">
+  <div class="row" :style="rowStyle">
     <slot></slot>
   </div>
 </template>
@@ -12,8 +12,12 @@
     *  Vue 父子组件钩子顺序
     *  顺序: row created => col created => col mounted => row mounted
     * */
+    computed: {
+      rowStyle() {
+        return {marginLeft: -this.gutter / 2 + 'px', marginRight: -this.gutter / 2 + 'px'}
+      }
+    },
     mounted() {
-      console.log(this.$children)
       this.$children.forEach(vm => {
         vm.gutter = this.gutter
       })
