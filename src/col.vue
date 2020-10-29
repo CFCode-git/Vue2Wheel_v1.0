@@ -21,7 +21,6 @@
     props: {
       span: {type: [Number, String]},
       offset: {type: [Number, String]},
-      phone: {type: Object, validator,},
       pad: {type: Object, validator,},
       narrowPc: {type: Object, validator,},
       pc: {type: Object, validator,},
@@ -35,11 +34,10 @@
         }
       },
       colClasses() {
-        let {span, offset, phone, pad, narrowPc, pc, widePc} = this
+        let {span, offset, pad, narrowPc, pc, widePc} = this
         return [
           span && `col-${span}`,
           offset && `offset-${offset}`,
-          phone && [`col-phone-${phone.span}`],
           pad && [`col-pad-${pad.span}`],
           narrowPc && [`col-narrow-pc-${narrowPc.span}`],
           pc && [`col-pc-${pc.span}`],
@@ -64,20 +62,6 @@
     @for $n from 1 through 24 {
       &.#{$class-prefix}#{$n} {
         margin-left: ($n / 24)*100%;
-      }
-    }
-    @media(max-width: 576px) { // iPhone
-      $class-prefix: col-phone-;
-      @for $n from 1 through 24 {
-        &.#{$class-prefix}#{$n} {
-          width: ($n / 24)*100%;
-        }
-      }
-      $class-prefix: offset-phone-;
-      @for $n from 1 through 24 {
-        &.#{$class-prefix}#{$n} {
-          margin-left: ($n / 24)*100%;
-        }
       }
     }
     @media (min-width: 577px) and (max-width: 768px) { // iPad
