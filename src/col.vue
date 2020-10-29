@@ -31,7 +31,6 @@
 
 <style lang="scss" scoped>
   .col {
-    width: 50%;
     /*scss forEach*/
     $class-prefix: col-; /*class前缀*/
     @for $n from 1 through 24 {
