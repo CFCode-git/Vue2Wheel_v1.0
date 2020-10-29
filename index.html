@@ -30,8 +30,24 @@
 <div id="app">
   <div style="border:1px solid black;">
     <diff-row gutter="20">
-      <diff-col>1</diff-col>
-      <diff-col>1</diff-col>
+      <diff-col span="2"
+                :phone="{span:12}"
+                :pad="{span:8}"
+                :narrow-pc="{span:4}"
+                :pc="{span:2}"
+                :wide-pc="{span:1}"
+      >
+        1
+      </diff-col>
+      <diff-col span="22"
+                :phone="{span:12,offset:0}"
+                :pad="{span:16}"
+                :narrow-pc="{span:20}"
+                :pc="{span:22}"
+                :wide-pc="{span:23}"
+      >
+        1
+      </diff-col>
     </diff-row>
     <diff-row gutter="20">
       <diff-col>1</diff-col>

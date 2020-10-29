@@ -41,6 +41,7 @@
 <style lang="scss" scoped>
   .row {
     display: flex;
+    flex-wrap:wrap;/*让用户设置超过24的时候换行*/
     &.align-left{
       justify-content: flex-start;
     }
