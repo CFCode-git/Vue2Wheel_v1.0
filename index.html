@@ -26,100 +26,34 @@
   </style>
 </head>
 <body>
-
+<style>
+  .demo {
+    background: #ddd;
+    border: 1px solid #666;
+    height: 100px;
+  }
+</style>
 <div id="app">
-  <div style="border:1px solid black;">
-    <diff-row gutter="20">
-      <diff-col span="24"
-                :pad="{span:8}"
-                :narrow-pc="{span:4}"
-                :pc="{span:2}"
-                :wide-pc="{span:1}"
-      >
-        1
-      </diff-col>
-      <diff-col span="24"
-                :pad="{span:16}"
-                :narrow-pc="{span:20}"
-                :pc="{span:22}"
-                :wide-pc="{span:23}"
-      >
-        1
-      </diff-col>
-    </diff-row>
-    <diff-row gutter="20">
-      <diff-col>1</diff-col>
-      <diff-col>1</diff-col>
-      <diff-col>1</diff-col>
-    </diff-row>
-    <diff-row gutter="20">
-      <diff-col>1</diff-col>
-      <diff-col>1</diff-col>
-      <diff-col>1</diff-col>
-      <diff-col>1</diff-col>
-    </diff-row>
-    <diff-row gutter="20">
-      <diff-col :span="2">1</diff-col>
-      <diff-col :span="22">1</diff-col>
-    </diff-row>
-    <diff-row gutter="20">
-      <diff-col :span="2">1</diff-col>
-      <diff-col :span="20" :offset="2">1</diff-col>
-    </diff-row>
-    <diff-row>
-      <diff-col :span="1">1</diff-col>
-      <diff-col :span="20" :offset="3">1</diff-col>
-    </diff-row>
-    <diff-row gutter="20">
-      <diff-col :span="4">1</diff-col>
-      <diff-col :span="20">1</diff-col>
-    </diff-row>
-    <diff-row gutter="20">
-      <diff-col :span="4">1</diff-col>
-      <diff-col :span="18" :offset="2">1</diff-col>
-    </diff-row>
-    <diff-row gutter="20">
-      <diff-col :span="8">1</diff-col>
-      <diff-col :span="8" :offset="8">1</diff-col>
-    </diff-row>
-  </div>
-  <hr>
-  <div class="box">
-    <diff-input value="change事件" @change="inputChange"></diff-input>
-    <diff-input value="input事件" @input="inputInput"></diff-input>
-    <diff-input value="disable" disabled></diff-input>
-    <diff-input value="readonly" readonly></diff-input>
-  </div>
-  <div class="box">
-    <diff-input value="error" error-message="错了弟弟"></diff-input>
-  </div>
-  <div class="box">
-    <diff-input v-model="message"></diff-input>
-    <diff-button @click="message+=1">+1</diff-button>
-    {{message}}
-  </div>
-  <div class="box">
-    <diff-button>按钮</diff-button>
-    <diff-button icon="setting">按钮</diff-button>
-    <diff-button icon="setting" icon-position="right" loading> 按钮</diff-button>
-    <diff-button
-      icon="setting"
-      icon-position="right"
-      :loading="loadingDemo"
-      @click="loadingDemo = !loadingDemo"
-    >
-      按钮
-    </diff-button>
-    <diff-button-group>
-      <diff-button icon="left">上一页</diff-button>
-      <diff-button icon="right" icon-position="right">下一页</diff-button>
-    </diff-button-group>
-    <diff-button-group>
-      <diff-button icon="left">上一页</diff-button>
-      <diff-button>中间</diff-button>
-      <diff-button icon="right" icon-position="right">下一页</diff-button>
-    </diff-button-group>
-  </div>
+  <diff-row>
+    <diff-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}" :pc="{span:4}" :wide-pc="{span:2}">
+      <div class="demo"></div>
+    </diff-col>
+    <diff-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}" :pc="{span:4}" :wide-pc="{span:2}">
+      <div class="demo"></div>
+    </diff-col>
+    <diff-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}" :pc="{span:4}" :wide-pc="{span:2}">
+      <div class="demo"></div>
+    </diff-col>
+    <diff-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}" :pc="{span:4}" :wide-pc="{span:2}">
+      <div class="demo"></div>
+    </diff-col>
+    <diff-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}" :pc="{span:4}" :wide-pc="{span:2}">
+      <div class="demo"></div>
+    </diff-col>
+    <diff-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}" :pc="{span:4}" :wide-pc="{span:14}">
+      <div class="demo"></div>
+    </diff-col>
+  </diff-row>
 </div>
 </body>
 

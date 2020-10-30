@@ -38,10 +38,10 @@
         return [
           span && `col-${span}`,
           offset && `offset-${offset}`,
-          pad && [`col-pad-${pad.span}`],
-          narrowPc && [`col-narrow-pc-${narrowPc.span}`],
-          pc && [`col-pc-${pc.span}`],
-          widePc && [`col-wide-pc-${widePc.span}`],
+          pad ? [`col-pad-${pad.span}`] : [],
+          narrowPc ? [`col-narrow-pc-${narrowPc.span}`] : [],
+          pc ? [`col-pc-${pc.span}`] : [],
+          widePc ? [`col-wide-pc-${widePc.span}`] : [],
         ]
       }
     },
@@ -64,7 +64,7 @@
         margin-left: ($n / 24)*100%;
       }
     }
-    @media (min-width: 577px) and (max-width: 768px) { // iPad
+    @media (min-width: 577px) { // iPad
       $class-prefix: col-pad-;
       @for $n from 1 through 24 {
         &.#{$class-prefix}#{$n} {
@@ -78,7 +78,7 @@
         }
       }
     }
-    @media (min-width: 769px) and (max-width: 992px) { //  窄 pc
+    @media (min-width: 769px) { //  窄 pc
       $class-prefix: col-narrow-pc-;
       @for $n from 1 through 24 {
         &.#{$class-prefix}#{$n} {
@@ -92,7 +92,7 @@
         }
       }
     }
-    @media (min-width: 993px) and (max-width: 1200px) { //  普通 pc
+    @media (min-width: 993px) { //  普通 pc
       $class-prefix: col-pc-;
       @for $n from 1 through 24 {
         &.#{$class-prefix}#{$n} {
