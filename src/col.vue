@@ -36,16 +36,23 @@
       colClasses() {
         let {span, offset, pad, narrowPc, pc, widePc} = this
         return [
-          span && `col-${span}`,
-          offset && `offset-${offset}`,
-          pad ? [`col-pad-${pad.span}`] : [],
-          narrowPc ? [`col-narrow-pc-${narrowPc.span}`] : [],
-          pc ? [`col-pc-${pc.span}`] : [],
-          widePc ? [`col-wide-pc-${widePc.span}`] : [],
+          ...this.createClasses({span, offset}),
+          ...this.createClasses(pad, 'pad-'),
+          ...this.createClasses(narrowPc, 'narrow-pc-'),
+          ...this.createClasses(pc, 'pc-'),
+          ...this.createClasses(widePc, 'wide-pc-'),
         ]
       }
     },
-
+    methods: {
+      createClasses(obj, str = '') {
+        if (!obj) return []
+        let array = []
+        if (obj.span) {array.push(`col-${str}${obj.span}`)}
+        if (obj.offset) {array.push(`offset-${str}${obj.offset}`)}
+        return array
+      }
+    }
   }
 </script>
 
