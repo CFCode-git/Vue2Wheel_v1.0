@@ -30,41 +30,31 @@
     border: 1px solid #666;
     min-height: 100px;
   }
+  .sider{
+    background:#333;
+    width:200px;
+  }
+  .header{
+    background: #999;
+    height:100px;
+  }
+  .footer{
+    background: #ccc;
+    height:50px;
+  }
 </style>
+
 <div id="app">
 
   <diff-layout style="height:100vh;">
-    <diff-header class="demo">我是header</diff-header>
+    <diff-header>我是header</diff-header>
     <diff-layout>
-      <diff-sider class="demo">我是sider</diff-sider>
-      <diff-content class="demo">我是content</diff-content>
+      <diff-sider>我是sider</diff-sider>
+      <diff-content>我是content</diff-content>
     </diff-layout>
-    <diff-footer class="demo">我是footer</diff-footer>
+    <diff-footer>我是footer</diff-footer>
   </diff-layout>
-  <diff-layout style="height:100vh;">
-    <diff-header class="demo">我是header</diff-header>
-    <diff-layout>
-      <diff-content class="demo">我是content</diff-content>
-      <diff-sider class="demo">我是sider</diff-sider>
-    </diff-layout>
-    <diff-footer class="demo">我是footer</diff-footer>
-  </diff-layout>
-  <diff-layout style="height:100vh;">
-    <diff-sider class="demo">我是sider</diff-sider>
-    <diff-layout>
-      <diff-header class="demo">我是header</diff-header>
-      <diff-content class="demo">我是content</diff-content>
-      <diff-footer class="demo">我是footer</diff-footer>
-    </diff-layout>
-  </diff-layout>
-  <diff-layout style="height:100vh;">
-    <diff-layout>
-      <diff-header class="demo">我是header</diff-header>
-      <diff-content class="demo">我是content</diff-content>
-      <diff-footer class="demo">我是footer</diff-footer>
-    </diff-layout>
-    <diff-sider class="demo">我是sider</diff-sider>
-  </diff-layout>
+
 </div>
 </body>
 
