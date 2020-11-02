@@ -38,10 +38,16 @@ new Vue({
     loadingDemo: false,
     message: 'v-model'
   },
+  created() {
+    this.$toast('我是message',{
+      closeButton: {
+        text: '知道了',
+        callback: () => {console.log('用户知道了')}
+      }
+    })
+  },
   methods: {
-    showToast(){
-      this.$toast('我是message')
-    }
+    // showToast() { this.$toast('我是message') }
   }
 })
 
