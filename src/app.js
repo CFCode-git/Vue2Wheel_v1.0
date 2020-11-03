@@ -38,19 +38,19 @@ new Vue({
     loadingDemo: false,
     message: 'v-model'
   },
-  created() {
-    this.$toast('你的智商需要充值!', {
-      position: 'middle',
-      closeButton: {
-        text: '已充值',
-        callback: () => {console.log('他说他充值了')}
-      },
-      autoClose: false,
-      autoCloseDelay: 3
-    })
-  },
+  created() { },
   methods: {
-    showToast() { this.$toast('很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长over') }
+    showToast() {
+      this.$toast(`你的智商目前为${parseInt(Math.random()*100)},你的智商需要充值!`, {
+        position: 'middle',
+        closeButton: {
+          text: '已充值',
+          callback: () => {console.log('他说他充值了')}
+        },
+        autoClose: false,
+        autoCloseDelay: 3
+      })
+    }
   }
 })
 
