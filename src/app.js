@@ -40,7 +40,18 @@ new Vue({
   },
   created() { },
   methods: {
-    showToast() {
+    showToast1() {
+      this.$toast(`你的智商目前为${parseInt(Math.random()*100)},你的智商需要充值!`, {
+        position: 'top',
+        closeButton: {
+          text: '已充值',
+          callback: () => {console.log('他说他充值了')}
+        },
+        autoClose: false,
+        autoCloseDelay: 3
+      })
+    },
+    showToast2() {
       this.$toast(`你的智商目前为${parseInt(Math.random()*100)},你的智商需要充值!`, {
         position: 'bottom',
         closeButton: {
@@ -50,7 +61,19 @@ new Vue({
         autoClose: false,
         autoCloseDelay: 3
       })
+    },
+    showToast3(){
+      this.$toast(`你的智商目前为${parseInt(Math.random()*100)},你的智商需要充值!`, {
+        position: 'middle',
+        closeButton: {
+          text: '已充值',
+          callback: () => {console.log('他说他充值了')}
+        },
+        autoClose: false,
+        autoCloseDelay: 3
+      })
     }
+
   }
 })
 

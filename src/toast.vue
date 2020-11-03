@@ -1,15 +1,18 @@
 <template>
-  <div class="toast" :class="toastClasses" ref="toastRef">
-    <div class="message">
-      <div v-if="enableHtml" v-html="$slots.default[0]"></div>
-      <slot v-else></slot>
-    </div>
-    <div class="line" ref="lineRef"></div>
-    <span class="close" v-if="closeButton" @click="onClickClose">
+  <div class="wrapper" :class="toastClasses">
+    <div class="toast" ref="toastRef">
+      <div class="message">
+        <div v-if="enableHtml" v-html="$slots.default[0]"></div>
+        <slot v-else></slot>
+      </div>
+      <div class="line" ref="lineRef"></div>
+      <span class="close" v-if="closeButton" @click="onClickClose">
       {{closeButton.text}}
     </span>
+    </div>
   </div>
 </template>
+
 <script>
   export default {
     name: 'diff-toast',
@@ -71,41 +74,52 @@
   $font-size: 14px;
   $toast-min-height: 40px;
   $toast-bg: rgba(0, 0, 0, .75);
-  @keyframes fade-in {
+  $animation-duration:300ms;
+  @keyframes slide-up {
     0% {opacity: 0;transform: translateY(100%)}
     100% {opacity: 1;transform: translateY(0%)}
   }
-  .toast {
-    animation: fade-in 1s linear;
-    font-size: $font-size; line-height: 1.8;min-height: $toast-min-height;
+  @keyframes slide-down {
+    0% {opacity: 0;transform: translateY(-100%)}
+    100% {opacity: 1;transform: translateY(0%)}
+  }
+  @keyframes fade-in {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+  /* 用 wrapper 实现左右居中 */
+  /* 上下居中的动画由 toast 的 transform 实现 */
+  .wrapper {
     position: fixed;
-    display: flex; align-items: center; justify-content: center;
-    background: $toast-bg; border-radius: 4px; box-shadow: 0 0 3px 0 rgba(0, 0, 0, .5);
-    color: white;
-    padding: 0 16px;
     left: 50%;
     transform: translateX(-50%);
-    .message {
-      padding: 8px 0;
+    &.position-top { top: 0;
+      .toast {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        animation: slide-down $animation-duration;
+      }
     }
-    .line {
-      height: 100%;
-      border-left: 1px solid #666;
-      margin-left: 16px;
+    &.position-bottom { bottom: 0;
+      .toast {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        animation: slide-up $animation-duration;
+      }
     }
-    .close {
-      padding-left: 16px;
-      flex-shrink: 0;
+    &.position-middle { top: 50%; transform: translate(-50%, -50%);
+      .toast {
+        animation: fade-in $animation-duration;
+      }
     }
-    &.position-top {
-      top: 0;
-    }
-    &.position-bottom {
-      bottom: 0;
-    }
-    &.position-middle {
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
+  }
+  .toast {
+    font-size: $font-size; line-height: 1.8;min-height: $toast-min-height;
+    display: flex; align-items: center;
+    background: $toast-bg; border-radius: 4px; box-shadow: 0 0 3px 0 rgba(0, 0, 0, .5);
+    color: white; padding: 0 16px;
+    .message { padding: 8px 0; }
+    .line { height: 100%; border-left: 1px solid #666; margin-left: 16px; }
+    .close { padding-left: 16px; flex-shrink: 0; }
   }
 </style>
