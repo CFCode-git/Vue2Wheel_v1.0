@@ -1,5 +1,5 @@
 <template>
-  <div class="toast" ref="toastRef">
+  <div class="toast" :class="toastClasses" ref="toastRef">
     <div class="message">
       <div v-if="enableHtml" v-html="$slots.default[0]"></div>
       <slot v-else></slot>
@@ -15,7 +15,7 @@
     name: 'diff-toast',
     props: {
       autoClose: {type: Boolean, default: true},
-      autoCloseDelay: {type: Number, default: 5},
+      autoCloseDelay: {type: Number, default: 3},
       closeButton: {type: Object, default() { return {text: '关闭', callback: undefined} }},
       enableHtml: {type: Boolean, default: false},
       position: {
@@ -24,6 +24,11 @@
         }
       }
 
+    },
+    computed: {
+      toastClasses() {
+        return {[`position-${this.position}`]: true}
+      }
     },
     mounted() {
       this.updateStyle()
@@ -67,13 +72,15 @@
   $toast-bg: rgba(0, 0, 0, .75);
   .toast {
     font-size: $font-size; line-height: 1.8;min-height: $toast-min-height;
-    position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+    position: fixed;
     display: flex; align-items: center; justify-content: center;
     background: $toast-bg; border-radius: 4px; box-shadow: 0 0 3px 0 rgba(0, 0, 0, .5);
     color: white;
     padding: 0 16px;
-    .message{
-      padding:8px 0;
+    left: 50%;
+    transform: translateX(-50%);
+    .message {
+      padding: 8px 0;
     }
     .line {
       height: 100%;
@@ -83,6 +90,16 @@
     .close {
       padding-left: 16px;
       flex-shrink: 0;
+    }
+    &.position-top {
+      top: 0;
+    }
+    &.position-bottom {
+      bottom: 0;
+    }
+    &.position-middle {
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 </style>

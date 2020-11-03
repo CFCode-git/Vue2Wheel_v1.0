@@ -39,11 +39,14 @@ new Vue({
     message: 'v-model'
   },
   created() {
-    this.$toast('很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长over', {
+    this.$toast('你的智商需要充值!', {
+      position: 'middle',
       closeButton: {
-        text: '知道了',
-        callback: () => {console.log('用户知道了')}
+        text: '已充值',
+        callback: () => {console.log('他说他充值了')}
       },
+      autoClose: false,
+      autoCloseDelay: 3
     })
   },
   methods: {
