@@ -60,9 +60,9 @@
         this.$nextTick(() => {
           // setTimeout(() => {
           //   console.log(this.$refs.toastRef.getBoundingClientRect().height)
-          if(this.$refs.lineRef){
+          // if(this.$refs.lineRef){
             this.$refs.lineRef.style.height = `${this.$refs.toastRef.getBoundingClientRect().height}px`
-          }
+          // }
         })
       },
       close() {
