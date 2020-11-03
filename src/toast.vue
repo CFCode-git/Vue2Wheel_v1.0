@@ -1,7 +1,9 @@
 <template>
   <div class="toast" ref="toastRef">
-    <div v-if="enableHtml" v-html="$slots.default[0]"></div>
-    <slot v-else></slot>
+    <div class="message">
+      <div v-if="enableHtml" v-html="$slots.default[0]"></div>
+      <slot v-else></slot>
+    </div>
     <div class="line" ref="lineRef"></div>
     <span class="close" v-if="closeButton" @click="onClickClose">
       {{closeButton.text}}
@@ -26,21 +28,28 @@
       }
     },
     mounted() {
-      if (this.autoClose) {
-        setTimeout(() => {
-          this.close()
-        }, this.autoCloseDelay * 1000)
-      }
-      // style 只能获取内联样式
-      // 在 plugin.js 中，先 mount，再将 toast.$el append 到 body 里面，因此 mount被调用的时候，还没有到页面里
-      this.$nextTick(()=>{
-      // setTimeout(() => {
-      //   console.log(this.$refs.toastRef.getBoundingClientRect().height)
-        this.$refs.lineRef.style.height = `${this.$refs.toastRef.getBoundingClientRect().height}px`
-      })
+      this.updateStyle()
+      this.execAutoClose() // 是否自动关闭
+
 
     },
     methods: {
+      execAutoClose() {
+        if (this.autoClose) {
+          setTimeout(() => {
+            this.close()
+          }, this.autoCloseDelay * 1000)
+        }
+      },
+      updateStyle() {
+        // style 只能获取内联样式
+        // 在 plugin.js 中，先 mount，再将 toast.$el append 到 body 里面，因此 mount被调用的时候，还没有到页面里
+        this.$nextTick(() => {
+          // setTimeout(() => {
+          //   console.log(this.$refs.toastRef.getBoundingClientRect().height)
+          this.$refs.lineRef.style.height = `${this.$refs.toastRef.getBoundingClientRect().height}px`
+        })
+      },
       close() {
         this.$el.remove()// 删除页面的元素
         this.$destroy()// 删除时间绑定和组件
@@ -65,6 +74,9 @@
     background: $toast-bg; border-radius: 4px; box-shadow: 0 0 3px 0 rgba(0, 0, 0, .5);
     color: white;
     padding: 0 16px;
+    .message{
+      padding:8px 0;
+    }
     .line {
       height: 100%;
       border-left: 1px solid #666;
