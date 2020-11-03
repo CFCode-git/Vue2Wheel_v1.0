@@ -17,8 +17,15 @@
   export default {
     name: 'diff-toast',
     props: {
-      autoClose: {type: Boolean, default: true},
-      autoCloseDelay: {type: Number, default: 3},
+      autoClose: {
+        type: [Boolean, Number], default: 3, validator(value) {
+          if (value === false || typeof value === 'number') {
+            return true
+          } else {
+            return false
+          }
+        }
+      },
       closeButton: {type: Object, default() { return {text: '关闭', callback: undefined} }},
       enableHtml: {type: Boolean, default: false},
       position: {
@@ -44,7 +51,7 @@
         if (this.autoClose) {
           setTimeout(() => {
             this.close()
-          }, this.autoCloseDelay * 1000)
+          }, this.autoClose * 1000)
         }
       },
       updateStyle() {
@@ -53,7 +60,9 @@
         this.$nextTick(() => {
           // setTimeout(() => {
           //   console.log(this.$refs.toastRef.getBoundingClientRect().height)
-          this.$refs.lineRef.style.height = `${this.$refs.toastRef.getBoundingClientRect().height}px`
+          if(this.$refs.lineRef){
+            this.$refs.lineRef.style.height = `${this.$refs.toastRef.getBoundingClientRect().height}px`
+          }
         })
       },
       close() {

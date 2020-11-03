@@ -48,7 +48,6 @@ new Vue({
           callback: () => {console.log('他说他充值了')}
         },
         autoClose: false,
-        autoCloseDelay: 3
       })
     },
     showToast2() {
@@ -58,8 +57,7 @@ new Vue({
           text: '已充值',
           callback: () => {console.log('他说他充值了')}
         },
-        autoClose: false,
-        autoCloseDelay: 3
+        autoClose: 3,
       })
     },
     showToast3(){
@@ -70,7 +68,6 @@ new Vue({
           callback: () => {console.log('他说他充值了')}
         },
         autoClose: false,
-        autoCloseDelay: 3
       })
     }
 
