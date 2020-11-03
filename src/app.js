@@ -39,15 +39,15 @@ new Vue({
     message: 'v-model'
   },
   created() {
-    this.$toast('<strong>加粗</strong>',{
+    this.$toast('很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长over', {
       closeButton: {
         text: '知道了',
         callback: () => {console.log('用户知道了')}
-      }
+      },
     })
   },
   methods: {
-    // showToast() { this.$toast('我是message') }
+    showToast() { this.$toast('很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长over') }
   }
 })
 

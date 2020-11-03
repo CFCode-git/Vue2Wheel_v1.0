@@ -7,9 +7,7 @@ export default {
       // 动态创建组件
       let Constructor = Vue.extend(Toast)
       let toast = new Constructor({
-        propsData: {
-          closeButton: toastOptions.closeButton
-        }
+        propsData: toastOptions
       })
       toast.$slots.default = [message] // 给 toast 传插槽
       toast.$mount()
