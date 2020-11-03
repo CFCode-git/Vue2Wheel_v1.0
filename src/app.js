@@ -39,7 +39,7 @@ new Vue({
     message: 'v-model'
   },
   created() {
-    this.$toast('我是message',{
+    this.$toast('<strong>加粗</strong>',{
       closeButton: {
         text: '知道了',
         callback: () => {console.log('用户知道了')}
