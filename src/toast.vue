@@ -13,19 +13,17 @@
 <script>
   export default {
     name: 'diff-toast',
-    data(){
-      return{
-        height:''
-      }
-    },
     props: {
       autoClose: {type: Boolean, default: true},
-      autoCloseDelay: {type: Number, default: 50},
+      autoCloseDelay: {type: Number, default: 5},
       closeButton: {type: Object, default() { return {text: '关闭', callback: undefined} }},
-      enableHtml: {  // 默认不支持 html
-        type: Boolean,
-        default: false
+      enableHtml: {type: Boolean, default: false},
+      position: {
+        type: String, default: 'top', validator(value) {
+          return ['top', 'bottom', 'middle'].indexOf(value) >= 0
+        }
       }
+
     },
     mounted() {
       this.updateStyle()
