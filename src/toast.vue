@@ -55,6 +55,7 @@
       },
       close() {
         this.$el.remove()// 删除页面的元素
+        this.$emit('beforeClose') // 通知外面我要 close 了
         this.$destroy()// 删除时间绑定和组件
       },
       onClickClose() {
