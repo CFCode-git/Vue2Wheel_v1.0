@@ -26,7 +26,7 @@
 </head>
 <body>
 <div id="app">
-  <diff-tabs :selected.sync="selectedTab">
+  <diff-tabs :selected.sync="selectedTab" @update:selected="yyy">
 <!--  <diff-tabs selected="three" @update:selected="selectedTab=$event">-->
     <diff-tabs-head>
       <template slot="actions">
