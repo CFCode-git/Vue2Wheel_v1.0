@@ -25,25 +25,13 @@
   </style>
 </head>
 <body>
-<div id="app">
-  <diff-tabs :selected.sync="selectedTab" @update:selected="yyy">
-<!--  <diff-tabs selected="three" @update:selected="selectedTab=$event">-->
-    <diff-tabs-head>
-      <template slot="actions">
-        <button>actions</button>
-      </template>
-      <diff-tabs-item name="one">
-        <diff-icon icon-name="setting"></diff-icon> 1
-      </diff-tabs-item>
-      <diff-tabs-item name="two" disabled>2</diff-tabs-item>
-      <diff-tabs-item name="three">333333333333</diff-tabs-item>
-    </diff-tabs-head>
-    <diff-tabs-body>
-      <diff-tabs-pane name="one">111</diff-tabs-pane>
-      <diff-tabs-pane name="two">222</diff-tabs-pane>
-      <diff-tabs-pane name="three">333</diff-tabs-pane>
-    </diff-tabs-body>
-  </diff-tabs>
+<div id="app" style="padding-top: 100px;padding-left: 100px;">
+<diff-popover>
+  <template slot="content">
+    <div>popover content</div>
+  </template>
+  <button>click me</button>
+</diff-popover>
 </div>
 </body>
 

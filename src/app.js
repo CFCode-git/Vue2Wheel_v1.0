@@ -19,6 +19,8 @@ import TabsBody from './Tabs-body.vue'
 import TabsItem from './Tabs-item.vue'
 import TabsPane from './Tabs-pane.vue'
 
+import Popover from './popover.vue'
+
 import plugin from './plugin'
 
 // 全局注册
@@ -41,6 +43,8 @@ Vue.component('diff-tabs-body', TabsBody)
 Vue.component('diff-tabs-item', TabsItem)
 Vue.component('diff-tabs-pane', TabsPane)
 Vue.component('diff-tabs-head', TabsHead)
+
+Vue.component('diff-popover', Popover)
 Vue.use(plugin)
 
 new Vue({
@@ -50,7 +54,7 @@ new Vue({
   },
   created() { },
   methods: {
-    yyy(data){
+    yyy(data) {
       console.log(data)
     }
 
