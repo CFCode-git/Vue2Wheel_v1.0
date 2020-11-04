@@ -1,6 +1,6 @@
 <template>
-  <div class="popover" @click="xxx">
-    <div class="content-wrapper" v-if="visible">
+  <div class="popover" @click.stop="xxx">
+    <div class="content-wrapper" v-if="visible" @click.stop> <!--阻止popover内容点击事件冒泡到这里-->
       <slot name="content"></slot>
     </div>
     <slot></slot>
@@ -17,6 +17,21 @@
     methods: {
       xxx() {
         this.visible = !this.visible
+        console.log('切换 visible')
+        if (this.visible === true) {
+          // this.$nextTick(() => {
+          setTimeout(() => {
+            let eventHandler = () => {
+              this.visible = false
+              console.log('document 隐藏 popover')
+              document.removeEventListener('click', eventHandler)
+              console.log('点击body, 关闭visible')
+            }
+            document.addEventListener('click', eventHandler)
+          })
+        } else {
+          console.log('vm 隐藏 popover')
+        }
       }
     }
   }
