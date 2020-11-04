@@ -5,7 +5,9 @@
 </template>
 <script>
   export default {
-    name:'diff-tabs-body'
+    name:'diff-tabs-body',
+    inject:['eventBus'],
+
   }
 </script>
 <style lang="scss" scoped>

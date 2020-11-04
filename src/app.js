@@ -46,8 +46,7 @@ Vue.use(plugin)
 new Vue({
   el: '#app',
   data: {
-    loadingDemo: false,
-    message: 'v-model'
+    selectedTab: '2',
   },
   created() { },
   methods: {

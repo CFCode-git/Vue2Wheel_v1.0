@@ -5,7 +5,13 @@
 </template>
 <script>
   export default {
-    name:'diff-tabs-pane'
+    name: 'diff-tabs-pane',
+    inject: ['eventBus'],
+    created() {
+      this.eventBus.$on('update:selected', (name) => {
+        console.log('pane', name)
+      })
+    }
   }
 </script>
 <style lang="scss" scoped>

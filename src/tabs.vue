@@ -4,6 +4,7 @@
   </div>
 </template>
 <script>
+  import Vue from 'vue'
   export default {
     name:'diff-tabs',
     props:{
@@ -19,7 +20,19 @@
         }
       }
     },
+    data(){
+      return {
+        eventBus:new Vue()
+      }
+    },
+    // 依赖注入，tabs 提供事件中心（eventBus）,用 data 做中转，让自己也能访问 eventBus
+    provide(){
+      return{
+        eventBus:this.eventBus
+      }
+    },
     created(){
+
       // this.$emit('update:selected','xxx')
     }
   }
