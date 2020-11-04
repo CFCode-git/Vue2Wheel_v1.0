@@ -20,13 +20,7 @@
     },
     created() {
       this.eventBus.$on('update:selected', (name) => {
-        if (name === this.name) {
-          console.log(`pane ${this.name}选中`)
-          this.active = true
-        } else {
-          console.log(`pane ${this.name}没选中`)
-          this.active = false
-        }
+        this.active = name === this.name
       })
     }
   }

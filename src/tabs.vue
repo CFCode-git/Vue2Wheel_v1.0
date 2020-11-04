@@ -25,13 +25,10 @@
       return {eventBus: this.eventBus}
     },
     created() {
-      console.log('tabs created')
     },
     mounted() { // mounted 保证所有子元素 全部创建完毕
       // this.$emit('update:selected', '这是this $emit 出来的事件')
-      console.log('tabs mounted before emit')
       this.eventBus.$emit('update:selected', this.selected)
-      console.log('tabs mounted after emit')
       // this.$emit('update:selected','xxx')
     },
   }

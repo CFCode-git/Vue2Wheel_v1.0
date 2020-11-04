@@ -22,20 +22,11 @@
       }
     },
     created() {
-      console.log(`${this.name}item created before on`)
       this.eventBus.$on('update:selected', (name) => {
-        if (name === this.name) {
-          console.log(`我${this.name}被选中了`)
-          this.active = true
-        } else {
-          console.log(`我${this.name}没被选中`)
-          this.active = false
-        }
+        this.active = name === this.name;
       })
-      console.log('item created after on')
     },
     mounted() {
-      console.log('item mounted')
     },
     methods: {
       xxx() {

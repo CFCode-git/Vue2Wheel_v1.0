@@ -10,12 +10,8 @@
   export default {
     name: 'diff-tabs-head',
     inject: ['eventBus'],
-    created() {
-      console.log('head created')
-    },
-    mounted() {
-      console.log('head mounted')
-    }
+    created() { },
+    mounted() { }
   }
 </script>
 <style lang="scss" scoped>
