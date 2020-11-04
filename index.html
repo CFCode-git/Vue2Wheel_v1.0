@@ -26,9 +26,24 @@
 </head>
 <body>
 <div id="app">
-  <button @click="showToast1">alert</button>
-  <button @click="showToast2">alert</button>
-  <button @click="showToast3">alert</button>
+  <diff-tabs :selected.sync="selectedTab">
+<!--  <diff-tabs selected="three" @update:selected="selectedTab=$event">-->
+    <diff-tabs-head>
+      <template slot="actions">
+        <button>actions</button>
+      </template>
+      <diff-tabs-item name="one">
+        <diff-icon name="setting"></diff-icon> 1
+      </diff-tabs-item>
+      <diff-tabs-item name="two" disabled>2</diff-tabs-item>
+      <diff-tabs-item name="three">333333333333</diff-tabs-item>
+    </diff-tabs-head>
+    <diff-tabs-body>
+      <diff-tabs-pane name="one">111</diff-tabs-pane>
+      <diff-tabs-pane name="two">222</diff-tabs-pane>
+      <diff-tabs-pane name="three">333</diff-tabs-pane>
+    </diff-tabs-body>
+  </diff-tabs>
 </div>
 </body>
 

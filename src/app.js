@@ -13,6 +13,12 @@ import Footer from './footer.vue'
 import Content from './content.vue'
 import Sider from './sider.vue'
 
+import Tabs from './Tabs.vue'
+import TabsHead from './Tabs-head.vue'
+import TabsBody from './Tabs-body.vue'
+import TabsItem from './Tabs-item.vue'
+import TabsPane from './Tabs-pane.vue'
+
 import plugin from './plugin'
 
 // 全局注册
@@ -30,6 +36,11 @@ Vue.component('diff-footer', Footer)
 Vue.component('diff-content', Content)
 Vue.component('diff-sider', Sider)
 
+Vue.component('diff-tabs', Tabs)
+Vue.component('diff-tabs-body', TabsBody)
+Vue.component('diff-tabs-item', TabsItem)
+Vue.component('diff-tabs-pane', TabsPane)
+Vue.component('diff-tabs-head', TabsHead)
 Vue.use(plugin)
 
 new Vue({
