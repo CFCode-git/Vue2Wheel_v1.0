@@ -16,6 +16,7 @@
       return {}
     },
     mounted() {
+      this.eventBus &&
       this.eventBus.$on('update:selected', (item, vm) => {
         this.$nextTick(() => {
           let {width, left} = vm.$el.getBoundingClientRect()

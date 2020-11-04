@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs-item" @click="onClickTab" :class="classes">
+  <div class="tabs-item" @click="onClickTab" :class="classes" :data-name="name">
     <slot></slot>
   </div>
 </template>
@@ -25,8 +25,9 @@
       }
     },
     created() {
+      this.eventBus &&
       this.eventBus.$on('update:selected', (name) => {
-        this.active = name === this.name;
+        this.active = name === this.name
       })
     },
     mounted() {
@@ -34,7 +35,9 @@
     methods: {
       onClickTab() {
         if (this.disabled) return
-        this.eventBus.$emit('update:selected', this.name, this)
+        this.eventBus &&
+        this.eventBus.$emit('update:selected', this.name, this) // 通过 eventBus 将点击信息发布到事件总线
+        this.$emit('click',this) // 测试用，
       }
     }
   }
