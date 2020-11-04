@@ -28,7 +28,15 @@
     },
     mounted() { // mounted 保证所有子元素 全部创建完毕
       // this.$emit('update:selected', '这是this $emit 出来的事件')
-      this.eventBus.$emit('update:selected', this.selected)
+      this.$children.forEach(vm=>{ // 筛选 vm
+        if (vm.$options.name === 'diff-tabs-head') {
+          vm.$children.forEach(childVm=>{
+            if(childVm.$options.name === 'diff-tabs-item' && childVm.name=== this.selected){
+              this.eventBus.$emit('update:selected', this.selected,childVm)
+            }
+          })
+        }
+      })
       // this.$emit('update:selected','xxx')
     },
   }
