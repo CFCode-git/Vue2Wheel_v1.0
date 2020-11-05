@@ -25,8 +25,8 @@
           setTimeout(() => {
             document.body.appendChild(this.$refs.contentWrapperRef)
             let {width, height, left, top} = this.$refs.triggerWrapperRef.getBoundingClientRect()
-            this.$refs.contentWrapperRef.style.left = left + 'px'
-            this.$refs.contentWrapperRef.style.top = top + 'px'
+            this.$refs.contentWrapperRef.style.left = left +　window.scrollX + 'px'
+            this.$refs.contentWrapperRef.style.top = top + window.scrollY + 'px'
             let eventHandler = () => {
               this.visible = false
               console.log('document 隐藏 popover')
