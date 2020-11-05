@@ -20,18 +20,21 @@
       /*--border-color-hover: red;*/
       --border-color-hover: #666;
     }
-    /*#app { margin: 20px; }*/
-    body { font-style: var(--font-size); border:1px solid red;}
+    #app {}
+    body { font-style: var(--font-size); }
   </style>
 </head>
 <body>
-<div id="app" style="padding-top: 100px;padding-left: 100px;overflow: hidden;">
-<diff-popover>
-  <template slot="content">
-    <div>popover content</div>
-  </template>
-  <button>click me</button>
-</diff-popover>
+<div id="app" style="padding-top: 100px;padding-left: 100px; border:1px solid red;">
+  <div style="overflow:hidden;border:1px solid green; padding:5px"
+       @click="yyy">
+    <diff-popover>
+      <template slot="content">
+        <div>popover content</div>
+      </template>
+      <button>click me</button>
+    </diff-popover>
+  </div>
 </div>
 </body>
 

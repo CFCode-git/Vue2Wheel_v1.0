@@ -1,9 +1,8 @@
 <template>
-  <div class="popover" @click.stop="xxx">
+  <div class="popover" @click="onClick" ref="popover">
     <div ref="contentWrapperRef"
          class="content-wrapper"
-         v-if="visible"
-         @click.stop> <!--阻止popover内容点击事件冒泡到这里-->
+         v-if="visible"> <!--阻止popover内容点击事件冒泡到这里-->
       <slot name="content"></slot>
     </div>
     <span ref="triggerWrapperRef">
@@ -18,27 +17,38 @@
       return {visible: false}
     },
     methods: {
-      xxx() {
-        this.visible = !this.visible
-        console.log('切换 visible')
-        if (this.visible === true) {
-          setTimeout(() => {
-            document.body.appendChild(this.$refs.contentWrapperRef)
-            let {width, height, left, top} = this.$refs.triggerWrapperRef.getBoundingClientRect()
-            this.$refs.contentWrapperRef.style.left = left +　window.scrollX + 'px'
-            this.$refs.contentWrapperRef.style.top = top + window.scrollY + 'px'
-            let eventHandler = () => {
-              this.visible = false
-              console.log('document 隐藏 popover')
-              document.removeEventListener('click', eventHandler)
-              console.log('点击body, 关闭visible')
-            }
-            document.addEventListener('click', eventHandler)
-          })
-        } else {
-          console.log('vm 隐藏 popover')
+      // 计算 popover 位置
+      positionContent() {
+        document.body.appendChild(this.$refs.contentWrapperRef)
+        let {left, top} = this.$refs.triggerWrapperRef.getBoundingClientRect()
+        // popover 的绝对定位相对于body元素； ClientRect 得到的 left 和 top 是相对于可视范围的。
+        // scrollX 和 scrollY 是 滚动高度；整个高度是 scrollHeight
+        this.$refs.contentWrapperRef.style.left = left + window.scrollX + 'px'
+        this.$refs.contentWrapperRef.style.top = top + window.scrollY + 'px'
+      },
+      // 处理点击 document 的情况，同时避开点击 content 的情况
+      onClickDocument(e) {
+        // 如果点击的是 popover 或者 popover 的 content,就拜拜
+        if (this.$refs.popover.contains(e.target) || this.$refs.contentWrapperRef.contains(e.target)) { return }
+        this.close()
+      },
+      open() {
+        this.visible = true
+        setTimeout(() => {
+          this.positionContent()
+          document.addEventListener('click', this.onClickDocument)
+        })
+      },
+      close() {
+        this.visible = false
+        document.removeEventListener('click', this.onClickDocument)
+      },
+      onClick(event) {
+        // 如果点击的是按钮或者按钮里面的东西，切换visible
+        if (this.$refs.triggerWrapperRef.contains(event.target)) {
+          this.visible === true ? this.close() : this.open()
         }
-      }
+      },
     },
     mounted() {
     }
