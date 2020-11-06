@@ -5,7 +5,7 @@
          v-if="visible"> <!--阻止popover内容点击事件冒泡到这里-->
       <slot name="content"></slot>
     </div>
-    <span ref="triggerWrapperRef">
+    <span ref="triggerWrapperRef" style="display: inline-block;">
     <slot></slot>
     </span>
   </div>
