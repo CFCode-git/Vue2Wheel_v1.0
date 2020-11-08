@@ -29,25 +29,20 @@
     methods: {
       // 计算 popover 位置
       positionContent() {
-        document.body.appendChild(this.$refs.contentWrapperRef)
-        let {width, height, left, top} = this.$refs.triggerWrapperRef.getBoundingClientRect()
+        let {triggerWrapperRef, contentWrapperRef} = this.$refs
+        document.body.appendChild(contentWrapperRef)
+        let {width, height, left, top} = triggerWrapperRef.getBoundingClientRect()
+        let {height: height2} = contentWrapperRef.getBoundingClientRect()
+        let positionHash = {
+          top: {top: top + window.scrollY, left: left + window.scrollX},
+          bottom: {top: top + height + window.scrollY, left: left + window.scrollX},
+          right: {top: top + window.scrollY + (height - height2) / 2, left: left + window.scrollX + width},
+          left: {top: top + window.scrollY + (height - height2) / 2, left: left + window.scrollX}
+        }
         // popover 的绝对定位相对于body元素； ClientRect 得到的 left 和 top 是相对于可视范围的。
         // scrollX 和 scrollY 是 滚动高度；整个高度是 scrollHeight
-        if (this.position === 'top') {
-          this.$refs.contentWrapperRef.style.left = left + window.scrollX + 'px'
-          this.$refs.contentWrapperRef.style.top = top + window.scrollY + 'px'
-        } else if (this.position === 'bottom') {
-          this.$refs.contentWrapperRef.style.left = left + window.scrollX + 'px'
-          this.$refs.contentWrapperRef.style.top = top + height + window.scrollY + 'px'
-        } else if (this.position === 'left') {
-          let {height: height2} = this.$refs.contentWrapperRef.getBoundingClientRect()
-          this.$refs.contentWrapperRef.style.left = left + window.scrollX + 'px'
-          this.$refs.contentWrapperRef.style.top = top - ((height2 - height) / 2) + window.scrollY + 'px'
-        } else {
-          let {height: height2} = this.$refs.contentWrapperRef.getBoundingClientRect()
-          this.$refs.contentWrapperRef.style.left = left + width +  window.scrollX + 'px'
-          this.$refs.contentWrapperRef.style.top = top - ((height2 - height) / 2) + window.scrollY + 'px'
-        }
+        contentWrapperRef.style.left = positionHash[this.position].left + 'px'
+        contentWrapperRef.style.top = positionHash[this.position].top + 'px'
       },
       // 处理点击 document 的情况，同时避开点击 content 的情况
       onClickDocument(e) {
