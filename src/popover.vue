@@ -4,7 +4,7 @@
          class="content-wrapper"
          :class="{[`position-${position}`]:true}"
          v-if="visible"> <!--阻止popover内容点击事件冒泡到这里-->
-      <slot name="content"></slot>
+      <slot name="content" :close="close"></slot>
     </div>
     <span ref="triggerWrapperRef" style="display: inline-block;">
     <slot></slot>
@@ -15,9 +15,7 @@
   export default {
     name: 'diff-popover',
     data() {
-      return {
-        visible: false,
-      }
+      return {visible: false,}
     },
     props: {
       position: {
@@ -28,11 +26,8 @@
         }
       },
       trigger: {
-        type: String,
-        default: 'click',
-        validator(value) {
-          return ['click', 'hover'].indexOf(value) >= 0
-        }
+        type: String, default: 'click',
+        validator(value) { return ['click', 'hover'].indexOf(value) >= 0 }
       }
     },
     methods: {
@@ -90,10 +85,10 @@
     },
     destroyed() {
       if (this.trigger === 'click') {
-        this.$refs.popover.removeEventListener('click', this.onClick)
+        this.$refs.popover?.removeEventListener('click', this.onClick)
       } else {
-        this.$refs.popover.removeEventListener('mouseenter', this.open)
-        this.$refs.popover.removeEventListener('mouseleave', this.close)
+        this.$refs.popover?.removeEventListener('mouseenter', this.open)
+        this.$refs.popover?.removeEventListener('mouseleave', this.close)
       }
     }
   }

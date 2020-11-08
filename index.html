@@ -29,9 +29,10 @@
   <div style="overflow:hidden; padding-top:150px;padding-bottom: 40px;"
        @click="yyy">
     <diff-popover position="bottom">
-      <template slot="content">
+      <template slot="content" slot-scope="{close}">
         <div>popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容</div>
         <div>popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容</div>
+        <diff-button @click="close">close</diff-button>
       </template>
       <diff-button>click me</diff-button>
     </diff-popover>
