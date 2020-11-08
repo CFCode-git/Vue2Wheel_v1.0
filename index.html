@@ -25,8 +25,8 @@
   </style>
 </head>
 <body>
-<div id="app">
-  <div style="overflow:hidden; padding:150px"
+<div id="app" style="padding-left:40px;">
+  <div style="overflow:hidden; padding-top:150px;padding-bottom: 40px;"
        @click="yyy">
     <diff-popover position="bottom">
       <template slot="content">
@@ -48,6 +48,34 @@
       <diff-button>click me</diff-button>
     </diff-popover>
     <diff-popover position="right">
+      <template slot="content">
+        <div>popover内容</div>
+      </template>
+      <diff-button>click me</diff-button>
+    </diff-popover>
+  </div>
+  <div style="overflow:hidden; padding-bottom:150px"
+       @click="yyy">
+    <diff-popover position="bottom" trigger="hover">
+      <template slot="content">
+        <div>popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容</div>
+        <div>popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容</div>
+      </template>
+      <diff-button>click me</diff-button>
+    </diff-popover>
+    <diff-popover trigger="hover">
+      <template slot="content">
+        <div>popover内容</div>
+      </template>
+      <diff-button>click me</diff-button>
+    </diff-popover>
+    <diff-popover position="left" trigger="hover">
+      <template slot="content">
+        <div>popover内容</div>
+      </template>
+      <diff-button>click me</diff-button>
+    </diff-popover>
+    <diff-popover position="right" trigger="hover">
       <template slot="content">
         <div>popover内容</div>
       </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="popover" @click="onClick" ref="popover">
+  <div class="popover" ref="popover">
     <div ref="contentWrapperRef"
          class="content-wrapper"
          :class="{[`position-${position}`]:true}"
@@ -15,7 +15,25 @@
   export default {
     name: 'diff-popover',
     data() {
-      return {visible: false}
+      return {
+        visible: false,
+      }
+    },
+    computed: {
+      openEvent() {
+        if (this.trigger === 'click') {
+          return 'click'
+        } else {
+          return 'mouseenter'
+        }
+      },
+      closeEvent() {
+        if (this.trigger === 'click') {
+          return 'click'
+        } else {
+          return 'mouseleave'
+        }
+      }
     },
     props: {
       position: {
@@ -23,6 +41,13 @@
         default: 'top',
         validator(value) {
           return ['top', 'bottom', 'left', 'right'].indexOf(value) >= 0
+        }
+      },
+      trigger: {
+        type: String,
+        default: 'click',
+        validator(value) {
+          return ['click', 'hover'].indexOf(value) >= 0
         }
       }
     },
@@ -70,7 +95,22 @@
         }
       },
     },
+    // 在 created 添加事件监听，根据 trigger 觉得监听的事件类型。
     mounted() {
+      if (this.trigger === 'click') {
+        this.$refs.popover.addEventListener('click', this.onClick)
+      } else {
+        this.$refs.popover.addEventListener('mouseenter', this.open)
+        this.$refs.popover.addEventListener('mouseleave', this.close)
+      }
+    },
+    destroyed() {
+      if (this.trigger === 'click') {
+        this.$refs.popover.removeEventListener('click', this.onClick)
+      } else {
+        this.$refs.popover.removeEventListener('mouseenter', this.open)
+        this.$refs.popover.removeEventListener('mouseleave', this.close)
+      }
     }
   }
 </script>
