@@ -19,22 +19,6 @@
         visible: false,
       }
     },
-    computed: {
-      openEvent() {
-        if (this.trigger === 'click') {
-          return 'click'
-        } else {
-          return 'mouseenter'
-        }
-      },
-      closeEvent() {
-        if (this.trigger === 'click') {
-          return 'click'
-        } else {
-          return 'mouseleave'
-        }
-      }
-    },
     props: {
       position: {
         type: String,
