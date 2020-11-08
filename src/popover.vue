@@ -57,6 +57,7 @@
         this.close()
       },
       open() {
+        console.log('open了')
         this.visible = true
         setTimeout(() => {
           this.positionContent()
