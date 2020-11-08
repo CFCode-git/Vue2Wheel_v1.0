@@ -41,13 +41,10 @@ describe('Popover', () => {
     vm.$nextTick(() => {
       let event = new Event('mouseenter')
       vm.$el.dispatchEvent(event)
-      console.log('11111111111')
       vm.$nextTick(() => {
-        console.log('2222222222')
         let {contentWrapperRef} = vm.$refs.a.$refs
         expect(contentWrapperRef).to.exist
         done()
-        console.log('3333333333')
       })
     })
   })
