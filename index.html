@@ -28,14 +28,28 @@
 <div id="app">
   <div style="overflow:hidden; padding:150px"
        @click="yyy">
+    <diff-popover position="bottom">
+      <template slot="content">
+        <div>popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容</div>
+        <div>popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容</div>
+      </template>
+      <diff-button>click me</diff-button>
+    </diff-popover>
     <diff-popover>
       <template slot="content">
-        <div>popover contentpopover contentpopover contentpopover contentpopover contentpopover contentpopover
-          contentpopover contentpopover contentpopover contentpopover contentpopover contentpopover contentpopover
-          contentpopover contentpopover contentpopover contentpopover contentpopover contentpopover contentpopover
-          contentpopover contentpopover contentpopover contentpopover contentpopover contentpopover contentpopover
-          contentpopover contentpopover contentpopover content
-        </div>
+        <div>popover内容</div>
+      </template>
+      <diff-button>click me</diff-button>
+    </diff-popover>
+    <diff-popover position="left">
+      <template slot="content">
+        <div>popover内容</div>
+      </template>
+      <diff-button>click me</diff-button>
+    </diff-popover>
+    <diff-popover position="right">
+      <template slot="content">
+        <div>popover内容</div>
       </template>
       <diff-button>click me</diff-button>
     </diff-popover>
