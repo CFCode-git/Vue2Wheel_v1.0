@@ -25,67 +25,14 @@
   </style>
 </head>
 <body>
-<div id="app" style="padding-left:40px;">
-  <div style="overflow:hidden; padding-top:150px;padding-bottom: 40px;"
-       @click="yyy">
-    <diff-popover position="bottom">
-      <template slot="content" slot-scope="{close}">
-        <div>popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容</div>
-        <div>popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容</div>
-        <diff-button @click="close">close</diff-button>
-      </template>
-      <diff-button>click me</diff-button>
-    </diff-popover>
-    <diff-popover>
-      <template slot="content">
-        <div>popover内容</div>
-      </template>
-      <diff-button>click me</diff-button>
-    </diff-popover>
-    <diff-popover position="left">
-      <template slot="content">
-        <div>popover内容</div>
-      </template>
-      <diff-button>click me</diff-button>
-    </diff-popover>
-    <diff-popover position="right">
-      <template slot="content">
-        <div>popover内容</div>
-      </template>
-      <diff-button>click me</diff-button>
-    </diff-popover>
-  </div>
-  <div style="overflow:hidden; padding-bottom:150px"
-       @click="yyy">
-    <diff-popover position="bottom" trigger="hover">
-      <template slot="content">
-        <div>popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容</div>
-        <div>popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容popover内容</div>
-      </template>
-      <diff-button>click me</diff-button>
-    </diff-popover>
-    <diff-popover trigger="hover">
-      <template slot="content">
-        <div>popover内容</div>
-      </template>
-      <diff-button>click me</diff-button>
-    </diff-popover>
-    <diff-popover position="left" trigger="hover">
-      <template slot="content">
-        <div>popover内容</div>
-      </template>
-      <diff-button>click me</diff-button>
-    </diff-popover>
-    <diff-popover position="right" trigger="hover">
-      <template slot="content">
-        <div>popover内容</div>
-      </template>
-      <diff-button>click me</diff-button>
-    </diff-popover>
-  </div>
+<div id="app" style="padding:100px;">
+  <diff-collapse>
+    <diff-collapse-item title="标题1">内容1</diff-collapse-item>
+    <diff-collapse-item title="标题2">内容2</diff-collapse-item>
+    <diff-collapse-item title="标题3">内容3</diff-collapse-item>
+  </diff-collapse>
 </div>
 </body>
-
 <script src="./src/app.js"></script>
 <script src="//at.alicdn.com/t/font_2156714_mndj4vc4h3n.js"></script>
 

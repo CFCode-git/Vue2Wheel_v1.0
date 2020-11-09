@@ -20,6 +20,8 @@ import TabsItem from './Tabs-item.vue'
 import TabsPane from './Tabs-pane.vue'
 
 import Popover from './popover.vue'
+import Collapse from './collapse.vue'
+import CollapseItem from './collapse-item.vue'
 
 import plugin from './plugin'
 
@@ -45,6 +47,8 @@ Vue.component('diff-tabs-pane', TabsPane)
 Vue.component('diff-tabs-head', TabsHead)
 
 Vue.component('diff-popover', Popover)
+Vue.component('diff-collapse', Collapse)
+Vue.component('diff-collapse-item', CollapseItem)
 Vue.use(plugin)
 
 new Vue({
