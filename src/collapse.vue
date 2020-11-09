@@ -4,8 +4,27 @@
   </div>
 </template>
 <script>
+  import Vue from 'vue'
   export default {
-    name: 'diff-collapse'
+    name: 'diff-collapse',
+    data() {
+      return {
+        eventBus: new Vue()
+      }
+    },
+    props: {
+      single: {
+        type: Boolean,
+        default: false
+      }
+    },
+    provide() {
+      if (this.single) {
+        return {
+          eventBus: this.eventBus
+        }
+      }
+    }
   }
 </script>
 <style lang="scss">
