@@ -1,5 +1,6 @@
 module.exports = {
-  title: '',
+  base:'/Vue2Wheel_v1.0/',
+  title: 'Diff UI',
   description: '好用的 UI 框架',
   themeConfig: {
     nav: [
