@@ -34,18 +34,31 @@
   }
 </script>
 <style lang="scss" scoped>
+  $font-size: 14px;
+  $button-height: 32px;
+  $button-bg: white;
+  $button-active-bg: #eee;
+  $border-radius: 4px;
+  $color: #333;
+  $border-color: #999;
+  $border-color-hover: #666;
   @keyframes spin {
     0% {transform: rotate(0deg)}
     100% {transform: rotate(360deg)}
   }
   .diff-button {
-    height: var(--button-height); padding: 0 .8em; font: inherit;
-    border-radius: var(--button-radius); border: 1px solid var(--border-color);
-    background: var(--button-bg);
-    display: inline-flex; justify-content: center; align-items: center;
+    font-style: $font-size;
+    height: $button-height;
+    padding: 0 .8em;
+    border-radius: $border-radius;
+    border: 1px solid $border-color;
+    background: $button-bg;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     vertical-align: middle;
-    &:hover { border-color: var(--border-color-hover); }
-    &:active { background-color: var(--button-active-bg); }
+    &:hover { border-color: $border-color-hover; }
+    &:active { background-color: $button-active-bg; }
     &:focus { outline: none; }
     > .diff-icon { order: 1; margin-right: .3em; }
     > .diff-content { order: 2;}
