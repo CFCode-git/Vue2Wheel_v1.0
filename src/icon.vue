@@ -4,6 +4,7 @@
   </svg>
 </template>
 <script>
+  import './svg'
   export default {
     name: 'diff-icon',
     props: {
