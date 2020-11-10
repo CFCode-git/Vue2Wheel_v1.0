@@ -1,22 +1,24 @@
 <template>
   <div class="cascaderItem">
     {{sourceItem.name}}
-    <cascaderItem
+    <diff-cascader-item
       v-if="sourceItem.children"
       v-for="item in sourceItem.children"
       :source-item="item"
-      :key="item.name"></cascaderItem>
+      :key="item.name"></diff-cascader-item>
   </div>
 </template>
 <script>
-  export default {
-    name: 'cascaderItem',
+  const component = {
+    name: 'diff-cascader-item',
+    components: {'diff-cascader-item': component},
     props: {
       sourceItem: {
         type: Object
       }
     }
   }
+  export default component
 </script>
 <style lang="scss" scoped>
   .cascaderItem {

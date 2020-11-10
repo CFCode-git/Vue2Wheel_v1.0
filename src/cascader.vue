@@ -6,17 +6,17 @@
     <div class="popover">
       <!--      由于不清楚source有多少层，所以应该递归组件，当存在children的时候。-->
       <div v-for="item in source" :key="item.name">
-        <cascader-item :source-item="item"></cascader-item>
+        <diff-cascader-item :source-item="item"></diff-cascader-item>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import cascaderItem from './cascader-item'
+  import diffCascaderItem from './cascader-item'
   export default {
     name: 'diff-cascader',
-    components: {cascaderItem},
+    components: {'diff-cascader-item': diffCascaderItem},
     props: {
       source: {
         type: Array
