@@ -1,6 +1,6 @@
 <template>
   <svg class="diff-icon">
-    <use :xlink:href="`#i-${iconName}`"></use>
+    <use :xlink:href="`#i-${name}`"></use>
   </svg>
 </template>
 <script>
@@ -8,7 +8,7 @@
   export default {
     name: 'diff-icon',
     props: {
-      iconName: {type: String}
+      name: {type: String}
     },
     mounted() {
     }
