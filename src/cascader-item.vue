@@ -1,16 +1,16 @@
 <template>
   <div class="cascaderItem">
     {{sourceItem.name}}
-    <x
+    <cascaderItem
       v-if="sourceItem.children"
       v-for="item in sourceItem.children"
       :source-item="item"
-      :key="item.name"></x>
+      :key="item.name"></cascaderItem>
   </div>
 </template>
 <script>
   export default {
-    name: 'x',
+    name: 'cascaderItem',
     props: {
       sourceItem: {
         type: Object
