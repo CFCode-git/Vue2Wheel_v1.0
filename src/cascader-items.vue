@@ -1,14 +1,24 @@
 <template>
   <div class="cascaderItem" :style="{height:height}">
     <!--    递归方案：点击左边后 递归 渲染右边-->
+    <div>
+      selected:{{selected && selected[level] && selected[level].name}}
+      level:{{level}}
+    </div>
     <div class="left">
-      <div v-for="item in items" class="label" @click="leftSelected = item">
+      <div v-for="item in items" class="label" @click="onClickLabel(item)">
         {{item.name}}
         <icon class="icon" v-if="item.children" name="right"></icon>
       </div>
     </div>
     <div class="right" v-if="rightItems">
-      <diff-cascader-items :items="rightItems" :height="height"></diff-cascader-items>
+      <diff-cascader-items ref="right"
+                           :items="rightItems"
+                           :height="height"
+                           :level="level+1"
+                           :selected="selected"
+                           @update:selected="onUpdateSelected"
+      ></diff-cascader-items>
     </div>
   </div>
 </template>
@@ -17,29 +27,37 @@
 
   const component = {
     name: 'diff-cascader-items',
-    data() {
-      return {
-        leftSelected: null
-      }
-    },
     components: {
       Icon
     },
     props: {
-      items: {
-        type: Array
+      items: {type: Array},
+      height: {type: String},
+      selected: {
+        type: Array, default: () => {return []},
       },
-      height: {
-        type: String
-      }
+      level: {type: Number, default: 0}
     },
     computed: {
       rightItems() {
-        if (this.leftSelected && this.leftSelected.children) {
-          return this.leftSelected.children
+        let currentSelected = this.selected[this.level]
+        if (currentSelected && currentSelected.children) {
+          return currentSelected.children
         } else {
           return null
         }
+      },
+    },
+    mounted() {
+    },
+    methods: {
+      onClickLabel(item) {
+        let copy = JSON.parse(JSON.stringify(this.selected))
+        copy[this.level] = item
+        this.$emit('update:selected', copy)
+      },
+      onUpdateSelected(newSelected) {
+        this.$emit('update:selected', newSelected)
       }
     }
   }

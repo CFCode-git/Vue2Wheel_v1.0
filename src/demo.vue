@@ -1,7 +1,8 @@
 <template>
   <div>
-    <p>111111</p>
-    <diff-cascader :source="source" height="200px"></diff-cascader>
+    <p>{{selected}}</p>
+    <diff-cascader :source="source" height="200px" :selected="selected"
+                   @update:selected="selected = $event"></diff-cascader>
     <p>111111</p>
   </div>
 </template>
@@ -18,6 +19,7 @@
     },
     data() {
       return {
+        selected: [],
         source: [
           {
             name: '浙江',

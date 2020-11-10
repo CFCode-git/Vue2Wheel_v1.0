@@ -2,7 +2,14 @@
   <div class="cascader">
     <div class="trigger" @click="popoverVisible =!popoverVisible"></div>
     <div class="popover-wrapper" v-if="popoverVisible">
-      <diff-cascader-items :items="source" class="popover" :height="height"></diff-cascader-items>
+      <diff-cascader-items
+        :items="source"
+        class="popover"
+        :height="height"
+        :selected="selected"
+        @update:selected="onUpdateSelected"
+      >
+      </diff-cascader-items>
     </div>
   </div>
 </template>
@@ -14,15 +21,19 @@
     components: {'diff-cascader-items': diffCascaderItems},
     props: {
       source: {type: Array},
-      height:{
-        type:String
-      }
+      height: {type: String},
+      selected: {type: Array, default: () => {return []}}
     },
     data() {
       return {
         popoverVisible: false
       }
     },
+    methods: {
+      onUpdateSelected(newSelected) {
+        this.$emit('update:selected', newSelected)
+      }
+    }
   }
 </script>
 
