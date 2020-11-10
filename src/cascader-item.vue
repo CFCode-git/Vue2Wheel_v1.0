@@ -1,24 +1,22 @@
 <template>
   <div class="cascaderItem">
     {{sourceItem.name}}
-    <cascader-item
+    <x
       v-if="sourceItem.children"
       v-for="item in sourceItem.children"
       :source-item="item"
-      :key="item.name"></cascader-item>
+      :key="item.name"></x>
   </div>
 </template>
 <script>
-  const cascaderItem = {
-    name: 'cascader-item',
-    components: {cascaderItem:cascaderItem},
+  export default {
+    name: 'x',
     props: {
       sourceItem: {
         type: Object
       }
     }
   }
-  export default cascaderItem
 </script>
 <style lang="scss" scoped>
   .cascaderItem {
