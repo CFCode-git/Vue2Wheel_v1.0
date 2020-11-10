@@ -5,11 +5,7 @@
     <diff-button loading>默认按钮</diff-button>
     <diff-button disabled>默认按钮</diff-button>
 
-    <pre>
-      <code>
-      {{content}}
-      </code>
-    </pre>
+    <pre><code>{{content}}</code></pre>
   </div>
 </template>
 <script>
@@ -24,11 +20,11 @@
     data() {
       return {
         content: `
-    <diff-button>默认按钮</diff-button>
-    <diff-button icon="setting">默认按钮</diff-button>
-    <diff-button loading>默认按钮</diff-button>
-    <diff-button disabled>默认按钮</diff-button>
-        `
+          <diff-button>默认按钮</diff-button>
+          <diff-button icon="setting">默认按钮</diff-button>
+          <diff-button loading>默认按钮</diff-button>
+          <diff-button disabled>默认按钮</diff-button>
+       `.replace(/\t+| +/g, '').trim()
       }
     }
   }
