@@ -46,7 +46,7 @@
     }
   }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   $grey: #ddd;
   $border-radius: 4px;
   .collapse {

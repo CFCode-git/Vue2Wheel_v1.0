@@ -22,6 +22,7 @@ import TabsPane from './Tabs-pane.vue'
 import Popover from './popover.vue'
 import Collapse from './collapse.vue'
 import CollapseItem from './collapse-item.vue'
+import Cascader from './cascader.vue'
 
 import plugin from './plugin'
 
@@ -49,21 +50,51 @@ Vue.component('diff-tabs-head', TabsHead)
 Vue.component('diff-popover', Popover)
 Vue.component('diff-collapse', Collapse)
 Vue.component('diff-collapse-item', CollapseItem)
+Vue.component('diff-cascader', Cascader)
 Vue.use(plugin)
 
 new Vue({
   el: '#app',
   data: {
-    selectedTab: ['2','1'],
+    source: [
+      {
+        name: '浙江',
+        children: [
+          {
+            name: '杭州',
+            children: [
+              {name: '上城'},
+              {name: '下城'},
+              {name: '江干'}
+            ]
+          },
+          {
+            name: '嘉兴',
+            children: [
+              {name: '南湖'},
+              {name: '秀洲'},
+              {name: '嘉善'}
+            ]
+          },
+        ]
+      },
+      {
+        name: '福建',
+        children: [
+          {
+            name: '福州',
+            children: [
+              {name: '鼓楼'},
+              {name: '台江'},
+              {name: '仓山'}
+            ]
+          },
+        ]
+      }
+    ]
   },
   created() { },
-  methods: {
-    yyy() {
-      console.log('yyy')
-    }
-
-
-  }
+  methods: {}
 })
 
 
