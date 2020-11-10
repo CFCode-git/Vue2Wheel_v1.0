@@ -2,52 +2,29 @@
   "name": "vue2wheel",
   "version": "0.0.2",
   "description": "这是一个UI框架",
-  "main": "main/index.js",
+  "private": true,
   "scripts": {
-    "start": "parcel index.html --no-cache",
-    "dev-test": "parcel watch test/* --no-cache & karma start",
-    "test": "parcel build test/* --no-cache --no-minify && karma start --single-run",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CFCode-git/Vue2Wheel_v1.0.git"
-  },
-  "keywords": [
-    "vue2",
-    "ui"
-  ],
-  "author": "chowQ",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/CFCode-git/Vue2Wheel_v1.0/issues"
-  },
-  "homepage": "https://github.com/CFCode-git/Vue2Wheel_v1.0#readme",
   "dependencies": {
-    "vue": "^2.6.12",
-    "vue-hot-reload-api": "^2.3.4"
+    "core-js": "^3.6.5",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
-    "@vue/component-compiler-utils": "^3.2.0",
-    "chai": "^4.2.0",
-    "chai-spies": "^1.0.0",
-    "karma": "^5.2.3",
-    "karma-chai": "^0.1.0",
-    "karma-chai-spies": "^0.1.4",
-    "karma-chrome-launcher": "^3.1.0",
-    "karma-mocha": "^2.0.1",
-    "karma-sinon-chai": "^2.0.2",
-    "mocha": "^8.2.0",
-    "parcel-bundler": "^1.12.4",
-    "sass": "^1.27.0",
-    "sass-loader": "^10.0.5",
-    "sinon": "^9.2.0",
-    "sinon-chai": "^3.5.0",
-    "vue-template-compiler": "^2.6.12",
-    "vuepress": "^1.7.1"
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-unit-mocha": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/test-utils": "^1.0.3",
+    "chai": "^4.1.2",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.11"
   },
-  "alias": {
-    "vue": "./node_modules/vue/dist/vue.common.js"
-  }
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
