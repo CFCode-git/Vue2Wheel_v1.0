@@ -90,6 +90,23 @@ new Vue({
             ]
           },
         ]
+      },
+      {
+        name: '广东',
+        children: [
+          {
+            name: '广州', children: [
+              {name: '天河'},
+              {name: '番禺'}
+            ]
+          },
+          {
+            name: '佛山', children: [
+              {name: '顺德'},
+              {name: '禅城'}
+            ]
+          }
+        ]
       }
     ]
   },

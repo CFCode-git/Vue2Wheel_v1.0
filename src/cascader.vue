@@ -1,32 +1,48 @@
 <template>
   <div class="cascader">
-    <div class="trigger">
-      <slot></slot>
-    </div>
-    <div class="popover">
-      <!--      由于不清楚source有多少层，所以应该递归组件，当存在children的时候。-->
-      <div v-for="item in source" :key="item.name">
-        <diff-cascader-item :source-item="item"></diff-cascader-item>
-      </div>
+    <div class="trigger" @click="popoverVisible =!popoverVisible"></div>
+    <div class="popover-wrapper" v-if="popoverVisible">
+      <diff-cascader-items :items="source" class="popover" :height="height"></diff-cascader-items>
     </div>
   </div>
 </template>
 
 <script>
-  import diffCascaderItem from './cascader-item'
+  import diffCascaderItems from './cascader-items'
   export default {
     name: 'diff-cascader',
-    components: {'diff-cascader-item': diffCascaderItem},
+    components: {'diff-cascader-items': diffCascaderItems},
     props: {
-      source: {
-        type: Array
+      source: {type: Array},
+      height:{
+        type:String
       }
-    }
+    },
+    data() {
+      return {
+        popoverVisible: false
+      }
+    },
   }
 </script>
 
 <style lang="scss" scoped>
   @import 'var';
   .cascader {
+    position: relative;
+    .trigger {
+      border: 1px solid red;
+      height: 32px;
+      width: 100px;
+    }
+    .popover-wrapper {
+      position: absolute;
+      top:100%;
+      left:0;
+      background: #fff;
+      display: flex;
+      @extend .box-shadow; /*placeholder*/
+
+    }
   }
 </style>

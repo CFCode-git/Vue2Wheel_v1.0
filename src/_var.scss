@@ -1,5 +1,6 @@
 $border-color-hover: #666;
 $border-color: #999;
+$border-color-light: lighten($border-color,25%);
 $border-radius: 4px;
 $box-shadow-color: rgba(0, 0, 0, .5);
 $button-active-bg: #eee;
@@ -8,6 +9,22 @@ $button-height: 32px;
 $color: #333;
 $error-color: #f1453d;
 $font-size: 14px;
-$input-height:32px;
-$padding: 0 8px;
+$input-height: 32px;
+.box-shadow {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+@mixin box-shadow2 {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+/* mixins 和 placeholder 区别
+  mixins include多少次，里面的内容就会被复制多少次；
+  placeholder 无论extend多少次，都只会复制一次。
+  比如：
+  .a,.b,.c,.c{ placeholder 的内容 }
+  .a{ mixins 的内容 }
+  .b{ mixins 的内容 }
+  .c{ mixins 的内容 }
+  .d{ mixins 的内容 }
+*/
 $tips-color: #8f97f1;
+$padding: 0 8px;

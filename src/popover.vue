@@ -96,7 +96,7 @@
 <style lang="scss" scoped>
   $border-color: #333;
   $border-radius: 4px;
-  .popover {
+  .popover-wrapper {
     display: inline-block;
     vertical-align: top;
     position: relative;
