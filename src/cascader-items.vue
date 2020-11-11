@@ -1,15 +1,6 @@
 <template>
   <div class="cascaderItem" :style="{height:height}">
     <!--    递归方案：点击左边后 递归 渲染右边-->
-    <div>
-      selected:{{selected}}
-      <hr>
-      name:{{selected && selected[level] && selected[level].name}}
-      <hr>
-      level:{{level}}
-      <hr>
-      rightItems:{{rightItems}}
-    </div>
     <div class="left">
       <div v-for="item in items" class="label" @click="onClickLabel(item)">
         {{item.name}}
