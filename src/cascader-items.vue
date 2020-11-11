@@ -2,8 +2,13 @@
   <div class="cascaderItem" :style="{height:height}">
     <!--    递归方案：点击左边后 递归 渲染右边-->
     <div>
-      selected:{{selected && selected[level] && selected[level].name}}
+      selected:{{selected}}
+      <hr>
+      name:{{selected && selected[level] && selected[level].name}}
+      <hr>
       level:{{level}}
+      <hr>
+      rightItems:{{rightItems}}
     </div>
     <div class="left">
       <div v-for="item in items" class="label" @click="onClickLabel(item)">
@@ -40,15 +45,38 @@
     },
     computed: {
       rightItems() {
+        console.log('level', this.level)
+        console.log('---selected---')
+        console.log(this.selected)
         let currentSelected = this.selected[this.level]
+        console.log('---currentSelected---')
+        console.log(currentSelected)
         if (currentSelected && currentSelected.children) {
+          console.log(`---children---`)
+          console.log(currentSelected.children)
           return currentSelected.children
         } else {
           return null
         }
       },
     },
+    created() {
+      console.log('created')
+      console.log(this.selected)
+    },
+
     mounted() {
+      // TODO
+      console.log('数据源', this.items)
+      console.log('选中的对象', this.selected)
+      console.log(`-----------${this.level}----------`)
+      // console.log(this.selected?.[this.level])
+      // console.log(this.selected?.[this.level]?.children)
+      console.log(this.rightItems)
+      console.log('==========================')
+      console.log('==========================')
+      console.log('==========================')
+
     },
     methods: {
       onClickLabel(item) {
