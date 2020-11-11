@@ -1,8 +1,7 @@
 <template>
   <div>
     <div style="padding:20px;">
-      <diff-cascader :source="source" height="200px" :selected="selected"
-                     @update:selected="selected = $event"></diff-cascader>
+      <diff-cascader :source="source" height="200px" :selected.sync="selected"></diff-cascader>
     </div>
   </div>
 </template>
@@ -10,6 +9,15 @@
 <script>
   import Button from './button'
   import Cascader from './cascader'
+
+  import db from './db.js'
+
+
+  function ajax(parentId = 0) {
+    return db.filter(item => item.parent_id === parentId)
+  }
+
+  console.log(ajax())
 
   export default {
     name: 'demo',
@@ -20,59 +28,7 @@
     data() {
       return {
         selected: [],
-        source: [
-          {
-            name: '浙江',
-            children: [
-              {
-                name: '杭州',
-                children: [
-                  {name: '上城'},
-                  {name: '下城'},
-                  {name: '江干'}
-                ]
-              },
-              {
-                name: '嘉兴',
-                children: [
-                  {name: '南湖'},
-                  {name: '秀洲'},
-                  {name: '嘉善'}
-                ]
-              },
-            ]
-          },
-          {
-            name: '福建',
-            children: [
-              {
-                name: '福州',
-                children: [
-                  {name: '鼓楼'},
-                  {name: '台江'},
-                  {name: '仓山'}
-                ]
-              },
-            ]
-          },
-          {
-            name: '广东',
-            children: [
-              {
-                name: '广州', children: [
-                  {name: '天河'},
-                  {name: '番禺'}
-                ]
-              },
-              {
-                name: '佛山', children: [
-                  {name: '顺德'},
-                  {name: '禅城'}
-                ]
-              }
-            ]
-          }
-        ]
+        source: ajax()
       }
     }
   }
