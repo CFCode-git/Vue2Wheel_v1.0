@@ -45,38 +45,15 @@
     },
     computed: {
       rightItems() {
-        console.log('level', this.level)
-        console.log('---selected---')
-        console.log(this.selected)
         let currentSelected = this.selected[this.level]
-        console.log('---currentSelected---')
-        console.log(currentSelected)
         if (currentSelected && currentSelected.children) {
-          console.log(`---children---`)
-          console.log(currentSelected.children)
           return currentSelected.children
         } else {
           return null
         }
       },
     },
-    created() {
-      console.log('created')
-      console.log(this.selected)
-    },
-
     mounted() {
-      // TODO
-      console.log('数据源', this.items)
-      console.log('选中的对象', this.selected)
-      console.log(`-----------${this.level}----------`)
-      // console.log(this.selected?.[this.level])
-      // console.log(this.selected?.[this.level]?.children)
-      console.log(this.rightItems)
-      console.log('==========================')
-      console.log('==========================')
-      console.log('==========================')
-
     },
     methods: {
       onClickLabel(item) {
