@@ -1,7 +1,13 @@
 <template>
   <div>
     <div style="padding:20px;">
-      <diff-cascader :source="source" height="200px" :selected.sync="selected"></diff-cascader>
+      <diff-cascader
+        :source="source"
+        height="200px"
+        :selected.sync="selected"
+        @update:selected="xxx"
+      >
+      </diff-cascader>
     </div>
   </div>
 </template>
@@ -12,12 +18,23 @@
 
   import db from './db.js'
 
-
-  function ajax(parentId = 0) {
-    return db.filter(item => item.parent_id === parentId)
+  // 模拟 ajax
+  function ajax1(parentId = 0, success, fail) {
+    let id = setTimeout(() => {
+      let result = db.filter(item => item.parent_id === parentId)
+      success(result)
+    }, 3000)
+    return id
   }
 
-  console.log(ajax())
+  function ajax2(parentId = 0) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        let result = db.filter(item => item.parent_id === parentId)
+        resolve(result)
+      }, 2000)
+    })
+  }
 
   export default {
     name: 'demo',
@@ -28,7 +45,27 @@
     data() {
       return {
         selected: [],
-        source: ajax()
+        source: []
+      }
+    },
+    created() {
+      ajax2(0).then((result) => {
+        this.source = result
+      })
+    },
+    methods: {
+      xxx() {
+        console.log(this.selected)
+        // 最外层为第零层，level0
+        ajax2(this.selected[0].id).then(result => {
+          // 取出 source 中对应的引用，然后用 set 将 children 放进去 source
+          let lastLevelSelected = this.source.filter(item => item.id === this.selected[0].id)[0]
+          // 由于 this.selected 里面的值是来自于 source 内部各项的引用
+          // 因此这里修改 lastLevelSelected 等同于 修改了 source 和 this.selected 里面对应的项
+          this.$set(lastLevelSelected, 'children', result)
+          // lastLevelSelected.children = result
+          // TODO - 22:10 开始
+        })
       }
     }
   }
