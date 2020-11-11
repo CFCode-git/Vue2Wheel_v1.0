@@ -58,7 +58,9 @@
     methods: {
       onClickLabel(item) {
         let copy = JSON.parse(JSON.stringify(this.selected))
-        copy[this.level] = item
+        copy[this.level] = item // 设置当前 level 的 selected 值
+        // selected 数组删除当前 level 之后的 selected
+        copy.splice(this.level + 1)
         this.$emit('update:selected', copy)
       },
       onUpdateSelected(newSelected) {
