@@ -1,6 +1,8 @@
 <template>
   <div class="cascader">
-    <div class="trigger" @click="popoverVisible =!popoverVisible"></div>
+    <div class="trigger" @click="popoverVisible =!popoverVisible">
+        {{result || '选择城市'}}
+    </div>
     <div class="popover-wrapper" v-if="popoverVisible">
       <diff-cascader-items
         :items="source"
@@ -33,6 +35,11 @@
       onUpdateSelected(newSelected) {
         this.$emit('update:selected', newSelected)
       }
+    },
+    computed: {
+      result() {
+        return this.selected.map((item) => item.name).join(',')
+      }
     }
   }
 </script>
@@ -42,18 +49,23 @@
   .cascader {
     position: relative;
     .trigger {
-      border: 1px solid red;
-      height: 32px;
-      width: 100px;
+      border: 1px solid $border-color;
+      height: $input-height;
+      line-height: 1.2;
+      min-width: 10em;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 1em;
+      border-radius: $border-radius;
     }
     .popover-wrapper {
       position: absolute;
-      top:100%;
-      left:0;
+      top: 100%;
+      left: 0;
       background: #fff;
       display: flex;
       @extend .box-shadow; /*placeholder*/
-
+      margin-top: 8px;
     }
   }
 </style>

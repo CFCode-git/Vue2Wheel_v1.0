@@ -1,7 +1,9 @@
 <template>
   <div>
-    <diff-cascader :source="source" height="200px" :selected="selected"
-                   @update:selected="selected = $event"></diff-cascader>
+    <div style="padding:20px;">
+      <diff-cascader :source="source" height="200px" :selected="selected"
+                     @update:selected="selected = $event"></diff-cascader>
+    </div>
   </div>
 </template>
 
