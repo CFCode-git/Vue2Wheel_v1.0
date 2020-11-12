@@ -24,7 +24,10 @@
     props: {
       source: {type: Array},
       height: {type: String},
-      selected: {type: Array, default: () => {return []}}
+      selected: {type: Array, default: () => {return []}},
+      loadData: {
+        type: Function
+      }
     },
     data() {
       return {
@@ -34,12 +37,62 @@
     methods: {
       onUpdateSelected(newSelected) {
         this.$emit('update:selected', newSelected)
+        let lastItem = newSelected[newSelected.length - 1]
+        let simplest = (children, id) => {
+          return children.filter(item => item.id === id)[0]
+        }
+        let complex = (children, id) => {
+          // 分治法
+          // 分成有 children 和没有 children 两组
+          let noChildren = []
+          let hasChildren = []
+          children.forEach(item => {
+            if (item.children) {
+              hasChildren.push(item)
+            } else {
+              noChildren.push(item)
+            }
+          })
+          let found = simplest(noChildren, id)
+          if (found) {
+            // 如果没有 children，得到found后返回
+            return found
+          } else {
+            // 如果有 children，先当作没有 children 用 simplest 找一遍
+            // 再 complex 它的 children
+            found = simplest(hasChildren, id)
+            if (found) {
+              return found
+            } else {
+              for (let i = 0; i < hasChildren.length; i++) {
+                found = complex(hasChildren[i].children, id)
+                if (found) {
+                  return found
+                }
+              }
+              return undefined
+            }
+            return hasChildren.length > 0 ? complex(hasChildren, id) : undefined
+          }
+        }
+        let updateSource = (result) => {
+          let copy = JSON.parse(JSON.stringify(this.source))
+          let toUpdate = complex(copy, lastItem.id)
+          console.log(toUpdate)
+          toUpdate.children = result
+          this.$emit('update:source',copy)
+        }
+        this.loadData(lastItem, updateSource)
+        // 回调 把外界传的函数调用一下；调用回调的时候传一个函数给外面调用
       }
     },
     computed: {
       result() {
         return this.selected.map((item) => item.name).join(',')
       }
+    },
+    updated(){
+      console.log('更新了')
     }
   }
 </script>

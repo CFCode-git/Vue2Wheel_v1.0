@@ -2,10 +2,10 @@
   <div>
     <div style="padding:20px;">
       <diff-cascader
-        :source="source"
+        :source.sync="source"
         height="200px"
         :selected.sync="selected"
-        @update:selected="xxx"
+        :load-data="loadData"
       >
       </diff-cascader>
     </div>
@@ -26,13 +26,12 @@
     }, 3000)
     return id
   }
-
   function ajax2(parentId = 0) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         let result = db.filter(item => item.parent_id === parentId)
         resolve(result)
-      }, 2000)
+      }, 500)
     })
   }
 
@@ -64,7 +63,12 @@
           // 因此这里修改 lastLevelSelected 等同于 修改了 source 和 this.selected 里面对应的项
           this.$set(lastLevelSelected, 'children', result)
           // lastLevelSelected.children = result
-          // TODO - 22:10 开始
+        })
+      },
+      loadData(item, updateSource) {
+        let {id} = item
+        ajax2(id).then(result => {
+          updateSource(result)
         })
       }
     }

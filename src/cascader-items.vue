@@ -36,7 +36,7 @@
     },
     computed: {
       rightItems() {
-        console.log(this.selected)
+        console.log('计算rightItems')
         let currentSelected = this.selected[this.level]
         if (currentSelected && currentSelected.children) {
           return currentSelected.children
@@ -59,6 +59,10 @@
       onUpdateSelected(newSelected) {
         this.$emit('update:selected', newSelected)
       }
+    },
+    updated() {
+      console.log('items 更新了')
+      console.log(this.items)
     }
   }
   export default component
