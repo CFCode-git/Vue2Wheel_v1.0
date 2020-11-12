@@ -36,12 +36,11 @@
     },
     computed: {
       rightItems() {
-        console.log('计算rightItems')
-        let currentSelected = this.selected[this.level]
-        if (currentSelected && currentSelected.children) {
-          return currentSelected.children
-        } else {
-          return null
+        if(this.selected && this.selected[this.level]){
+          let item = this.items.filter(item=>item.name === this.selected[this.level].name)[0]
+          if(item && item.children){
+            return item.children
+          }
         }
       },
     },
@@ -50,9 +49,7 @@
     methods: {
       onClickLabel(item) {
         let copy = JSON.parse(JSON.stringify(this.selected))
-        // 注意这里 赋值的是 item 的引用
-        copy[this.level] = item // 设置当前 level 的 selected 值
-        // selected 数组删除当前 level 之后的 selected
+        copy[this.level] = item
         copy.splice(this.level + 1)
         this.$emit('update:selected', copy)
       },

@@ -71,6 +71,12 @@
           updateSource(result)
         })
       }
+    },
+    updated(){
+      console.log('demo source')
+      console.log(this.source)
+      console.log('demo selected')
+      console.log(this.selected)
     }
   }
 
