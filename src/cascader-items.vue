@@ -37,9 +37,9 @@
     computed: {
       rightItems() {
         if(this.selected && this.selected[this.level]){
-          let item = this.items.filter(item=>item.name === this.selected[this.level].name)[0]
-          if(item && item.children){
-            return item.children
+          let selectedItem = this.items.filter(item=>item.name === this.selected[this.level].name)[0]
+          if (selectedItem && selectedItem.children && selectedItem.children.length > 0) {
+            return selectedItem.children
           }
         }
       },
