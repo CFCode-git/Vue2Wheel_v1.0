@@ -87,13 +87,14 @@
       padding: .5em 1em;
       display: flex;
       align-items: center;
+      white-space: nowrap;
       &:hover {
         background: $grey;
         cursor: pointer;
       }
       > .text {
         margin-right: 1em;
-        user-select: none; /*不允许用户选中*/
+        user-select: none; /* 不允许用户选中 */
       }
       .icon {
         margin-left: auto;

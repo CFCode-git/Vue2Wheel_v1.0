@@ -9,14 +9,23 @@
       >
       </diff-cascader>
     </div>
+
+    <diff-popover>
+      <template>
+        <button>click me</button>
+      </template>
+      <template slot="content">
+        <div>弹出内容</div>
+      </template>
+    </diff-popover>
   </div>
 </template>
 
 <script>
   import Button from './button'
   import Cascader from './cascader'
-
   import db from './db.js'
+  import Popover from './popover'
 
   // 模拟 ajax
   function ajax1(parentId = 0, success, fail) {
@@ -54,7 +63,8 @@
     name: 'demo',
     components: {
       'diff-button': Button,
-      'diff-cascader': Cascader
+      'diff-cascader': Cascader,
+      'diff-popover': Popover
     },
     data() {
       return {
