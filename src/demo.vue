@@ -22,14 +22,29 @@
   function ajax1(parentId = 0, success, fail) {
     let id = setTimeout(() => {
       let result = db.filter(item => item.parent_id === parentId)
+      result.forEach(node => {
+        if (db.filter(item => item.parent_id === node.id).length > 0) {
+          node.isLeaf = false
+        } else {
+          node.isLeaf = true
+        }
+      })
       success(result)
     }, 3000)
     return id
   }
+
   function ajax2(parentId = 0) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         let result = db.filter(item => item.parent_id === parentId)
+        result.forEach(node => {
+          if (db.filter(item => item.parent_id === node.id).length > 0) {
+            node.isLeaf = false
+          } else {
+            node.isLeaf = true
+          }
+        })
         resolve(result)
       }, 500)
     })
@@ -49,6 +64,7 @@
     },
     created() {
       ajax2(0).then((result) => {
+        console.log(result)
         this.source = result
       })
     },
