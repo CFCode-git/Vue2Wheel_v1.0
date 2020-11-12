@@ -72,7 +72,6 @@
               }
               return undefined
             }
-            return hasChildren.length > 0 ? complex(hasChildren, id) : undefined
           }
         }
         let updateSource = (result) => {
@@ -81,7 +80,9 @@
           toUpdate.children = result
           this.$emit('update:source',copy)
         }
-        this.loadData(lastItem, updateSource)
+        if(!lastItem.isLeaf){
+          this.loadData(lastItem, updateSource)
+        }
         // 回调 把外界传的函数调用一下；调用回调的时候传一个函数给外面调用
       }
     },
