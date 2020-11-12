@@ -78,7 +78,6 @@
         let updateSource = (result) => {
           let copy = JSON.parse(JSON.stringify(this.source))
           let toUpdate = complex(copy, lastItem.id)
-          console.log(toUpdate)
           toUpdate.children = result
           this.$emit('update:source',copy)
         }
@@ -92,7 +91,6 @@
       }
     },
     updated(){
-      console.log('更新了')
     }
   }
 </script>

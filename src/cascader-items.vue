@@ -58,8 +58,6 @@
       }
     },
     updated() {
-      console.log('items 更新了')
-      console.log(this.items)
     }
   }
   export default component
