@@ -3,7 +3,7 @@
     <!--    递归方案：点击左边后 递归 渲染右边-->
     <div class="left">
       <div v-for="item in items" class="label" @click="onClickLabel(item)">
-        {{item.name}}
+        <span class="text">{{item.name}}</span>
         <icon class="icon" v-if="!item.isLeaf" name="right"></icon>
       </div>
     </div>
@@ -79,13 +79,21 @@
       border-left: 1px solid $border-color-light;
     }
     .label {
-      padding: .3em 1em;
+      padding: .5em 1em;
       display: flex;
       align-items: center;
-      .icon{
-        margin-left:1em;
+      &:hover {
+        background: $grey;
+        cursor: pointer;
+      }
+      > .text {
+        margin-right: 1em;
+        user-select: none; /*不允许用户选中*/
+      }
+      .icon {
+        margin-left: auto;
         transform: scale(.8);
-        fill:lighten($color,40%);
+        fill: lighten($color, 40%);
       }
     }
   }
