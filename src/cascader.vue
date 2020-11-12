@@ -1,5 +1,5 @@
 <template>
-  <div class="cascader" ref="cascader">
+  <div class="cascader" ref="cascader" v-click-outside="close">
     <div class="trigger" @click="toggle">
       {{result || '选择城市'}}
     </div>
@@ -20,6 +20,8 @@
 
 <script>
   import diffCascaderItems from './cascader-items'
+  import ClickOutside from './click-outside'
+
   export default {
     name: 'diff-cascader',
     components: {'diff-cascader-items': diffCascaderItems},
@@ -34,25 +36,22 @@
         popoverVisible: false
       }
     },
+    directives:{ClickOutside},
     methods: {
-      onClickDocument(e) {
-        let {cascader} = this.$refs
-        let {target} = e
-        if (cascader === target || cascader.contains(target)) {
-          return
-        }
-        this.close()
-      },
+      // onClickDocument(e) {
+      //   let {cascader} = this.$refs
+      //   let {target} = e
+      //   if (cascader === target || cascader.contains(target)) {
+      //     return
+      //   }
+      //   this.close()
+      // },
       open() {
         this.popoverVisible = true
-        this.$nextTick(() => {
-          document.addEventListener('click', this.onClickDocument)
-        })
       },
       close() {
-        this.popoverVisible = false
         console.log('close')
-        document.removeEventListener('click',this.onClickDocument)
+        this.popoverVisible = false
       },
       toggle() {
         if (this.popoverVisible) {
