@@ -10,7 +10,9 @@
         :height="height"
         :selected="selected"
         @update:selected="onUpdateSelected"
+        :load-data="loadData"
       >
+<!--        load-data 传给 cascader-item 用来决定小箭头的渲染判断方式-->
       </diff-cascader-items>
     </div>
   </div>
@@ -25,9 +27,7 @@
       source: {type: Array},
       height: {type: String},
       selected: {type: Array, default: () => {return []}},
-      loadData: {
-        type: Function
-      }
+      loadData: {type: Function}
     },
     data() {
       return {
@@ -81,7 +81,7 @@
           this.$emit('update:source',copy)
         }
         if(!lastItem.isLeaf){
-          this.loadData(lastItem, updateSource)
+          this.loadData?.(lastItem, updateSource)
         }
         // 回调 把外界传的函数调用一下；调用回调的时候传一个函数给外面调用
       }

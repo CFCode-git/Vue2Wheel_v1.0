@@ -4,7 +4,7 @@
     <div class="left">
       <div v-for="item in items" class="label" @click="onClickLabel(item)">
         <span class="text">{{item.name}}</span>
-        <icon class="icon" v-if="!item.isLeaf" name="right"></icon>
+        <icon class="icon" v-if="rightArrowVisible(item)" name="right"></icon>
       </div>
     </div>
     <div class="right" v-if="rightItems">
@@ -13,6 +13,7 @@
                            :height="height"
                            :level="level+1"
                            :selected="selected"
+                           :load-data="loadData"
                            @update:selected="onUpdateSelected"
       ></diff-cascader-items>
     </div>
@@ -32,7 +33,8 @@
       selected: {
         type: Array, default: () => {return []},
       },
-      level: {type: Number, default: 0}
+      level: {type: Number, default: 0},
+      loadData: {Function}
     },
     computed: {
       rightItems() {
@@ -42,7 +44,7 @@
             return selectedItem.children
           }
         }
-      },
+      }
     },
     mounted() {
     },
@@ -55,6 +57,9 @@
       },
       onUpdateSelected(newSelected) {
         this.$emit('update:selected', newSelected)
+      },
+      rightArrowVisible(item) {
+        return this.loadData ? !item.isLeaf : item.children
       }
     },
     updated() {
