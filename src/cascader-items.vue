@@ -4,7 +4,14 @@
     <div class="left">
       <div v-for="item in items" class="label" @click="onClickLabel(item)">
         <span class="text">{{item.name}}</span>
-        <icon class="icon" v-if="rightArrowVisible(item)" name="right"></icon>
+        <span class="icons">
+          <template v-if="item.name === loadingItem.name">
+            <icon class="icon loading" name="loading"></icon>
+          </template>
+          <template v-else>
+            <icon class="icon" v-if="rightArrowVisible(item)" name="right"></icon>
+          </template>
+        </span>
       </div>
     </div>
     <div class="right" v-if="rightItems">
@@ -14,6 +21,7 @@
                            :level="level+1"
                            :selected="selected"
                            :load-data="loadData"
+                           :loading-item="loadingItem"
                            @update:selected="onUpdateSelected"
       ></diff-cascader-items>
     </div>
@@ -24,17 +32,17 @@
 
   const component = {
     name: 'diff-cascader-items',
-    components: {
-      Icon
-    },
+    components: {Icon},
     props: {
+      loadingItem: {type: Object, default: () => ({})},
       items: {type: Array},
       height: {type: String},
+      level: {type: Number, default: 0},
+      loadData: {Function},
+      loadingItem: {type: Object},
       selected: {
         type: Array, default: () => {return []},
       },
-      level: {type: Number, default: 0},
-      loadData: {Function}
     },
     computed: {
       rightItems() {
@@ -96,10 +104,13 @@
         margin-right: 1em;
         user-select: none; /* 不允许用户选中 */
       }
-      .icon {
+      .icons {
         margin-left: auto;
         transform: scale(.8);
         fill: lighten($color, 40%);
+        .loading {
+          animation: spin 2s infinite linear;
+        }
       }
     }
   }

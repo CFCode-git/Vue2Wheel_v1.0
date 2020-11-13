@@ -11,6 +11,7 @@
         :selected="selected"
         @update:selected="onUpdateSelected"
         :load-data="loadData"
+        :loading-item="loadingItem"
       >
 <!--        load-data 传给 cascader-item 用来决定小箭头的渲染判断方式-->
       </diff-cascader-items>
@@ -33,19 +34,12 @@
     },
     data() {
       return {
-        popoverVisible: false
+        popoverVisible: false,
+        loadingItem: {}
       }
     },
     directives:{ClickOutside},
     methods: {
-      // onClickDocument(e) {
-      //   let {cascader} = this.$refs
-      //   let {target} = e
-      //   if (cascader === target || cascader.contains(target)) {
-      //     return
-      //   }
-      //   this.close()
-      // },
       open() {
         this.popoverVisible = true
       },
@@ -102,12 +96,15 @@
           let copy = JSON.parse(JSON.stringify(this.source))
           let toUpdate = complex(copy, lastItem.id)
           toUpdate.children = result
-          this.$emit('update:source',copy)
+          this.$emit('update:source', copy)
+          // 回调执行完毕，数据加载成功后，应该置为 {}
+          this.loadingItem = {}
         }
-        if(!lastItem.isLeaf){
-          this.loadData?.(lastItem, updateSource)
+        if (!lastItem.isLeaf && this.loadData) {
+          this.loadData(lastItem, updateSource)
+          // load data 传了一个回调，同时将 loadingItem 赋值为 lastItem
+          this.loadingItem = lastItem
         }
-        // 回调 把外界传的函数调用一下；调用回调的时候传一个函数给外面调用
       }
     },
     computed: {
@@ -115,8 +112,6 @@
         return this.selected.map((item) => item.name).join(',')
       }
     },
-    updated(){
-    }
   }
 </script>
 
