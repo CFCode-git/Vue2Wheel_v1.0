@@ -50,7 +50,6 @@
         this.popoverVisible = true
       },
       close() {
-        console.log('close')
         this.popoverVisible = false
       },
       toggle() {
@@ -125,7 +124,6 @@
   @import 'var';
   .cascader {
     position: relative;
-    border: 1px solid red;
     display: inline-block;
     .trigger {
       border: 1px solid $border-color;
@@ -136,6 +134,7 @@
       align-items: center;
       padding: 0 1em;
       border-radius: $border-radius;
+      background: #fff;
     }
     .popover-wrapper {
       position: absolute;
@@ -145,6 +144,7 @@
       display: flex;
       @extend .box-shadow; /*placeholder*/
       margin-top: 8px;
+      z-index: 1;
     }
   }
 </style>

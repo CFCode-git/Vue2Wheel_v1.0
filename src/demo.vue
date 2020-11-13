@@ -9,15 +9,8 @@
       >
       </diff-cascader>
     </div>
+    {{selected.map(item=>item.name)}}
 
-    <diff-popover>
-      <template>
-        <button>click me</button>
-      </template>
-      <template slot="content">
-        <div>弹出内容</div>
-      </template>
-    </diff-popover>
   </div>
 </template>
 
@@ -74,7 +67,6 @@
     },
     created() {
       ajax2(0).then((result) => {
-        console.log(result)
         this.source = result
       })
 
