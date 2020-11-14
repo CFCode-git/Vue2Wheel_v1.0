@@ -1,6 +1,6 @@
 const expect = chai.expect // karma打开浏览器，通过 karma.conf.js 的 framework，会自动引入sinon-chai和m ocha
 import Vue from 'vue'
-import Input from '../src/input'
+import Input from '../../src/input'
 
 // describe 和 it 由 mocha 提供
 // sinon-chai 同时引入 sinon 和 chai
