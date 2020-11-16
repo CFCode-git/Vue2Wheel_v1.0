@@ -23,7 +23,7 @@
     name: 'demo',
     components: {DiffSlides, DiffSlidesItem},
     data() {
-      return { selected: '2' }
+      return { selected: '3' }
     },
     created() {
     }

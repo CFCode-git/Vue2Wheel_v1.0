@@ -10,7 +10,7 @@
       <span v-for="n in childrenLength"
             :class="{'active':selectedIndex === n-1}"
             @click="select(n-1)">
-        {{n}}
+        {{n-1}}
       </span>
     </div>
   </div>
@@ -25,7 +25,8 @@
     },
     data() {
       return {
-        childrenLength: 0
+        childrenLength: 0,
+        lastSelectedIndex: undefined
       }
     },
     mounted() {
@@ -33,21 +34,25 @@
       this.playAutomatically()
       this.childrenLength = this.$children.length
     },
-    updated() { this.updateChildren() },
+    updated() {
+      this.updateChildren()
+    },
     methods: {
-      select(index){
-        this.$emit('update:selected',this.names[index])
+      select(index) {
+        this.lastSelectedIndex = this.selectedIndex
+        this.$emit('update:selected', this.names[index])
       },
       playAutomatically() {
         let index = this.names.indexOf(this.getSelected())
         let run = () => {
           if (index === this.names.length) { index = 0 }
           if (index < 0) {index = this.names.length }
-          this.$emit('update:selected', this.names[index + 1])
+          let newIndex = index + 1
+          this.select(newIndex)
           index++
           setTimeout(run, 2000)
         }
-        setTimeout(run, 2000)
+        // setTimeout(run, 2000)
       },
       getSelected() {
         let first = this.$children[0]
@@ -57,9 +62,7 @@
         const selected = this.getSelected()
         this.$children.forEach(vm => {
           vm.selected = selected
-          let newIndex = this.names.indexOf(selected)
-          let oldIndex = this.names.indexOf(vm.name)
-          vm.reverse = newIndex <= oldIndex
+          vm.reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
         })
       },
     },
