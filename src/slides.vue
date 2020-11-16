@@ -12,19 +12,29 @@
       </div>
     </div>
     <div class="diff-slides-dots">
+      <span @click="onClickPrev">
+        <icon name="left"></icon>
+      </span>
       <!--      https://cn.vuejs.org/v2/guide/list.html#%E5%9C%A8-v-for-%E9%87%8C%E4%BD%BF%E7%94%A8%E5%80%BC%E8%8C%83%E5%9B%B4 -->
       <span v-for="n in childrenLength"
             :class="{'active':selectedIndex === n-1}"
             @click="select(n-1)">
         {{n}}
       </span>
+      <span @click="onClickNext">
+        <icon name="right"></icon>
+      </span>
     </div>
   </div>
 </template>
 
 <script>
+  import icon from './icon'
   export default {
     name: 'diff-slides',
+    components: {
+      icon
+    },
     props: {
       selected: {type: String},
       autoPlay: {type: Boolean, default: true}
@@ -41,7 +51,7 @@
     mounted() {
       this.updateChildren()
       this.playAutomatically()
-      this.childrenLength = this.$children.length
+      this.childrenLength = this.items.length
     },
     updated() {
       this.updateChildren()
@@ -74,20 +84,20 @@
         this.timerId = undefined
       },
       getSelected() {
-        let first = this.$children[0]
+        let first = this.items[0]
         return this.selected || first.name
       },
       updateChildren() {
         const selected = this.getSelected()
-        this.$children.forEach(vm => {
+        this.items.forEach(vm => {
           let reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
           if (this.timerId || this.startTouch) { // timerId 存在： 正在轮播
             // 如果当前是最后一个，下一个第一个，reverse还是false
-            if (this.lastSelectedIndex === this.$children.length - 1 && this.selectedIndex === 0) {
+            if (this.lastSelectedIndex === this.items.length - 1 && this.selectedIndex === 0) {
               reverse = false
             }
             // 如果当前是第一个，要去最后一个，reverse为true 逆向
-            if (this.lastSelectedIndex === 0 && this.selectedIndex === this.$children.length - 1) {
+            if (this.lastSelectedIndex === 0 && this.selectedIndex === this.items.length - 1) {
               reverse = true
             }
           }
@@ -114,10 +124,8 @@
         let rate = distance / deltaY
         if (rate > 2) {
           if (x2 > x1) {
-            console.log(this.selectedIndex)
             this.select(this.selectedIndex - 1)
           } else {
-            console.log(this.selectedIndex)
             this.select(this.selectedIndex + 1)
           }
         }
@@ -125,15 +133,24 @@
           this.playAutomatically()
         })
       },
+      onClickPrev() {
+        this.select(this.selectedIndex - 1)
+      },
+      onClickNext() {
+        this.select(this.selectedIndex + 1)
+      },
     },
     computed: {
       names() {
-        return this.$children.map(vm => vm.name)
+        return this.items.map(vm => vm.name)
       },
       selectedIndex() {
         return this.names.indexOf(this.selected) === -1 ?
           0 :
           this.names.indexOf(this.selected)
+      },
+      items() {
+        return this.$children.filter(vm => vm.$options.name === 'diff-slides-item')
       }
     }
   }
