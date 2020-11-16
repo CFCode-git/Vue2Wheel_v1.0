@@ -10,7 +10,7 @@
       <span v-for="n in childrenLength"
             :class="{'active':selectedIndex === n-1}"
             @click="select(n-1)">
-        {{n-1}}
+        {{n}}
       </span>
     </div>
   </div>
@@ -73,13 +73,15 @@
         const selected = this.getSelected()
         this.$children.forEach(vm => {
           let reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
-          // 如果当前是最后一个，下一个第一个，reverse还是false
-          if (this.lastSelectedIndex === this.$children.length - 1 && this.selectedIndex === 0) {
-            reverse = false
-          }
-          // 如果当前是第一个，要去最后一个，reverse为true 逆向
-          if (this.lastSelectedIndex === 0 && this.selectedIndex === this.$children.length - 1) {
-            reverse = true
+          if (this.timerId) { // timerId 存在： 正在轮播
+            // 如果当前是最后一个，下一个第一个，reverse还是false
+            if (this.lastSelectedIndex === this.$children.length - 1 && this.selectedIndex === 0) {
+              reverse = false
+            }
+            // 如果当前是第一个，要去最后一个，reverse为true 逆向
+            if (this.lastSelectedIndex === 0 && this.selectedIndex === this.$children.length - 1) {
+              reverse = true
+            }
           }
           vm.reverse = reverse
           this.$nextTick(() => {
@@ -110,9 +112,29 @@
       overflow: hidden;
     }
     &-dots {
+      padding:8px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       > span {
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        background: #ddd;
+        margin:0 8px;
+        font-size: 12px;
+        &:hover{
+          cursor:pointer;
+        }
         &.active {
-          background: red;
+          background: #a49fff;
+          color:white;
+          &:hover{
+            cursor:default;
+          }
         }
       }
     }
