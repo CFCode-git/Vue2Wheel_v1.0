@@ -1,6 +1,6 @@
 <template>
   <div>
-    <diff-slides :selected.sync="selected">
+    <diff-slides class="wrapper" :selected.sync="selected">
       <diff-slides-item name="1">
         <div class="box">1</div>
       </diff-slides-item>
@@ -23,7 +23,7 @@
     name: 'demo',
     components: {DiffSlides, DiffSlidesItem},
     data() {
-      return { selected: undefined }
+      return { selected: '2' }
     },
     created() {
     }
@@ -32,5 +32,11 @@
 
 <style>
   * { margin: 0;padding: 0;box-sizing: border-box; }
-  .box { width: 200px; height: 150px; background: #ddd; border: 1px solid red; }
+  .wrapper{margin:20px;}
+  .box {
+    width:100%;
+    height: 300px;
+    background: #ddd;
+    border: 1px solid red;
+  }
 </style>
