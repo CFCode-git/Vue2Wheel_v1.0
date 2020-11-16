@@ -24,14 +24,13 @@
       playAutomatically() {
         const names = this.$children.map(vm => vm.name)
         let index = names.indexOf(this.getSelected())
-        console.log(index)
-        setInterval(()=>{
-          if(index === names.length){
-            index = 0
-          }
-          this.$emit('update:selected',names[index+1])
+        let run = () => {
+          if (index === names.length) { index = 0 }
+          this.$emit('update:selected', names[index + 1])
           index++
-        },3000)
+          setTimeout(run, 2000)
+        }
+        setTimeout(run,2000)
       },
       getSelected() {
         let first = this.$children[0]
