@@ -61,8 +61,12 @@
       updateChildren() {
         const selected = this.getSelected()
         this.$children.forEach(vm => {
-          vm.selected = selected
           vm.reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
+          // 当reverse立即变化的时候，不一定立即生效在dom里面
+          // 等DOM的reverse变化了之后，再赋值selected，selected赋值之后动画就会立刻执行。
+          this.$nextTick(() => {
+            vm.selected = selected
+          })
         })
       },
     },
