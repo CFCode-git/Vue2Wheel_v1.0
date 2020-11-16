@@ -39,7 +39,6 @@
       height: {type: String},
       level: {type: Number, default: 0},
       loadData: {Function},
-      loadingItem: {type: Object},
       selected: {
         type: Array, default: () => {return []},
       },
