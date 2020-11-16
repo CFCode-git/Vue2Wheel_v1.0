@@ -17,6 +17,8 @@
       </span>
       <!--      https://cn.vuejs.org/v2/guide/list.html#%E5%9C%A8-v-for-%E9%87%8C%E4%BD%BF%E7%94%A8%E5%80%BC%E8%8C%83%E5%9B%B4 -->
       <span v-for="n in childrenLength"
+            :key="n"
+            :data-index="n-1"
             :class="{'active':selectedIndex === n-1}"
             @click="select(n-1)">
         {{n}}
@@ -37,7 +39,8 @@
     },
     props: {
       selected: {type: String},
-      autoPlay: {type: Boolean, default: true}
+      autoPlay: {type: Boolean, default: true},
+      autoPlayDelay: {type: Number, default: 2000}
     },
     data() {
       return {
@@ -50,7 +53,9 @@
     },
     mounted() {
       this.updateChildren()
-      this.playAutomatically()
+      if (this.autoPlay) {
+        this.playAutomatically()
+      }
       this.childrenLength = this.items.length
     },
     updated() {
@@ -73,11 +78,11 @@
         if (this.timerId) return
         let run = () => {
           let index = this.names.indexOf(this.getSelected())
-          let newIndex = index - 1
+          let newIndex = index + 1
           this.select(newIndex) // 告诉外界选中 newIndex
-          this.timerId = setTimeout(run, 2000)
+          this.timerId = setTimeout(run, this.autoPlayDelay)
         }
-        this.timerId = setTimeout(run, 2000)
+        this.timerId = setTimeout(run, this.autoPlayDelay)
       },
       pause() {
         window.clearTimeout(this.timerId)
