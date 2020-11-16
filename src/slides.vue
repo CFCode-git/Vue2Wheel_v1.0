@@ -1,5 +1,5 @@
 <template>
-  <div class="diff-slides">
+  <div class="diff-slides" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
     <div class="diff-slides-window" ref="window">
       <div class="diff-slides-wrapper">
         <slot></slot>
@@ -26,7 +26,8 @@
     data() {
       return {
         childrenLength: 0,
-        lastSelectedIndex: undefined
+        lastSelectedIndex: undefined,
+        timerId: undefined
       }
     },
     mounted() {
@@ -38,21 +39,31 @@
       this.updateChildren()
     },
     methods: {
+      onMouseEnter() {
+        this.pause()
+      },
+      onMouseLeave() {
+        this.playAutomatically()
+      },
       select(index) {
         this.lastSelectedIndex = this.selectedIndex
         this.$emit('update:selected', this.names[index])
       },
       playAutomatically() {
-        let index = this.names.indexOf(this.getSelected())
+        if (this.timerId) return
         let run = () => {
-          if (index === this.names.length) { index = 0 }
-          if (index < 0) {index = this.names.length }
-          let newIndex = index + 1
-          this.select(newIndex)
-          index++
-          setTimeout(run, 2000)
+          let index = this.names.indexOf(this.getSelected())
+          let newIndex = index - 1
+          if (newIndex === -1) { newIndex = this.names.length - 1 }
+          if (newIndex === this.names.length) {newIndex = 0}
+          this.select(newIndex) // 告诉外界选中 newIndex
+          this.timerId = setTimeout(run, 2000)
         }
-        // setTimeout(run, 2000)
+        this.timerId = setTimeout(run, 2000)
+      },
+      pause() {
+        window.clearTimeout(this.timerId)
+        this.timerId = undefined
       },
       getSelected() {
         let first = this.$children[0]
@@ -61,9 +72,16 @@
       updateChildren() {
         const selected = this.getSelected()
         this.$children.forEach(vm => {
-          vm.reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
-          // 当reverse立即变化的时候，不一定立即生效在dom里面
-          // 等DOM的reverse变化了之后，再赋值selected，selected赋值之后动画就会立刻执行。
+          let reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
+          // 如果当前是最后一个，下一个第一个，reverse还是false
+          if (this.lastSelectedIndex === this.$children.length - 1 && this.selectedIndex === 0) {
+            reverse = false
+          }
+          // 如果当前是第一个，要去最后一个，reverse为true 逆向
+          if (this.lastSelectedIndex === 0 && this.selectedIndex === this.$children.length - 1) {
+            reverse = true
+          }
+          vm.reverse = reverse
           this.$nextTick(() => {
             vm.selected = selected
           })
