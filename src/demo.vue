@@ -1,6 +1,6 @@
 <template>
   <div>
-    <diff-slides :selected="selected">
+    <diff-slides :selected.sync="selected">
       <diff-slides-item name="1">
         <div class="box">1</div>
       </diff-slides-item>
@@ -23,19 +23,9 @@
     name: 'demo',
     components: {DiffSlides, DiffSlidesItem},
     data() {
-      return {
-        selected: undefined
-      }
+      return { selected: undefined }
     },
     created() {
-      let n = 1
-      setInterval(() => {
-        if (n === 4) {
-          n = 1
-        }
-        this.selected = n.toString()
-        n++
-      }, 2000)
     }
   }
 </script>

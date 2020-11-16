@@ -13,13 +13,32 @@
     name: 'diff-slides',
     props: {
       selected: {type: String},
+      autoPlay: {type: Boolean, default: true}
     },
-    mounted() { this.updateChildren() },
+    mounted() {
+      this.updateChildren()
+      this.playAutomatically()
+    },
     updated() { this.updateChildren() },
     methods: {
+      playAutomatically() {
+        const names = this.$children.map(vm => vm.name)
+        let index = names.indexOf(this.getSelected())
+        console.log(index)
+        setInterval(()=>{
+          if(index === names.length){
+            index = 0
+          }
+          this.$emit('update:selected',names[index+1])
+          index++
+        },3000)
+      },
+      getSelected() {
+        let first = this.$children[0]
+        return this.selected || first.name
+      },
       updateChildren() {
-        const first = this.$children[0]
-        const selected = this.selected || first.name
+        const selected = this.getSelected()
         this.$children.forEach(vm => {
           vm.selected = selected
         })
