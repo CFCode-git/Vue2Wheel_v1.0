@@ -34,7 +34,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  /*@import 'var';*/
+  @import 'var';
   $font-size: 14px;
   $button-height: 32px;
   $button-bg: white;
