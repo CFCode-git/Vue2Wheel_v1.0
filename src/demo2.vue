@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import Button from './button'
+  import Button from './button/button'
   import Cascader from './cascader'
   import db from '../tests/fixtures/db.js'
   import Popover from './popover'
