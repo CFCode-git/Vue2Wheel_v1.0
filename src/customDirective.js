@@ -1,105 +1,120 @@
-// // import Vue from 'vue'
-// //
-// // Vue.directive('input-number', {
-// //   bind: function (el, binding, vnode) {
-// //     inputNumber(el, binding, vnode)
-// //   }
-// // })
-// //
-// //
-// // Vue.directive('input-max-length', {
-// //   bind: function (el, binding, vnode) {
-// //     inputMaxLength(el, binding, vnode)
-// //   }
-// // })
-// //
-// //
-// // function inputMaxLength(el, binding, vnode) {
-// //   const input = el.getElementsByTagName('input')[0]
-// //   let bindValue = binding.value
-// //   let bindValueArray = bindValue.split(',')
-// //   input.onkeyup = function (e) {
-// //     let value = input.value
-// //     input.value = validNumberLength(bindValue, bindValueArray, value)
-// //     trigger(input, 'input')
-// //   }
-// //   input.onblur = function (e) {
-// //     let value = input.value
-// //     input.value = validNumberLength(bindValue, bindValueArray, value)
-// //     trigger(input, 'input')
-// //   }
-// // }
-// //
-// //
-// // function inputNumber(el, binding, vnode) {
-// //   // const input = el.getElementsByTagName('input')[0]
-// //   const input = el
-// //   let bindValue = binding.value
-// //   let bindValueArray = bindValue.split(',')
-// //
-// //   let singleReg = /[^0-9]/g
-// //   let manyReg = /[^\d.{1}]/g
-// //
-// //   input.onkeyup = function (e) {
-// //     let value = input.value
-// //     if (value.length === 1) {
-// //       value = value.replace(singleReg, '')
-// //     } else {
-// //       value = value.replace(manyReg, '')
-// //     }
-// //     input.value = validNumberLength(bindValue, bindValueArray, value)
-// //     trigger(input, 'input')
-// //     input.blur()
-// //     input.focus()
-// //   }
-// //   input.onblur = function (e) {
-// //     let value = input.value
-// //     if (input.value.length === 1) {
-// //       value = value.replace(singleReg, '')
-// //     } else {
-// //       value = value.replace(manyReg, '')
-// //     }
-// //     input.value = validNumberLength(bindValue, bindValueArray, value)
-// //     trigger(input, 'input')
-// //     input.blur()
-// //     input.focus()
-// //   }
-// // }
-// //
-// // function validNumberLength(bindValue, bindValueArray, value) {
-// //   if (bindValue && value) {
-// //     if (bindValueArray.length == 2) {
-// //       let valueArray = value.split('.')
-// //       if (valueArray.length >= 2) {
-// //         return returnMaxLengthData(valueArray[0], bindValueArray[0]) + '.' + returnMaxLengthData(valueArray[1], bindValueArray[1])
-// //       } else {
-// //         return returnMaxLengthData(value, bindValueArray[0])
-// //       }
-// //     } else if (bindValueArray.length == 1) {
-// //       return returnMaxLengthData(value, bindValueArray[0])
-// //     }
-// //   }
-// //   return value
-// // }
-// //
-// // function returnMaxLengthData(value, maxLength) {
-// //   if (value && value.length > maxLength) {
-// //     return value.substring(0, maxLength)
-// //   }
-// //   return value
-// // }
-// //
-// // const trigger = (el, type) => {
-// //   const e = document.createEvent('HTMLEvents')
-// //   e.initEvent(type, true, true)
-// //   el.dispatchEvent(e)
-// // }
-// //
-// // const customDirective = null
-// //
-// // // 参考 https://blog.csdn.net/weixin_34174422/article/details/88006880,https://www.cnblogs.com/y896926473/articles/7841430.html
-// //
-// // export default customDirective
+import Vue from 'vue'
+
+Vue.directive('input-number', {
+  bind: function (el, binding, vnode) {
+    inputNumber(el, binding, vnode)
+  }
+})
+
+
+Vue.directive('input-max-length', {
+  bind: function (el, binding, vnode) {
+    inputMaxLength(el, binding, vnode)
+  }
+})
+
+
+function inputMaxLength(el, binding, vnode) {
+  const input = el.getElementsByTagName('input')[0]
+  let bindValue = binding.value
+  let bindValueArray = bindValue.split(',')
+  input.onkeyup = function (e) {
+    let value = input.value
+    input.value = validNumberLength(bindValue, bindValueArray, value)
+    trigger(input, 'input')
+  }
+  input.onblur = function (e) {
+    let value = input.value
+    input.value = validNumberLength(bindValue, bindValueArray, value)
+    trigger(input, 'input')
+  }
+}
+
+
+function inputNumber(el, binding, vnode) {
+  // const input = el.getElementsByTagName('input')[0]
+  const input = el
+  let bindValue = binding.value
+  let bindValueArray = bindValue.split(',')
+  let singleReg = /[^0-9]/g
+  let manyReg = /[^\d.{1}]/g
+  let usingInputMethod = false // 是否在使用输入法
+  input.addEventListener('compositionstart', function (e) {
+    console.log('输入法开始')
+    usingInputMethod = true
+  })
+  input.addEventListener('compositionend', function (e) {
+    console.log('输入法结束')
+    usingInputMethod = false
+    let value = input.value
+    if (value.length === 1) {
+      value = value.replace(singleReg, '')
+    } else {
+      value = value.replace(manyReg, '')
+    }
+    input.value = validNumberLength(bindValue, bindValueArray, value)
+    trigger(input, 'input')
+  })
+  input.addEventListener('keyup', function (e) {
+    if (usingInputMethod) {
+      return
+    }
+    console.log('keyup')
+    let value = input.value
+    if (value.length === 1) {
+      value = value.replace(singleReg, '')
+    } else {
+      value = value.replace(manyReg, '')
+    }
+    input.value = validNumberLength(bindValue, bindValueArray, value)
+    trigger(input, 'input')
+  })
+  input.onblur = function (e) {
+    let value = input.value
+    if (input.value.length === 1) {
+      value = value.replace(singleReg, '')
+    } else {
+      value = value.replace(manyReg, '')
+    }
+    input.value = validNumberLength(bindValue, bindValueArray, value)
+    trigger(input, 'input')
+  }
+}
+
+function validNumberLength(bindValue, bindValueArray, value) {
+  if (bindValue && value) {
+    if (bindValueArray.length == 2) {
+      let valueArray = value.split('.')
+      if (valueArray.length >= 2) {
+        return returnMaxLengthData(valueArray[0], bindValueArray[0]) + '.' + returnMaxLengthData(valueArray[1], bindValueArray[1])
+      } else {
+        return returnMaxLengthData(value, bindValueArray[0])
+      }
+    } else if (bindValueArray.length == 1) {
+      return returnMaxLengthData(value, bindValueArray[0])
+    }
+  }
+  return value
+}
+
+function returnMaxLengthData(value, maxLength) {
+  if (value && value.length > maxLength) {
+    return value.substring(0, maxLength)
+  }
+  return value
+}
+
+const trigger = (el, type) => {
+  const e = document.createEvent('HTMLEvents')
+  e.initEvent(type, true, true)
+  el.dispatchEvent(e)
+}
+
+const customDirective = null
+
+// 参考 https://blog.csdn.net/weixin_34174422/article/details/88006880,https://www.cnblogs.com/y896926473/articles/7841430.html
+
+export default customDirective
 // import Vue from 'vue'
 //
 // Vue.directive('input-number', {

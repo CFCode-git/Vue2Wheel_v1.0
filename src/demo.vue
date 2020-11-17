@@ -1,29 +1,32 @@
 <template>
   <div>
-    <diff-slides class="wrapper" :selected.sync="selected">
-      <diff-slides-item name="1">
-        <div class="box">1</div>
-      </diff-slides-item>
-      <diff-slides-item name="2">
-        <div class="box">2</div>
-      </diff-slides-item>
-      <diff-slides-item name="3">
-        <div class="box">3</div>
-      </diff-slides-item>
-      <!--      <div v-for></div>-->
-    </diff-slides>
+    <div>
+            <diff-slides class="wrapper" :selected.sync="selected">
+              <diff-slides-item name="1">
+                <div class="box">1</div>
+              </diff-slides-item>
+              <diff-slides-item name="2">
+                <div class="box">2</div>
+              </diff-slides-item>
+              <diff-slides-item name="3">
+                <div class="box">3</div>
+              </diff-slides-item>
+            </diff-slides>
+    </div>
   </div>
 </template>
 
 <script>
-  import DiffSlides from './slides'
-  import DiffSlidesItem from './slides-item'
+  import DiffSlides from './slides/slides'
+  import DiffSlidesItem from './slides/slides-item'
+  import CustomDirective from '../src/customDirective'
 
   export default {
     name: 'demo',
     components: {DiffSlides, DiffSlidesItem},
+    directives: {CustomDirective},
     data() {
-      return {selected: undefined}
+      return {selected: undefined, message: '123'}
     },
     created() {
     }

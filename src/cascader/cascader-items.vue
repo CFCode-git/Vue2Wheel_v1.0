@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-  import Icon from './icon.vue'
+  import Icon from '../icon/icon.vue'
 
   const component = {
     name: 'diff-cascader-items',

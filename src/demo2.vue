@@ -15,9 +15,9 @@
 
 <script>
   import Button from './button/button'
-  import Cascader from './cascader'
+  import Cascader from './cascader/cascader'
   import db from '../tests/fixtures/db.js'
-  import Popover from './popover'
+  import Popover from './popover/popover'
   export default {
     name: 'demo',
     components: {
