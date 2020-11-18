@@ -17,11 +17,12 @@
         default: false
       }
     },
-    computed: {
-      items() {
-        return this.$children.filter(vm => vm.$options.name === 'diff-nav-item')
+    data() {
+      return {
+        items: []
       }
     },
+    computed: {},
     mounted() {
       this.updateChildren()
       this.listenToChildren()
@@ -53,6 +54,14 @@
             }
           })
         })
+      },
+      addItem(vm) {
+        this.items.push(vm)
+      }
+    },
+    provide() {
+      return {
+        root: this
       }
     }
   }

@@ -13,11 +13,15 @@
     props: {
       name: { type: String, required: true }
     },
+    created() {
+      this.root.addItem(this)
+    },
     methods:{
       onClick(){
         this.$emit('add:selected',this.name)
       }
-    }
+    },
+    inject:['root']
   }
 </script>
 
