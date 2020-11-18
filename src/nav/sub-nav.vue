@@ -1,7 +1,10 @@
 <template>
   <div class="diff-sub-nav" :class="{active}" v-click-outside="close">
-    <span @click="onClick">
-    <slot name="title"></slot>
+    <span class="diff-sub-nav-label" @click="onClick">
+      <slot name="title"></slot>
+    <span class="diff-sub-nav-icon" :class="{open}">
+      <diff-icon name="right"></diff-icon>
+    </span>
     </span>
     <div class="diff-sub-nav-popover" v-show="open">
       <slot></slot>
@@ -11,6 +14,7 @@
 
 <script>
   import ClickOutside from '../click-outside'
+  import DiffIcon from '../icon/icon'
   export default {
     name: 'diff-sub-nav',
     data() {
@@ -42,6 +46,9 @@
     inject: ['root'],
     directives: {
       ClickOutside
+    },
+    components: {
+      DiffIcon
     }
   }
 </script>
@@ -63,9 +70,12 @@
         width: 100%;
       }
     }
-    > span {
+    &-label {
       display: block;
       padding: 10px 20px;
+    }
+    &-icon {
+      display: none;
     }
     &-popover {
       background: #fff;
@@ -80,9 +90,32 @@
       min-width: 8em;
     }
   }
-  .diff-sub-nav .diff-sub-nav .diff-sub-nav-popover{
-    top:0;
-    left:100%;
-    margin-left:8px;
+  .diff-sub-nav .diff-sub-nav {
+    &.active {
+      position: relative;
+      &::after {
+        display: none;
+      }
+    }
+    .diff-sub-nav-popover {
+      top: 0;
+      left: 100%;
+      margin-left: 8px;
+    }
+    .diff-sub-nav-label {
+      display: flex;
+      align-items: center;
+      padding: 10px 10px 10px 20px;
+      justify-content: space-between;
+    }
+    .diff-sub-nav-icon {
+      display: inline-flex;
+      margin-left: 1em;
+      svg {fill: $light-color;height: .8em;width: .8em;}
+      &.open {
+        transform: rotate(180deg);
+        transition: all .2s;
+      }
+    }
   }
 </style>
