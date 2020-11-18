@@ -2,15 +2,15 @@
   <div>
     <diff-nav :selected.sync="selected">
       <diff-nav-item name="home">首页</diff-nav-item>
-      <diff-sub-nav>
+      <diff-sub-nav name="about">
         <template slot="title">关于</template>
         <diff-nav-item name="culture">企业文化</diff-nav-item>
         <diff-nav-item name="developers">开发团队</diff-nav-item>
-        <diff-sub-nav>
+        <diff-sub-nav name="contacts">
           <template slot="title">联系方式</template>
           <diff-nav-item name="wechat">微信</diff-nav-item>
           <diff-nav-item name="qq">QQ</diff-nav-item>
-          <diff-sub-nav>
+          <diff-sub-nav name="phone">
             <template slot="title">手机</template>
             <diff-nav-item name="cm">移动</diff-nav-item>
             <diff-nav-item name="cu">电信</diff-nav-item>

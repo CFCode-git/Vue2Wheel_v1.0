@@ -18,21 +18,41 @@
     },
     methods:{
       onClick(){
+        this.root.namePath =[]
+        this.$parent.updateNamePath && this.$parent.updateNamePath()
         this.$emit('add:selected', this.name)
       }
     },
-    inject:['root']
+    inject:['root'],
   }
 </script>
 
 <style scoped lang="scss">
+  @import 'var';
   .diff-nav-item {
     padding: 10px 20px;
+    position: relative;
     cursor: pointer;
-    user-select:none;
+    user-select: none;
     &.selected {
-      background: red;
-      color:white;
+      &::after {
+        content: '';
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-bottom: 2px solid $blue;
+      }
+    }
+  }
+  .diff-sub-nav .diff-nav-item {
+    color: $light-color;
+    &.selected {
+      background: $grey;
+      color: $blue;
+      &::after {
+        display: none;
+      }
     }
   }
 </style>

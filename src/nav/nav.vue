@@ -19,7 +19,8 @@
     },
     data() {
       return {
-        items: []
+        items: [],
+        namePath:[]
       }
     },
     computed: {},
@@ -68,8 +69,10 @@
 </script>
 
 <style scoped lang="scss">
+  @import 'var';
   .diff-nav {
     display: flex;
-    border: 1px solid red;
+    border-bottom:1px solid $grey;
+    color:$color;
   }
 </style>
