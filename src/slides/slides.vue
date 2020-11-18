@@ -52,6 +52,7 @@
       }
     },
     mounted() {
+
       this.updateChildren()
       if (this.autoPlay) {
         this.playAutomatically()

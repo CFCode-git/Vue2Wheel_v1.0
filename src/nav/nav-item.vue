@@ -18,7 +18,7 @@
     },
     methods:{
       onClick(){
-        this.$emit('add:selected',this.name)
+        this.$emit('add:selected', this.name)
       }
     },
     inject:['root']
@@ -28,6 +28,8 @@
 <style scoped lang="scss">
   .diff-nav-item {
     padding: 10px 20px;
+    cursor: pointer;
+    user-select:none;
     &.selected {
       background: red;
       color:white;
