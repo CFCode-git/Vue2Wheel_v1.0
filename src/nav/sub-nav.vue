@@ -6,16 +6,24 @@
       <diff-icon name="right"></diff-icon>
     </span>
     </span>
-    <transition name="x"
-                @enter="enter"
-                @after-enter="afterEnter"
-                @leave="leave"
-                @after-leave="afterLeave"
-    >
-      <div class="diff-sub-nav-popover" :class="{vertical}" v-show="open">
+    <template v-if="vertical">
+      <transition
+        name="x"
+        @enter="enter"
+        @after-enter="afterEnter"
+        @leave="leave"
+        @after-leave="afterLeave"
+      >
+        <div class="diff-sub-nav-popover" :class="{vertical}" v-show="open">
+          <slot></slot>
+        </div>
+      </transition>
+    </template>
+    <template v-else>
+      <div class="diff-sub-nav-popover" v-show="open">
         <slot></slot>
       </div>
-    </transition>
+    </template>
   </div>
 </template>
 
@@ -126,6 +134,7 @@
       display: none;
     }
     &-popover {
+      transition: all .3s;
       background: #fff;
       position: absolute;
       top: 100%;
@@ -137,7 +146,6 @@
       font-size: $font-size;
       min-width: 8em;
       &.vertical {
-        transition: all .3s;
         overflow: hidden;
         position: static;
         box-shadow: none;
