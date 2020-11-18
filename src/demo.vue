@@ -1,6 +1,6 @@
 <template>
   <div>
-    <diff-nav :selected.sync="selected">
+    <diff-nav :selected.sync="selected" vertical style="width:200px;margin:20px;">
       <diff-nav-item name="home">首页</diff-nav-item>
       <diff-sub-nav name="about">
         <template slot="title">关于</template>

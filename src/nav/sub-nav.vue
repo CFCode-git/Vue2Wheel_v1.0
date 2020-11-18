@@ -6,9 +6,16 @@
       <diff-icon name="right"></diff-icon>
     </span>
     </span>
-    <div class="diff-sub-nav-popover" v-show="open">
-      <slot></slot>
-    </div>
+    <transition name="x"
+                @enter="enter"
+                @after-enter="afterEnter"
+                @leave="leave"
+                @after-leave="afterLeave"
+    >
+      <div class="diff-sub-nav-popover" :class="{vertical}" v-show="open">
+        <slot></slot>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -31,6 +38,44 @@
       }
     },
     methods: {
+      // beforeEnter(el,done){}, /* 进入动画前一帧 */
+      enter(el, done) { /* 进入动画 */
+        el.style.height = 'auto'
+        let {height} = el.getBoundingClientRect() // 取得 auto 后的实际高度
+        el.style.height = '0px' // 还原成 0
+        el.getBoundingClientRect() // 让再计算一次高度
+        el.style.height = `${height}px` // 再次设置为 实际高度
+        /*
+        * 之所以要再计算一次高度是因为 浏览器会对多次赋值操作进行合并
+        * 如果先把高度设置为 0，又马上设置为 height，那么浏览器会直接设置成 height 的值
+        * el.getBoundingClientRect()执行了这一步操作之后，浏览器必须要计算一次高度
+        * 只能先把 0 先设置到页面，再计算高度
+        * */
+        el.addEventListener('transitionend',()=>{
+          done()
+        })
+      },
+      afterEnter(el,done) { /* 进入动画结束后 */
+        el.style.height = 'auto'
+        /* 进入完成后要变成auto，因为有二级菜单存在，高度不固定。 */
+        done()
+      },
+      leave(el) { /* 离开动画 */
+        let {height} = el.getBoundingClientRect()
+        el.style.height = `${height}px`
+        el.getBoundingClientRect()
+        el.style.height = `0px`
+        el.addEventListener('transitionend', () => {
+          done()
+          // 这里要等过渡动画结束了以后再调用 done，
+          // 否则会马上执行 afterLeave 以后的操作变为 auto
+          // afterLeave 以后马上变成 display none
+        })
+      },
+      afterLeave(el, done) { /* 离开动画后 */
+        el.style.height = `auto`
+        done()
+      },
       onClick() { this.open = !this.open },
       updateNamePath() {
         this.root.namePath.unshift(this.name)
@@ -43,7 +88,7 @@
         this.open = false
       }
     },
-    inject: ['root'],
+    inject: ['root', 'vertical'],
     directives: {
       ClickOutside
     },
@@ -55,6 +100,9 @@
 
 <style scoped lang="scss">
   @import 'var';
+  .x-enter-active, .x-leave-active {
+    transition: all 5s;
+  }
   .diff-sub-nav {
     position: relative;
     user-select: none;
@@ -88,6 +136,14 @@
       border-radius: 4px;
       font-size: $font-size;
       min-width: 8em;
+      &.vertical {
+        transition: all .3s;
+        overflow: hidden;
+        position: static;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+      }
     }
   }
   .diff-sub-nav .diff-sub-nav {
@@ -105,7 +161,6 @@
     .diff-sub-nav-label {
       display: flex;
       align-items: center;
-      padding: 10px 10px 10px 20px;
       justify-content: space-between;
     }
     .diff-sub-nav-icon {

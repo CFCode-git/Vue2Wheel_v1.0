@@ -1,5 +1,5 @@
 <template>
-  <div class="diff-nav">
+  <div class="diff-nav" :class="{vertical}">
     <slot></slot>
   </div>
 </template>
@@ -15,7 +15,8 @@
       multiple: {
         type: Boolean,
         default: false
-      }
+      },
+      vertical: {type: Boolean, default: false}
     },
     data() {
       return {
@@ -62,7 +63,8 @@
     },
     provide() {
       return {
-        root: this
+        root: this,
+        vertical:this.vertical
       }
     }
   }
@@ -72,7 +74,13 @@
   @import 'var';
   .diff-nav {
     display: flex;
-    border-bottom:1px solid $grey;
-    color:$color;
+    border-bottom: 1px solid $grey;
+    color: $color;
+  }
+  .diff-nav {
+    &.vertical {
+      flex-direction: column;
+      border: 1px solid $grey;
+    }
   }
 </style>
