@@ -1,8 +1,8 @@
 <template>
-  <div class="diff-sub-nav" :class="{active}" v-click-outside="close">
+  <div class="diff-sub-nav" :class="{active,vertical}" v-click-outside="close">
     <span class="diff-sub-nav-label" @click="onClick">
       <slot name="title"></slot>
-    <span class="diff-sub-nav-icon" :class="{open}">
+    <span class="diff-sub-nav-icon" :class="{open,vertical}">
       <diff-icon name="right"></diff-icon>
     </span>
     </span>
@@ -115,15 +115,17 @@
     position: relative;
     user-select: none;
     cursor: pointer;
-    &.active {
-      position: relative;
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        border-bottom: 2px solid $blue;
-        width: 100%;
+    &:not(.vertical) {
+      &.active {
+        position: relative;
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          border-bottom: 2px solid $blue;
+          width: 100%;
+        }
       }
     }
     &-label {
@@ -178,6 +180,9 @@
       &.open {
         transform: rotate(180deg);
         transition: all .2s;
+        &.vertical{
+          transform: rotate(90deg);
+        }
       }
     }
   }

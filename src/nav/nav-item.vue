@@ -1,5 +1,5 @@
 <template>
-  <div class="diff-nav-item" :class="{selected}" @click="onClick">
+  <div class="diff-nav-item" :class="{selected,vertical}" @click="onClick">
     <slot></slot>
   </div>
 </template>
@@ -8,22 +8,22 @@
   export default {
     name: 'diff-nav-item',
     data() {
-      return { selected: false }
+      return {selected: false}
     },
     props: {
-      name: { type: String, required: true }
+      name: {type: String, required: true}
     },
     created() {
       this.root.addItem(this)
     },
-    methods:{
-      onClick(){
-        this.root.namePath =[]
+    methods: {
+      onClick() {
+        this.root.namePath = []
         this.$parent.updateNamePath && this.$parent.updateNamePath()
         this.$emit('add:selected', this.name)
       }
     },
-    inject:['root'],
+    inject: ['root', 'vertical'],
   }
 </script>
 
@@ -34,18 +34,25 @@
     position: relative;
     cursor: pointer;
     user-select: none;
-    &.selected {
-      &::after {
-        content: '';
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        border-bottom: 2px solid $blue;
+    &:not(.vertical) {
+      &.selected {
+        &::after {
+          content: '';
+          width: 100%;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          border-bottom: 2px solid $blue;
+        }
+      }
+    }
+    &.vertical {
+      &.selected {
+        color: $blue;
       }
     }
   }
-  .diff-sub-nav .diff-nav-item {
+  .diff-sub-nav .diff-nav-item:not(.vertical) {
     color: $light-color;
     &.selected {
       background: $grey;
@@ -54,5 +61,9 @@
         display: none;
       }
     }
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 </style>
