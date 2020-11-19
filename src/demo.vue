@@ -54,7 +54,13 @@
     components: {DiffNav, DiffNavItem, DiffSubNav},
     data() {
       return {
-        selected:['culture']
+        selected: 'culture',
+      }
+    },
+    watch: {
+      selected(newSelected) {
+        newSelected === 'developers' &&
+        alert('developer')
       }
     }
   }
