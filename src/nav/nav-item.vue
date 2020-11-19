@@ -1,5 +1,8 @@
 <template>
-  <div class="diff-nav-item" :class="{selected,vertical}" @click="onClick">
+  <div class="diff-nav-item"
+       :class="{selected,vertical}"
+       :data-name="name"
+       @click="onClick">
     <slot></slot>
   </div>
 </template>
