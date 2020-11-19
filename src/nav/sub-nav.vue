@@ -46,6 +46,7 @@
       }
     },
     methods: {
+      // https://cn.vuejs.org/v2/guide/transitions.html#JavaScript-%E9%92%A9%E5%AD%90
       // beforeEnter(el,done){}, /* 进入动画前一帧 */
       enter(el, done) { /* 进入动画 */
         el.style.height = 'auto'
@@ -66,9 +67,9 @@
       afterEnter(el,done) { /* 进入动画结束后 */
         el.style.height = 'auto'
         /* 进入完成后要变成auto，因为有二级菜单存在，高度不固定。 */
-        done()
+        // done()
       },
-      leave(el) { /* 离开动画 */
+      leave(el,done) { /* 离开动画 */
         let {height} = el.getBoundingClientRect()
         el.style.height = `${height}px`
         el.getBoundingClientRect()
@@ -82,7 +83,7 @@
       },
       afterLeave(el, done) { /* 离开动画后 */
         el.style.height = `auto`
-        done()
+        // done()
       },
       onClick() { this.open = !this.open },
       updateNamePath() {
