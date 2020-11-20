@@ -33,28 +33,30 @@ describe('Button.vue', () => {
     expect(useElements[0].getAttribute('xlink:href')).to.equal('#i-loading')
     vm.$destroy()
   })
-  xit('icon 默认的 order 是 1.', () => {
-    const wrapper = mount(Button,{
-      propsData:{
-        icon:'setting'
-      }
+  it('icon 默认的 order 是 1.', () => {
+    // https://vue-test-utils.vuejs.org/zh/api/options.html#attachto
+    const div = document.createElement('div')
+    document.body.appendChild(div)
+    const wrapper = mount(Button, {
+      attachTo: 'div', // 加这个选项才生效
+      propsData: {icon: 'setting'}
     })
-    const vm = wrapper.vm
-    const icon = vm.$el.querySelector('svg')
+    const icon = wrapper.vm.$el.querySelector('svg')
     expect(getComputedStyle(icon).order).to.eq('1')
+    wrapper.destroy()
+    div.remove()
   })
-  xit('设置 iconPosition 可以改变 order', () => {
-    const wrapper = mount(Button,{
-      propsData: {
-        icon: 'settings',
-        iconPosition: 'right'
-      }
+  it('设置 iconPosition 可以改变 order', () => {
+    const div = document.createElement('div')
+    document.body.appendChild(div)
+    const wrapper = mount(Button, {
+      attachTo: 'div', // 加这个选项才生效
+      propsData: {icon: 'settings', iconPosition: 'right'}
     })
-    const vm = wrapper.vm
-    const icon = vm.$el.querySelector('svg')
+    const icon = wrapper.vm.$el.querySelector('svg')
     expect(getComputedStyle(icon).order).to.eq('2')
-    vm.$el.remove()
-    vm.$destroy()
+    wrapper.destroy()
+    div.remove()
   })
   it('点击 button 触发 click 事件', () => {
     const wrapper = mount(Button, {
