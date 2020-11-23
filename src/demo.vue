@@ -1,6 +1,7 @@
 <template>
   <div style="margin:20px;">
-    <diff-pager :total-page="20" :current-page="3"></diff-pager>
+    <diff-pager :total-page="20" :current-page="20"></diff-pager>
+
   </div>
 </template>
 

@@ -1,13 +1,25 @@
 <template>
   <div class="diff-pager">
-    <span v-for="page in pages" class="diff-pager-item" :class="{active:page===currentPage,separator:page === '...'}">
-      {{page}}
+    <span class="diff-pager-nav prev" :class="{disabled:currentPage ===1}">
+      <diff-icon name="left"></diff-icon>
+    </span>
+    <template v-for="page in pages">
+      <template v-if="page===currentPage"><span class="diff-pager-item current">{{page}}</span></template>
+      <template v-else-if="page ==='...'">
+        <diff-icon name="dots" class="diff-pager-separator">...</diff-icon>
+      </template>
+      <template v-else><span class="diff-pager-item other">{{page}}</span></template>
+    </template>
+    <span class="diff-pager-nav next" :class="{disabled:currentPage === totalPage}">
+      <diff-icon name="right"></diff-icon>
     </span>
   </div>
 </template>
 <script>
+  import DiffIcon from '../icon/icon'
   export default {
     name: 'diff-pager',
+    components: {DiffIcon},
     data() {
       let pages = [
         1, this.totalPage,
@@ -47,21 +59,42 @@
 </script>
 <style scoped lang="scss">
   @import 'var';
-  .diff-pager {
+  .diff-pager { display: flex; justify-content: flex-start; align-items: center;
+    $width: 20px;
+    $height: 20px;
+    $font-size: 12px;
+    &-separator { width: $width;font-size: $font-size; }
     &-item {
       border: 1px solid #e1e1e1; border-radius: $border-radius; padding: 0 4px;
       display: inline-flex; justify-content: center; align-items: center;
-      font-size: 12px; min-width: 20px; height: 20px;
+      font-size: $font-size; min-width: $width; height: $height;
       margin: 0 4px; cursor: pointer;
-      &.active, &:hover {
+      &.current, &:hover {
         border-color: $blue;
       }
-      &.active {
+      &.current {
         cursor: default;
       }
       &.separator {
         border: none;
         cursor: default;
+      }
+    }
+    &-nav {
+      margin: 0 4px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background: $grey;
+      width: $width;
+      height: $height;
+      border-radius: $border-radius;
+      font-size: $font-size;
+      &.disabled {
+        svg {
+          fill: darken($grey, 30%);
+        }
+        cursor: not-allowed;
       }
     }
   }
