@@ -14,7 +14,8 @@
         this.currentPage, this.currentPage - 1,
         this.currentPage - 2, this.currentPage + 1,
         this.currentPage + 2
-      ]
+      ].filter(n => n >= 1 && n <= this.totalPage)
+      console.log(pages)
       let u = unique(pages.sort((a, b) => {return a - b}))
       let u2 = u.reduce((prev, current, index, array) => { // 上一个结果,当前值,当前值下标,当前数组
         prev.push(current)
