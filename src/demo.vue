@@ -40,15 +40,6 @@
       }
     },
     methods: {
-      x(object) {
-        let {selected, item, index} = object
-        if (selected) {
-          this.selected.push(item)
-        } else {
-          let index = this.selected.indexOf(item)
-          this.selected.splice(index, 1)
-        }
-      }
     }
   }
 </script>

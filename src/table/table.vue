@@ -3,17 +3,20 @@
     <table class="diff-table" :class="{bordered,compact,striped}">
       <thead>
       <tr>
-        <th><input type="checkbox" @change="onChangeAllItems"></th>
+        <th><input type="checkbox" @change="onChangeAllItems" ref="allChecked"/></th>
         <th v-if="numberVisible">#</th>
-        <th v-for="column in columns">{{column.text}}</th>
+        <th v-for="column in columns" :key="column.field">{{column.text}}</th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(item,index) in dataSource">
+      <tr v-for="(item,index) in dataSource" :key="item.id">
+        <td>
+          <input type="checkbox" @change="onChangeItem(item,index,$event)"
+                 :checked="inSelectedItem(item)">
+        </td>
         <td v-if="numberVisible">{{index + 1}}</td>
-        <td><input type="checkbox" @change="onChangeItem(item,index,$event)"></td>
         <template v-for="column in columns">
-          <td>{{item[column.field]}}</td>
+          <td :key="column.field">{{item[column.field]}}</td>
         </template>
       </tr>
       </tbody>
@@ -26,26 +29,47 @@
     name: 'diff-table',
     props: {
       columns: {type: Array, required: true},
-      dataSource: {type: Array, required: true},
       numberVisible: {type: Boolean, default: false},
       bordered: {type: Boolean, default: false},
       compact: {type: Boolean, default: false},
       striped: {type: Boolean, default: true},
-      selectedItems: {type: Array, default: () => []}
+      selectedItems: {type: Array, default: () => []},
+      dataSource: {
+        type: Array,
+        required: true,
+        validator(array) {
+          return !(array.filter(item => item.id === undefined).length > 0)
+        }
+      },
     },
     methods: {
       onChangeItem(item, index, e) {
         let checked = e.target.checked
         let copy = JSON.parse(JSON.stringify(this.selectedItems))
-        if (checked) {
-          copy.push(item)
-        } else {
-          let index = copy.indexOf(item)
-          copy.splice(index, 1)
-        }
+        checked ?
+          copy.push(item) :
+          copy = copy.filter(i => i.id !== item.id)
         this.$emit('update:selectedItems', copy)
       },
       onChangeAllItems(e) {
+        let checked = e.target.checked
+        checked ?
+          this.$emit('update:selectedItems', this.dataSource) :
+          this.$emit('update:selectedItems', [])
+      },
+      inSelectedItem(item) {
+        return this.selectedItems.filter(i => i.id === item.id).length > 0
+      }
+    },
+    watch: {
+      selectedItems() {
+        if (this.selectedItems.length === this.dataSource.length) {
+          this.$refs.allChecked.indeterminate = false
+        } else if (this.selectedItems.length === 0) {
+          this.$refs.allChecked.indeterminate = false
+        } else {
+          this.$refs.allChecked.indeterminate = true
+        }
       }
     }
   }
