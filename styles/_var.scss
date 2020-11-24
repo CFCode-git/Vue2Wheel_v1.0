@@ -23,9 +23,16 @@ $blue:#4285f4;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
+@mixin spin{
+  animation: spin 2s infinite linear;
+}
+
 @mixin box-shadow2 {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
+
+
+
 /* mixins 和 placeholder 区别
   mixins include多少次，里面的内容就会被复制多少次；
   placeholder 无论extend多少次，都只会复制一次。

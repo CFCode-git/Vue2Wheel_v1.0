@@ -69,7 +69,7 @@
     }
   }
   .button-loading {
-    animation: spin 1s infinite linear;
+    @include spin;
   }
 
 

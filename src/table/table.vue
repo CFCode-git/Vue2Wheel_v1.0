@@ -5,10 +5,21 @@
       <tr>
         <th>
           <input type="checkbox" @change="onChangeAllItems"
-                 ref="allChecked" :checked="areAllItemsSelected"/>
-        </th>
+                 ref="allChecked" :checked="areAllItemsSelected"
+          /></th>
         <th v-if="numberVisible">#</th>
-        <th v-for="column in columns" :key="column.field">{{column.text}}</th>
+        <th v-for="column in columns" :key="column.field">
+          <div class="diff-table-header">
+            {{column.text}}
+
+            <span v-if="column.field in orderBy"
+                  class="diff-table-sorter"
+                  @click="changeOrderBy(column.field)"
+            > <diff-icon name="asc" :class="{active:orderBy[column.field] === 'asc'}"></diff-icon>
+              <diff-icon name="desc" :class="{active:orderBy[column.field] === 'desc'}"></diff-icon>
+          </span>
+          </div>
+        </th>
       </tr>
       </thead>
       <tbody>
@@ -24,12 +35,17 @@
       </tr>
       </tbody>
     </table>
+    <div v-if="loading" class="diff-table-loading">
+      <diff-icon name="loading"></diff-icon>
+    </div>
   </div>
 </template>
 
 <script>
+  import DiffIcon from '../icon/icon'
   export default {
     name: 'diff-table',
+    components: {DiffIcon},
     props: {
       columns: {type: Array, required: true},
       numberVisible: {type: Boolean, default: false},
@@ -44,6 +60,11 @@
           return !(array.filter(item => item.id === undefined).length > 0)
         }
       },
+      orderBy: {
+        type: Object,
+        default: () => ({})
+      },
+      loading: {type: Boolean, default: false}
     },
     methods: {
       onChangeItem(item, index, e) {
@@ -62,7 +83,19 @@
       },
       inSelectedItem(item) {
         return this.selectedItems.filter(i => i.id === item.id).length > 0
-      }
+      },
+      changeOrderBy(key) {
+        const copy = JSON.parse(JSON.stringify(this.orderBy))
+        let oldValue = copy[key]
+        if (oldValue === 'asc') {
+          copy[key] = 'desc'
+        } else if (oldValue === 'desc') {
+          copy[key] = true
+        } else {
+          copy[key] = 'asc'
+        }
+        this.$emit('update:orderBy', copy)
+      },
     },
     watch: {
       selectedItems() {
@@ -129,6 +162,53 @@
             background: lighten($grey, 10%);
           }
         }
+      }
+    }
+    &-sorter {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 0 4px;
+      fill: $grey;
+      cursor: pointer;
+      svg {
+        width: 10px;
+        height: 10px;
+        &:first-child {
+          position: relative;
+          bottom: -1px;
+        }
+        &:nth-child(2) {
+          position: relative;
+          top: -1px;
+        }
+        &.active {
+          fill: red;
+        }
+      }
+    }
+    &-header {
+      display: flex;
+      align-items: center;
+    }
+    &-wrapper {
+      position: relative;
+    }
+    &-loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, .8);
+      svg {
+        width: 50px;
+        height: 50px;
+        @include spin;
       }
     }
   }

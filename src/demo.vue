@@ -2,7 +2,12 @@
   <div>
     {{selectedItems}}
     <div style="margin: 20px;">
-      <diff-table :columns="columns" :data-source="dataSource" bordered :selected-items.sync="selectedItems"></diff-table>
+      <diff-table :columns="columns" :data-source="dataSource"
+                  bordered :selected-items.sync="selectedItems"
+                  :orderBy.sync="orderBy"
+                  @update:orderBy="x"
+                  :loading="loading"
+      ></diff-table>
     </div>
     <div style="margin: 20px;">
       <diff-table :columns="columns" :data-source="dataSource" compact :striped="false"></diff-table>
@@ -24,6 +29,7 @@
       return {
         currentPage: 1,
         selectedItems: [],
+        loading: false,
         dataSource: [
           {id: 1, name: 'Chow', score: 100},
           {id: 2, name: 'Jack', score: 80},
@@ -33,13 +39,25 @@
           {id: 6, name: 'Alice', score: 40},
           {id: 7, name: 'Bob', score: 40},
         ],
+        orderBy: { // true -- 开启排序,不确定 desc / asc
+          name: true,
+          score: 'desc'
+        },
         columns: [
           {text: '姓名', field: 'name'},
           {text: '分数', field: 'score'},
-        ]
+        ],
+
       }
     },
     methods: {
+      x() {
+        this.loading = true
+        setTimeout(() => {
+          this.dataSource = this.dataSource.sort((a, b) => a.score - b.score)
+          this.loading = false
+        }, 3000)
+      }
     }
   }
 </script>
