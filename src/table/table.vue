@@ -3,7 +3,10 @@
     <table class="diff-table" :class="{bordered,compact,striped}">
       <thead>
       <tr>
-        <th><input type="checkbox" @change="onChangeAllItems" ref="allChecked"/></th>
+        <th>
+          <input type="checkbox" @change="onChangeAllItems"
+                 ref="allChecked" :checked="areAllItemsSelected"/>
+        </th>
         <th v-if="numberVisible">#</th>
         <th v-for="column in columns" :key="column.field">{{column.text}}</th>
       </tr>
@@ -70,6 +73,21 @@
         } else {
           this.$refs.allChecked.indeterminate = true
         }
+      }
+    },
+    computed: {
+      areAllItemsSelected() {
+        const a = this.dataSource.map(item => item.id).sort()
+        const b = this.selectedItems.map(item => item.id).sort()
+        if (a.length !== b.length) { return false }
+        let equal = true
+        for (let i = 0; i < a.length; i++) {
+          if (a[i] !== b[i]) {
+            equal = false
+            break
+          }
+        }
+        return equal
       }
     }
   }
