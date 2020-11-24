@@ -1,8 +1,8 @@
 <template>
   <div>
-    {{selected}}
+    {{selectedItems}}
     <div style="margin: 20px;">
-      <diff-table :columns="columns" :data-source="dataSource" bordered @changeItem="x"></diff-table>
+      <diff-table :columns="columns" :data-source="dataSource" bordered :selected-items.sync="selectedItems"></diff-table>
     </div>
     <div style="margin: 20px;">
       <diff-table :columns="columns" :data-source="dataSource" compact :striped="false"></diff-table>
@@ -23,7 +23,7 @@
     data() {
       return {
         currentPage: 1,
-        selected: [],
+        selectedItems: [],
         dataSource: [
           {id: 1, name: 'Chow', score: 100},
           {id: 2, name: 'Jack', score: 80},

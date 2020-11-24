@@ -3,7 +3,7 @@
     <table class="diff-table" :class="{bordered,compact,striped}">
       <thead>
       <tr>
-        <th><input type="checkbox"></th>
+        <th><input type="checkbox" @change="onChangeAllItems"></th>
         <th v-if="numberVisible">#</th>
         <th v-for="column in columns">{{column.text}}</th>
       </tr>
@@ -31,11 +31,21 @@
       bordered: {type: Boolean, default: false},
       compact: {type: Boolean, default: false},
       striped: {type: Boolean, default: true},
+      selectedItems: {type: Array, default: () => []}
     },
     methods: {
       onChangeItem(item, index, e) {
-        this.$emit('changeItem', {selected: e.target.checked, item, index})
-
+        let checked = e.target.checked
+        let copy = JSON.parse(JSON.stringify(this.selectedItems))
+        if (checked) {
+          copy.push(item)
+        } else {
+          let index = copy.indexOf(item)
+          copy.splice(index, 1)
+        }
+        this.$emit('update:selectedItems', copy)
+      },
+      onChangeAllItems(e) {
       }
     }
   }
