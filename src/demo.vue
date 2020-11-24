@@ -7,6 +7,7 @@
                   :orderBy.sync="orderBy"
                   @update:orderBy="x"
                   :loading="loading"
+                  height="400px"
       ></diff-table>
     </div>
     <div style="margin: 20px;">
@@ -38,6 +39,19 @@
           {id: 5, name: 'Amy', score: 40},
           {id: 6, name: 'Alice', score: 40},
           {id: 7, name: 'Bob', score: 40},
+          {id: 8, name: 'Chow', score: 100},
+          {id: 9, name: 'Jack', score: 80},
+          {id: 10, name: 'Jane', score: 60},
+          {id: 11, name: 'Joshua', score: 40},
+          {id: 12, name: 'Amy', score: 40},
+          {id: 13, name: 'Alice', score: 40},
+          {id: 14, name: 'Bob', score: 40},
+          {id: 15, name: 'Chow', score: 100},
+          {id: 16, name: 'Jack', score: 80},
+          {id: 17, name: 'Jane', score: 60},
+          {id: 18, name: 'Joshua', score: 40},
+          {id: 19, name: 'Amy', score: 40},
+          {id: 20, name: 'Alice', score: 40},
         ],
         orderBy: { // true -- 开启排序,不确定 desc / asc
           name: true,
