@@ -1,37 +1,36 @@
 <template>
   <div class="diff-table-wrapper" ref="wrapper">
-    <div class="diff-table-scrollbarHider" :style="{height,overflow:'auto'}">
+    <div class="diff-table-scrollbarHider" :style="{height,overflow:'auto'}" ref="tableWrapper">
       <table class="diff-table" :class="{bordered,compact,striped}" ref="table">
         <thead>
         <tr>
-          <th>
+          <th :style="{width:'50px'}">
             <input type="checkbox" @change="onChangeAllItems"
                    ref="allChecked" :checked="areAllItemsSelected"
             /></th>
-          <th v-if="numberVisible">#</th>
-          <th v-for="column in columns" :key="column.field">
+          <th :style="{width:'50px'}" v-if="numberVisible">#</th>
+          <th :style="{width:column.width + 'px'}" v-for="column in columns" :key="column.field">
             <div class="diff-table-header">
               {{column.text}}
-
               <span v-if="column.field in orderBy"
                     class="diff-table-sorter"
                     @click="changeOrderBy(column.field)"
               > <diff-icon name="asc" :class="{active:orderBy[column.field] === 'asc'}"></diff-icon>
-              <diff-icon name="desc" :class="{active:orderBy[column.field] === 'desc'}"></diff-icon>
-          </span>
+                <diff-icon name="desc" :class="{active:orderBy[column.field] === 'desc'}"></diff-icon>
+            </span>
             </div>
           </th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="(item,index) in dataSource" :key="item.id">
-          <td>
+          <td :style="{width:'50px'}">
             <input type="checkbox" @change="onChangeItem(item,index,$event)"
-                   :checked="inSelectedItem(item)">
-          </td>
-          <td v-if="numberVisible">{{index + 1}}</td>
+                   :checked="inSelectedItem(item)"
+            ></td>
+          <td :style="{width:'50px'}" v-if="numberVisible">{{index + 1}}</td>
           <template v-for="column in columns">
-            <td :key="column.field">{{item[column.field]}}</td>
+            <td :style="{width:column.width + 'px'}" :key="column.field">{{item[column.field]}}</td>
           </template>
         </tr>
         </tbody>
@@ -67,7 +66,7 @@
         default: () => ({})
       },
       loading: {type: Boolean, default: false},
-      height: {type: [Number, String]}
+      height: {type: Number}
     },
     computed: {
       areAllItemsSelected() {
@@ -114,22 +113,6 @@
         }
         this.$emit('update:orderBy', copy)
       },
-      updateHeadersWidth() {
-        let table2 = this.table2
-        let tableHeader = Array.from(this.$refs.table.children).filter(node => node.tagName.toLowerCase() === 'thead')[0]
-        let tableHeader2
-        Array.from(table2.children).map(node => {
-          if (node.tagName.toLowerCase() !== 'thead') {
-            node.remove()
-          } else {
-            tableHeader2 = node
-          }
-        })
-        Array.from(tableHeader.children[0].children).map((th, i) => {
-          const {width} = th.getBoundingClientRect()
-          tableHeader2.children[0].children[i].style.width = width + 'px'
-        })
-      }
     },
     watch: {
       selectedItems() {
@@ -144,18 +127,15 @@
     },
     mounted() {
       // mdn cloneNode
-      let table2 = this.$refs.table.cloneNode(true)
-      this.table2 = table2
+      let table2 = this.$refs.table.cloneNode(false)
       table2.classList.add('diff-table-copy')
+      let thead = this.$refs.table.children[0]
+      let {height: theadHeight} = thead.getBoundingClientRect()
+      this.$refs.tableWrapper.style.marginTop = theadHeight + 'px'
+      this.$refs.tableWrapper.style.height = this.height - theadHeight + 'px'
+      table2.appendChild(thead)
       this.$refs.wrapper.appendChild(table2)
-      this.updateHeadersWidth()
-      this.onWindowResize = () => this.updateHeadersWidth()
-      window.addEventListener('resize', this.onWindowResize)
     },
-    beforeDestroy() {
-      window.removeEventListener('resize', this.onWindowResize)
-      this.table.remove()
-    }
   }
 </script>
 

@@ -7,7 +7,7 @@
                   :orderBy.sync="orderBy"
                   @update:orderBy="x"
                   :loading="loading"
-                  height="400px"
+                  :height="400"
       ></diff-table>
     </div>
     <div style="margin: 20px;">
@@ -58,7 +58,7 @@
           score: 'desc'
         },
         columns: [
-          {text: '姓名', field: 'name'},
+          {text: '姓名', field: 'name', width: 100},
           {text: '分数', field: 'score'},
         ],
 
