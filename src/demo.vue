@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{fileList}}
     <diff-uploader
       method="POST" name="file" accept="image/*"
       action="http://127.0.0.1:8888/upload"
