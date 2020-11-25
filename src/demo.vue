@@ -6,7 +6,7 @@
                   bordered :selected-items.sync="selectedItems"
                   :orderBy.sync="orderBy" @update:orderBy="x"
                   :loading="loading" :height="400"
-                  expand-field="description"
+                  expand-field="description" checkable
       ></diff-table>
     </div>
     <div style="margin: 20px;">

@@ -5,8 +5,8 @@
 
         <thead>
         <tr>
-          <th :style="{width:'50px'}" class="diff-table-center"></th>
-          <th :style="{width:'50px'}" class="diff-table-center">
+          <th v-if="expandField" :style="{width:'50px'}" class="diff-table-center"></th>
+          <th v-if="checkable" :style="{width:'50px'}" class="diff-table-center">
             <label><input
               type="checkbox" @change="onChangeAllItems"
               ref="allChecked" :checked="areAllItemsSelected"
@@ -27,21 +27,23 @@
         </thead>
 
         <tbody>
+
         <template v-for="(item,index) in dataSource">
           <tr :key="item.id">
 
             <!-- 展开 Icon -->
-            <td :style="{width:'50px'}" class="diff-table-center">
+            <td v-if="expandField" :style="{width:'50px'}" class="diff-table-center">
               <diff-icon class="diff-table-expandIcon" name="right"
                          @click="expandItem(item.id)"
               ></diff-icon>
             </td>
 
             <!-- checkbox 选择框 -->
-            <td :style="{width:'50px'}" class="diff-table-center"><label><input
-              type="checkbox" @change="onChangeItem(item,index,$event)"
-              :checked="inSelectedItem(item)"
-            ></label></td>
+            <td :style="{width:'50px'}" class="diff-table-center" v-if="checkable">
+              <label><input
+                type="checkbox" @change="onChangeItem(item,index,$event)"
+                :checked="inSelectedItem(item)"
+              ></label></td>
 
             <!-- 序号 -->
             <td :style="{width:'50px'}"
@@ -58,7 +60,7 @@
 
           <tr :key="`expand-${item.id}`" v-if="inExpandedIds(item.id)">
             <td></td>
-            <td :colspan="columns.length+1">
+            <td :colspan="columns.length+expandedColSpan">
               {{item[expandField] || '空'}}
             </td>
           </tr>
@@ -98,7 +100,9 @@
       orderBy: {type: Object, default: () => ({})},
       loading: {type: Boolean, default: false},
       height: {type: Number},
-      expandField: {type: String}
+      expandField: {type: String},
+      checkable: {type: Boolean, default: false}
+
     },
     computed: {
       areAllItemsSelected() {
@@ -113,6 +117,16 @@
           }
         }
         return equal
+      },
+      expandedColSpan() {
+        let result = -1
+        if (this.checkable) {
+          result += 1
+        }
+        if (this.expandField) {
+          result += 1
+        }
+        return result
       }
     },
     methods: {
