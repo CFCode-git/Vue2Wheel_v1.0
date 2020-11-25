@@ -6,8 +6,8 @@
     <div ref="temp" style="width:0;height:0;overflow: hidden;"></div>
     <ol>
       <li v-for="file in fileList" :key="file.name">
-        <img :src="file.url" width="100" height="100" alt="">
-        {{file.name}}
+        <img :src="file.url" width="100" height="100" alt=""> {{file.name}}
+        <button @click="onDeleteFile(file)">x</button>
       </li>
     </ol>
   </div>
@@ -28,6 +28,15 @@
       fileList: {type: Array, default: () => []}
     },
     methods: {
+      onDeleteFile(file) {
+        let answer = window.confirm('你确定要删除吗')
+        if (answer) {
+          let copy = [...this.fileList]
+          let index = copy.indexOf(file)
+          copy.splice(index, 1)
+          this.$emit('update:fileList', copy)
+        }
+      },
       createInput() {
         let input = document.createElement('input')
         input.type = 'file'
