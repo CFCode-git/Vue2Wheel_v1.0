@@ -2,7 +2,10 @@
   <div>
     <diff-uploader
       method="POST" name="file" accept="image/*"
-      action="http://127.0.0.1:8888/upload">
+      action="http://127.0.0.1:8888/upload"
+      :parse-response="parseResponse"
+      :file-list.sync="fileList"
+    >
       <button>上传</button>
       <template slot="tips">
         <div>只能上传 300kb 以内的 png、jpeg 文件</div>
@@ -13,11 +16,18 @@
 
 <script>
   import DiffUploader from './uploader/uploader'
+
   export default {
     name: 'demo',
     components: {DiffUploader},
     data() { return {fileList: []} },
-    methods: {}
+    methods: {
+      parseResponse(response) {
+        let object = JSON.parse(response)
+        console.log(object)
+        return `http://127.0.0.1:8888/preview/${object.id}`
+      }
+    }
   }
 </script>
 
