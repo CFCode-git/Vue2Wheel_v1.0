@@ -3,14 +3,19 @@
     {{selectedItems}}
     <div style="margin: 20px;">
       <diff-table :columns="columns" :data-source="dataSource"
-                  bordered :selected-items.sync="selectedItems"
+                  :selected-items.sync="selectedItems"
                   :orderBy.sync="orderBy" @update:orderBy="x"
-                  :loading="loading" :height="400"
-                  expand-field="description" checkable
-      ></diff-table>
+                  :loading="loading" expand-field="description"
+                  checkable bordered>
+        <template slot-scope="xxx">
+          <button @click="edit(xxx.item)">edit</button>
+          <button @click="view(xxx.item)">detail</button>
+          <button @click="view(xxx.item)">delete</button>
+        </template>
+      </diff-table>
     </div>
     <div style="margin: 20px;">
-      <diff-table :columns="columns" :data-source="dataSource" compact :striped="false"></diff-table>
+      <diff-table :columns="columns" :data-source="dataSource" compact :striped="false" bordered></diff-table>
     </div>
     <div style="margin:20px;">
       <diff-pager :total-page="1" :current-page.sync="currentPage" :hide-if-one-page="false"></diff-pager>
@@ -70,7 +75,13 @@
           this.dataSource = this.dataSource.sort((a, b) => a.score - b.score)
           this.loading = false
         }, 3000)
-      }
+      },
+      edit(item) {
+        alert(`开始编辑${item.id}`)
+      },
+      view(item) {
+        alert(`开始查看${item.id}`)
+      },
     }
   }
 </script>

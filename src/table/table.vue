@@ -23,6 +23,7 @@
             </span>
             </div>
           </th>
+          <th v-if="$scopedSlots.default" ref="actionsHead"></th>
         </tr>
         </thead>
 
@@ -56,6 +57,13 @@
                   :key="column.field">{{item[column.field]}}
               </td>
             </template>
+
+            <!-- 用户自定义最后一行的按钮 -->
+            <td v-if="$scopedSlots.default">
+              <div ref="actions" style="display: inline-block">
+                <slot :item="item"></slot>
+              </div>
+            </td>
           </tr>
 
           <tr :key="`expand-${item.id}`" v-if="inExpandedIds(item.id)">
@@ -191,6 +199,24 @@
       this.$refs.tableWrapper.style.height = this.height - theadHeight + 'px'
       table2.appendChild(thead)
       this.$refs.wrapper.appendChild(table2)
+
+
+      if (this.$scopedSlots.default) {
+        let div = this.$refs.actions[0]
+        let {width} = div.getBoundingClientRect()
+        let divParent = div.parentNode
+        let styles = getComputedStyle(divParent)
+        let paddingLeft = parseInt(styles.getPropertyValue('padding-left'), 10)
+        let paddingRight = parseInt(styles.getPropertyValue('padding-right'), 10)
+        let borderLeft = parseInt(styles.getPropertyValue('border-left-width'), 10)
+        let borderRight = parseInt(styles.getPropertyValue('border-right-width'), 10)
+        console.log(borderLeft, borderRight, paddingLeft, paddingRight)
+        let headWidth = width + borderRight + borderLeft + paddingLeft + paddingRight
+        console.log(headWidth)
+        this.$refs.actionsHead.style.width = headWidth + 'px'
+        console.log(this.$refs.actions[0].parentNode)
+        this.$refs.actions.map(div => div.parentNode.style.width = headWidth + 'px')
+      }
     },
   }
 </script>
