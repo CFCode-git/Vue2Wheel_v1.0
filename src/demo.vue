@@ -4,10 +4,9 @@
     <div style="margin: 20px;">
       <diff-table :columns="columns" :data-source="dataSource"
                   bordered :selected-items.sync="selectedItems"
-                  :orderBy.sync="orderBy"
-                  @update:orderBy="x"
-                  :loading="loading"
-                  :height="400"
+                  :orderBy.sync="orderBy" @update:orderBy="x"
+                  :loading="loading" :height="400"
+                  expand-field="description"
       ></diff-table>
     </div>
     <div style="margin: 20px;">
@@ -32,8 +31,8 @@
         selectedItems: [],
         loading: false,
         dataSource: [
-          {id: 1, name: 'Chow', score: 100},
-          {id: 2, name: 'Jack', score: 80},
+          {id: 1, name: 'Chow', score: 100, description: 'xxx xxx'},
+          {id: 2, name: 'Jack', score: 80, description: 'xxx xxx'},
           {id: 3, name: 'Jane', score: 60},
           {id: 4, name: 'Joshua', score: 40},
           {id: 5, name: 'Amy', score: 40},

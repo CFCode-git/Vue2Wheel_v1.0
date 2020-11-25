@@ -2,12 +2,15 @@
   <div class="diff-table-wrapper" ref="wrapper">
     <div class="diff-table-scrollbarHider" :style="{height,overflow:'auto'}" ref="tableWrapper">
       <table class="diff-table" :class="{bordered,compact,striped}" ref="table">
+
         <thead>
         <tr>
-          <th :style="{width:'50px'}">
-            <input type="checkbox" @change="onChangeAllItems"
-                   ref="allChecked" :checked="areAllItemsSelected"
-            /></th>
+          <th :style="{width:'50px'}" class="diff-table-center"></th>
+          <th :style="{width:'50px'}" class="diff-table-center">
+            <label><input
+              type="checkbox" @change="onChangeAllItems"
+              ref="allChecked" :checked="areAllItemsSelected"
+            /></label></th>
           <th :style="{width:'50px'}" v-if="numberVisible">#</th>
           <th :style="{width:column.width + 'px'}" v-for="column in columns" :key="column.field">
             <div class="diff-table-header">
@@ -22,17 +25,44 @@
           </th>
         </tr>
         </thead>
+
         <tbody>
-        <tr v-for="(item,index) in dataSource" :key="item.id">
-          <td :style="{width:'50px'}">
-            <input type="checkbox" @change="onChangeItem(item,index,$event)"
-                   :checked="inSelectedItem(item)"
-            ></td>
-          <td :style="{width:'50px'}" v-if="numberVisible">{{index + 1}}</td>
-          <template v-for="column in columns">
-            <td :style="{width:column.width + 'px'}" :key="column.field">{{item[column.field]}}</td>
-          </template>
-        </tr>
+        <template v-for="(item,index) in dataSource">
+          <tr :key="item.id">
+
+            <!-- 展开 Icon -->
+            <td :style="{width:'50px'}" class="diff-table-center">
+              <diff-icon class="diff-table-expandIcon" name="right"
+                         @click="expandItem(item.id)"
+              ></diff-icon>
+            </td>
+
+            <!-- checkbox 选择框 -->
+            <td :style="{width:'50px'}" class="diff-table-center"><label><input
+              type="checkbox" @change="onChangeItem(item,index,$event)"
+              :checked="inSelectedItem(item)"
+            ></label></td>
+
+            <!-- 序号 -->
+            <td :style="{width:'50px'}"
+                v-if="numberVisible">{{index + 1}}
+            </td>
+
+            <!-- 对应字段的内容 -->
+            <template v-for="column in columns">
+              <td :style="{width:column.width + 'px'}"
+                  :key="column.field">{{item[column.field]}}
+              </td>
+            </template>
+          </tr>
+
+          <tr :key="`expand-${item.id}`" v-if="inExpandedIds(item.id)">
+            <td></td>
+            <td :colspan="columns.length+1">
+              {{item[expandField] || '空'}}
+            </td>
+          </tr>
+        </template>
         </tbody>
       </table>
     </div>
@@ -47,6 +77,11 @@
   export default {
     name: 'diff-table',
     components: {DiffIcon},
+    data() {
+      return {
+        expandedIds: []
+      }
+    },
     props: {
       columns: {type: Array, required: true},
       numberVisible: {type: Boolean, default: false},
@@ -55,18 +90,15 @@
       striped: {type: Boolean, default: true},
       selectedItems: {type: Array, default: () => []},
       dataSource: {
-        type: Array,
-        required: true,
+        type: Array, required: true,
         validator(array) {
           return !(array.filter(item => item.id === undefined).length > 0)
         }
       },
-      orderBy: {
-        type: Object,
-        default: () => ({})
-      },
+      orderBy: {type: Object, default: () => ({})},
       loading: {type: Boolean, default: false},
-      height: {type: Number}
+      height: {type: Number},
+      expandField: {type: String}
     },
     computed: {
       areAllItemsSelected() {
@@ -84,6 +116,16 @@
       }
     },
     methods: {
+      expandItem(id) {
+        if (this.inExpandedIds(id)) {
+          this.expandedIds.splice(this.expandedIds.indexOf(id), 1)
+        } else {
+          this.expandedIds.push(id)
+        }
+      },
+      inExpandedIds(id) {
+        return this.expandedIds.indexOf(id) >= 0
+      },
       onChangeItem(item, index, e) {
         let checked = e.target.checked
         let copy = JSON.parse(JSON.stringify(this.selectedItems))
@@ -231,6 +273,14 @@
       left: 0;
       width: 100%;
       background: #fff;
+    }
+    &-expandIcon {
+      &:hover {cursor: pointer;}
+      width: 10px;
+      height: 10px;
+    }
+    & &-center {
+      text-align: center;
     }
     &-scrollbarHider {
       // 下面三行隐藏滚动条 ; 滚动条占 17 px
