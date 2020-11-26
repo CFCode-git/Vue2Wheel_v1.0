@@ -3,21 +3,33 @@
     <div @click="onClickUpload" ref="trigger">
       <slot></slot>
     </div>
-    <div ref="temp" style="width:0;height:0;overflow: hidden;"></div>
-    <ol>
+    <ol class="diff-uploader-fileList">
       <li v-for="file in fileList" :key="file.name">
+
         <template v-if="file.status === 'uploading'">
-          loading...
+          <div class="diff-uploader-loading-wrapper">
+            <diff-icon name="loading" class="diff-uploader-loading"></diff-icon>
+          </div>
         </template>
-        <img :src="file.url" width="100" height="100" alt=""> {{file.name}}
-        <button @click="onDeleteFile(file)">x</button>
+        <template v-else-if="file.type.indexOf('image') === 0">
+          <img class="diff-uploader-image" :src="file.url" width="32" height="32" alt="">
+        </template>
+        <template v-else>
+          <div class="diff-uploader-defaultImage"></div>
+        </template>
+
+        <span class="diff-uploader-name" :class="{[file.status]:file.status}">{{file.name}}</span>
+        <button class="diff-uploader-delete" @click="onDeleteFile(file)">x</button>
       </li>
     </ol>
+    <div ref="temp" style="width:0;height:0;overflow: hidden;"></div>
   </div>
 </template>
 <script>
+  import DiffIcon from '../icon/icon'
   export default {
     name: 'diff-uploader',
+    components: {DiffIcon},
     data() {
       return {
         url: 'about:blank'
@@ -85,7 +97,7 @@
         let index = this.fileList.indexOf(file)
         let fileCopy = JSON.parse(JSON.stringify(file))
         fileCopy.status = 'fail'
-        // fileCopy.failMessage = '尺寸过大'
+        // fileCopy.failMessage = '尺寸过大' // 后台返回 failReason
         let fileListCopy = JSON.parse(JSON.stringify(this.fileList))
         fileListCopy.splice(index, 1, fileCopy)
         this.$emit('update:fileList', fileListCopy)
@@ -117,8 +129,12 @@
         let xhr = new XMLHttpRequest()
         xhr.open(this.method, this.action)
         xhr.onload = () => {
-          success(xhr.response)
-          // fail()
+          // vue emit事件是同步的, render 任务是异步的
+          if (Math.random() > 0.5) {
+            success(xhr.response)
+          } else {
+            fail()
+          }
         }
         xhr.send(formData)
       },
@@ -134,7 +150,51 @@
   }
 </script>
 <style scoped lang="scss">
+  @import 'var';
   .diff-uploader {
-    border: 1px solid red;
+    &-fileList {
+      list-style: none;
+      > li {
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+        border: 1px solid darken($grey, 10);
+      }
+    }
+    &-defaultImage {
+      border: 1px solid red;
+      width: 32px;
+      height: 32px;
+      margin-right: 8px;
+    }
+    &-image {
+      margin-right: 8px;
+    }
+    &-name {
+      margin-right: auto;
+      &.success {
+        color: green;
+      }
+      &.fail {
+        color: red;
+      }
+    }
+    &-delete {
+      width: 32px;
+      height: 32px;
+    }
+    &-loading {
+      width: 24px;
+      height: 24px;
+      @include spin;
+      &-wrapper {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
   }
 </style>

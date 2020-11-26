@@ -1,26 +1,24 @@
 <template>
-  <div>
-    {{fileList}}
+  <div style="margin:20px;">
+    <div>只能上传 300kb 以内的 png、jpeg 文件</div>
     <diff-uploader
       method="POST" name="file" accept="image/*"
       action="http://127.0.0.1:8888/upload"
       :parse-response="parseResponse"
       :file-list.sync="fileList"
     >
-      <button>上传</button>
-      <template slot="tips">
-        <div>只能上传 300kb 以内的 png、jpeg 文件</div>
-      </template>
+      <diff-button icon="upload">上传</diff-button>
     </diff-uploader>
   </div>
 </template>
 
 <script>
   import DiffUploader from './uploader/uploader'
+  import DiffButton from './button/button'
 
   export default {
     name: 'demo',
-    components: {DiffUploader},
+    components: {DiffUploader, DiffButton},
     data() { return {fileList: []} },
     methods: {
       parseResponse(response) {
