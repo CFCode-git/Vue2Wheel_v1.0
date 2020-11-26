@@ -40,7 +40,8 @@
       action: {type: String, required: true},
       method: {type: String, default: 'POST'},
       parseResponse: {type: Function, required: true},
-      fileList: {type: Array, default: () => []}
+      fileList: {type: Array, default: () => []},
+      sizeLimit: {type: Number},
     },
     methods: {
       onDeleteFile(file) {
@@ -53,19 +54,29 @@
         }
       },
       createInput() {
+        this.$refs.temp.innerHTML = ''
         let input = document.createElement('input')
         input.type = 'file'
+        input.multiple = true
         this.$refs.temp.appendChild(input)
         return input
       },
       beforeUploadFile(rawFile, newName) {
         let {size, type} = rawFile
-        this.$emit('update:fileList', [
-          ...this.fileList,
-          {name: newName, type, size, status: 'uploading'}
-        ])
+        console.log(size)
+        if (size > this.sizeLimit/*2*1024*1024 kb*/) {
+          this.$emit('error', '文件过大')
+          return false
+        } else {
+          // this.$emit('update:fileList', [
+          //   ...this.fileList,
+          //   {name: newName, type, size, status: 'uploading'}
+          // ])
+          this.$emit('addFile',{name: newName, type, size, status: 'uploading'})
+          return true
+        }
       },
-      afterUploadFile(newName, url) {
+      afterUploadFiles(newName, url) {
         // 从 fileList 找到更新状态的 file 和它的 index
         let file = this.fileList.filter(file => file.name === newName)[0]
         let index = this.fileList.indexOf(file)
@@ -78,21 +89,29 @@
         fileListCopy.splice(index, 1, fileCopy)
         this.$emit('update:fileList', fileListCopy)
       },
-      uploadFile(rawFile) {
-        let {name} = rawFile
-        let newName = this.generateName(name)
-        this.beforeUploadFile(rawFile, newName)
-        let formData = new FormData()
-        formData.append(this.name, rawFile)
-        this.doUploadFile(formData, (response) => {
-          let url = this.parseResponse(response)
-          this.url = url
-          this.afterUploadFile(newName, url)
-        }, () => {
-          this.uploadError(newName)
-        })
+      uploadFiles(rawFiles) {
+        for (let i = 0; i < rawFiles.length; i++) {
+          let rawFile = rawFiles[i]
+          let {name} = rawFile
+          let newName = this.generateName(name)
+          let bool = this.beforeUploadFile(rawFile, newName)
+          if (!bool) { return }
+          let formData = new FormData()
+          formData.append(this.name, rawFile)
+          this.doUploadFiles(
+            formData,
+            (response) => {
+              let url = this.parseResponse(response)
+              this.url = url
+              this.afterUploadFiles(newName, url)
+            },
+            (xhr) => {
+              this.uploadError(xhr, newName)
+            }
+          )
+        }
       },
-      uploadError(newName) {
+      uploadError(xhr, newName) {
         let file = this.fileList.filter(file => file.name === newName)[0]
         let index = this.fileList.indexOf(file)
         let fileCopy = JSON.parse(JSON.stringify(file))
@@ -101,6 +120,9 @@
         let fileListCopy = JSON.parse(JSON.stringify(this.fileList))
         fileListCopy.splice(index, 1, fileCopy)
         this.$emit('update:fileList', fileListCopy)
+        let error = ''
+        if (xhr.status === 0) { error = '网络中断' }
+        this.$emit('error', error)
       },
       generateName(name) {
         // 生成新name
@@ -125,27 +147,22 @@
         }
         return name
       },
-      doUploadFile(formData, success, fail) {
+      doUploadFiles(formData, success, fail) {
         let xhr = new XMLHttpRequest()
         xhr.open(this.method, this.action)
-        xhr.onload = () => {
-          // vue emit事件是同步的, render 任务是异步的
-          if (Math.random() > 0.5) {
-            success(xhr.response)
-          } else {
-            fail()
-          }
-        }
+        // vue emit事件是同步的, render 任务是异步的
+        xhr.onload = () => { success(xhr.response) }
+        xhr.onerror = () => { fail(xhr, xhr.status) }
         xhr.send(formData)
       },
       onClickUpload() {
         let input = this.createInput()
         input.addEventListener('change', () => {
-          this.uploadFile(input.files[0])
+          this.uploadFiles(input.files)
           input.remove()
         })
         input.click()
-      }
+      },
     }
   }
 </script>
@@ -163,13 +180,10 @@
     }
     &-defaultImage {
       border: 1px solid red;
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       margin-right: 8px;
     }
-    &-image {
-      margin-right: 8px;
-    }
+    &-image { margin-right: 8px; }
     &-name {
       margin-right: auto;
       &.success {
@@ -179,19 +193,11 @@
         color: red;
       }
     }
-    &-delete {
-      width: 32px;
-      height: 32px;
-    }
-    &-loading {
-      width: 24px;
-      height: 24px;
-      @include spin;
+    &-delete { width: 32px; height: 32px; }
+    &-loading { width: 24px; height: 24px; @include spin;
       &-wrapper {
-        width: 32px;
-        height: 32px;
-        margin-right: 8px;
-        display: flex;
+        width: 32px; height: 32px;
+        margin-right: 8px; display: flex;
         justify-content: center;
         align-items: center;
       }
