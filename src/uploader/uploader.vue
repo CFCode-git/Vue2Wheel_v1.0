@@ -42,6 +42,8 @@
       parseResponse: {type: Function, required: true},
       fileList: {type: Array, default: () => []},
       sizeLimit: {type: Number},
+      accept:{type:String,default:"*"},
+      multiple:{type:Boolean,default:false}
     },
     methods: {
       onDeleteFile(file) {
@@ -56,25 +58,30 @@
       createInput() {
         this.$refs.temp.innerHTML = ''
         let input = document.createElement('input')
+        console.log(this.accept)
+        console.log(this.multiple)
+        input.accept = this.accept
         input.type = 'file'
-        input.multiple = true
+        input.multiple = this.multiple
         this.$refs.temp.appendChild(input)
         return input
       },
-      beforeUploadFile(rawFile, newName) {
-        let {size, type} = rawFile
-        console.log(size)
-        if (size > this.sizeLimit/*2*1024*1024 kb*/) {
-          this.$emit('error', '文件过大')
-          return false
-        } else {
-          // this.$emit('update:fileList', [
-          //   ...this.fileList,
-          //   {name: newName, type, size, status: 'uploading'}
-          // ])
-          this.$emit('addFile',{name: newName, type, size, status: 'uploading'})
-          return true
+      beforeUploadFiles(rawFiles, newNames) {
+        rawFiles = Array.from(rawFiles)
+        for (let i = 0; i < rawFiles.length; i++) {
+          let rawFile = rawFiles[i]
+          let {size, type} = rawFile
+          if (size > this.sizeLimit) {
+            this.$emit('error', '文件过大')
+            return false
+          }
         }
+        let x = rawFiles.map((rawFile, i) => {
+          let {type, size} = rawFile
+          return {name: newNames[i], type, size, status: 'uploading'}
+        })
+        this.$emit('update:fileList', [...this.fileList, ...x])
+        return true
       },
       afterUploadFiles(newName, url) {
         // 从 fileList 找到更新状态的 file 和它的 index
@@ -90,12 +97,16 @@
         this.$emit('update:fileList', fileListCopy)
       },
       uploadFiles(rawFiles) {
+        let newNames = []
         for (let i = 0; i < rawFiles.length; i++) {
           let rawFile = rawFiles[i]
           let {name} = rawFile
-          let newName = this.generateName(name)
-          let bool = this.beforeUploadFile(rawFile, newName)
-          if (!bool) { return }
+          newNames[i] = this.generateName(name)
+        }
+        if (!this.beforeUploadFiles(rawFiles, newNames)) { return }
+        for (let i = 0; i < rawFiles.length; i++) {
+          let rawFile = rawFiles[i]
+          let newName = newNames[i]
           let formData = new FormData()
           formData.append(this.name, rawFile)
           this.doUploadFiles(

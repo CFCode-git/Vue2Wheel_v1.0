@@ -10,7 +10,7 @@
       :parse-response="parseResponse"
       :file-list.sync="fileList"
       @error="error=$event" :size-limit="1024*1024"
-      @addFile="addFile"
+      multiple
     >
       <diff-button icon="upload">上传</diff-button>
     </diff-uploader>
@@ -31,9 +31,6 @@
       }
     },
     methods: {
-      addFile(file){
-        this.fileList.push(file)
-      },
       parseResponse(response) {
         let object = JSON.parse(response)
         console.log(object)
