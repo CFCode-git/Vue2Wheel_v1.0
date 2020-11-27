@@ -42,7 +42,7 @@
       parseResponse: {type: Function, required: true},
       fileList: {type: Array, default: () => []},
       sizeLimit: {type: Number},
-      accept:{type:String,default:"*"},
+      accept:{type:String,default:"image/*"},
       multiple:{type:Boolean,default:false}
     },
     methods: {
@@ -58,8 +58,6 @@
       createInput() {
         this.$refs.temp.innerHTML = ''
         let input = document.createElement('input')
-        console.log(this.accept)
-        console.log(this.multiple)
         input.accept = this.accept
         input.type = 'file'
         input.multiple = this.multiple
