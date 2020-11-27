@@ -27,6 +27,9 @@
 </template>
 <script>
   import DiffIcon from '../icon/icon'
+  import http from '../http'
+
+
   export default {
     name: 'diff-uploader',
     components: {DiffIcon},
@@ -157,6 +160,11 @@
         return name
       },
       doUploadFiles(formData, success, fail) {
+        http(this.method, this.action, {
+          success: success,
+          fail: fail,
+          data: formData
+        })
         let xhr = new XMLHttpRequest()
         xhr.open(this.method, this.action)
         // vue emit事件是同步的, render 任务是异步的
