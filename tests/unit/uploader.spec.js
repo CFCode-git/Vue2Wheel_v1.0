@@ -13,11 +13,13 @@ describe('Uploader.vue.', () => {
     expect(Uploader).to.be.exist
   })
   it('可以上传一个文件.', (done) => {
-    http.post = (url, options) => {
+    // http.post = sinon.stub().returns(100) 使用stub可以统计函数被调用了几次
+    let stub = sinon.stub(http, 'post').callsFake((url, options) => {
+      console.log('fake post')
       setTimeout(() => {
         options.success('{"id":"123123"}')
       }, 100)
-    }
+    })
     const wrapper = mount(Uploader, {
       propsData: {
         name: 'file', action: '/upload', method: 'post',
@@ -37,6 +39,7 @@ describe('Uploader.vue.', () => {
             // 上传成功, expect loading 不存在
             expect(wrapper.find('use').element).to.not.exist
             expect(wrapper.props().fileList[0].url).to.eq('/preview/123123')
+            stub.restore() /* 恢复 http.post,下一个测试用例test调用的是真post */
             done()
           })
         }
@@ -63,4 +66,7 @@ describe('Uploader.vue.', () => {
     }, 0)
   })
 
+  it('test .', () => {
+    http.post()
+  })
 })
