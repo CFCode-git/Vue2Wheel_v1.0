@@ -10,7 +10,6 @@ function core(method, url, options) {
 export default {
   get() {},
   post(url, options) {
-    console.log('post 了')
     core('post', url, options)
   },
   put() {},
