@@ -85,17 +85,15 @@
         return true
       },
       afterUploadFiles(newName, url) {
-        // 从 fileList 找到更新状态的 file 和它的 index
         let file = this.fileList.filter(file => file.name === newName)[0]
         let index = this.fileList.indexOf(file)
-        // 拷贝 file,更改状态
         let fileCopy = JSON.parse(JSON.stringify(file))
         fileCopy.url = url
         fileCopy.status = 'success'
-        // 拷贝 fileList,将更改状态后的 file 更换到里面
         let fileListCopy = [...this.fileList]
         fileListCopy.splice(index, 1, fileCopy)
         this.$emit('update:fileList', fileListCopy)
+        this.$emit('uploaded')
       },
       uploadFiles(rawFiles) {
         let newNames = []
@@ -110,14 +108,11 @@
           let newName = newNames[i]
           let formData = new FormData()
           formData.append(this.name, rawFile)
-          this.doUploadFiles(
-            formData,
-            (response) => {
+          this.doUploadFiles(formData, (response) => {
               let url = this.parseResponse(response)
               this.url = url
               this.afterUploadFiles(newName, url)
-            },
-            (xhr) => {
+            }, (xhr) => {
               this.uploadError(xhr, newName)
             }
           )
@@ -160,17 +155,7 @@
         return name
       },
       doUploadFiles(formData, success, fail) {
-        http(this.method, this.action, {
-          success: success,
-          fail: fail,
-          data: formData
-        })
-        let xhr = new XMLHttpRequest()
-        xhr.open(this.method, this.action)
-        // vue emit事件是同步的, render 任务是异步的
-        xhr.onload = () => { success(xhr.response) }
-        xhr.onerror = () => { fail(xhr, xhr.status) }
-        xhr.send(formData)
+        http[this.method.toLowerCase()](this.action, {success, fail, data: formData})
       },
       onClickUpload() {
         let input = this.createInput()

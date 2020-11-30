@@ -33,7 +33,6 @@
     methods: {
       parseResponse(response) {
         let object = JSON.parse(response)
-        console.log(object)
         return `http://127.0.0.1:8888/preview/${object.id}`
       }
     }

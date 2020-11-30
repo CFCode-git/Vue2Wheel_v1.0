@@ -42,7 +42,7 @@ describe('Popover', () => {
     expect(wrapper.find('.content-wrapper').element).to.not.exist
     const vm = wrapper.vm
     wrapper.find('.popover').trigger('mouseenter')
-    vm.$nextTick().then(()=>{
+    setTimeout(()=>{
       expect(wrapper.find('.content-wrapper').element).to.exist
     })
   })
