@@ -1,6 +1,6 @@
 <template>
   <div class="diff-sticky-wrapper" ref="wrapper" :style="{height}">
-    <div class="diff-sticky" :class="classes" :style="{width,left}">
+    <div class="diff-sticky" :class="classes" :style="{width,left,top}">
       <slot></slot>
     </div>
   </div>
@@ -14,10 +14,12 @@
         left: undefined,
         width: undefined,
         height: undefined,
-        timerId: null
+        top: undefined
       }
     },
-    props: {},
+    props: {
+      distance: {type: Number, default: 0}
+    },
     computed: {
       classes() {
         return {
@@ -37,27 +39,27 @@
       window.removeEventListener('scroll', this.windowScrollHandler)
     },
     methods: {
-      top() {
+      getTop() {
         let {top} = this.$refs.wrapper.getBoundingClientRect() /*距离窗口顶部*/
         let y = window.scrollY /* 文档滚动距离 */
         return top + y /* 距离文档顶部 */
       },
       _windowScrollHandler() {
-        let x = () => {
-          let top = this.top()
-          if (window.scrollY > top) {
-            let {height, width, left} = this.$refs.wrapper.getBoundingClientRect() /* sticky 的 wrapper 的高度 */
-            this.height = height + 'px'
-            this.width = width + 'px'
-            this.left = left + 'px'
-            this.sticky = true
-          } else {
-            this.sticky = false
-          }
+        let top = this.getTop()
+        if (window.scrollY > top - this.distance) {
+          let {height, width, left} = this.$refs.wrapper.getBoundingClientRect() /* sticky 的 wrapper 的高度 */
+          this.height = height + 'px'
+          this.width = width + 'px'
+          this.left = left + 'px'
+          this.top = this.distance + 'px'
+          this.sticky = true
+        } else {
+          this.height = undefined
+          this.width = undefined
+          this.left = undefined
+          this.top = undefined
+          this.sticky = false
         }
-        // if (this.timerId) { window.clearTimeout(this.timerId) }
-        // this.timerId = setTimeout(x, 200)
-        x()
       }
     },
   }
@@ -66,7 +68,7 @@
   .diff-sticky {
     &.sticky {
       position: fixed;
-      top: 0;
+      /*getTop: 0;*/
       /*left: 0;*/
       /*width: 100%;*/
     }

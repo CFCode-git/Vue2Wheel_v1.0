@@ -43,7 +43,7 @@
           right: {top: top + window.scrollY + (height - height2) / 2, left: left + window.scrollX + width},
           left: {top: top + window.scrollY + (height - height2) / 2, left: left + window.scrollX}
         }
-        // popover 的绝对定位相对于body元素； ClientRect 得到的 left 和 top 是相对于可视范围的。
+        // popover 的绝对定位相对于body元素； ClientRect 得到的 left 和 getTop 是相对于可视范围的。
         // scrollX 和 scrollY 是 滚动高度；整个高度是 scrollHeight
         contentWrapperRef.style.left = positionHash[this.position].left + 'px'
         contentWrapperRef.style.top = positionHash[this.position].top + 'px'
@@ -101,7 +101,7 @@
     vertical-align: top;
     position: relative;
   }
-  .content-wrapper { /* top 和 left 由 js 计算 */
+  .content-wrapper { /* getTop 和 left 由 js 计算 */
     position: absolute;
     border: 1px solid $border-color;
     border-radius: $border-radius;
