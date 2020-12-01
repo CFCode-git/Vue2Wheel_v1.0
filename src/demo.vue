@@ -32,8 +32,7 @@
       <p>段落9</p>
       <diff-sticky :distance="100">
         <div style="border:1px solid red;">
-          <img src="https://i.loli.net/2020/12/01/dTW9yUfAkHmOQ5s.png"
-               alt="" ref="img">
+          <div>我是一个粘滞的div</div>
         </div>
       </diff-sticky>
       <p>段落1</p>
