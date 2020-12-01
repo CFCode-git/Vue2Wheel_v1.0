@@ -1,6 +1,6 @@
 <template>
-  <div class="diff-sticky-wrapper" ref="wrapper">
-    <div class="diff-sticky" :class="classes">
+  <div class="diff-sticky-wrapper" ref="wrapper" :style="{height}">
+    <div class="diff-sticky" :class="classes" :style="{width,left}">
       <slot></slot>
     </div>
   </div>
@@ -10,7 +10,10 @@
     name: 'diff-sticky',
     data() {
       return {
-        sticky: false
+        sticky: false,
+        left: undefined,
+        width: undefined,
+        height: undefined
       }
     },
     props: {},
@@ -27,8 +30,10 @@
       let top = this.top()
       window.addEventListener('scroll', () => {
         if (window.scrollY > top) {
-          let height = this.height()
-          this.$refs.wrapper.style.height = height + 'px'
+          let {height, width, left} = this.$refs.wrapper.getBoundingClientRect() /* sticky 的 wrapper 的高度 */
+          this.height = height + 'px'
+          this.width = width + 'px'
+          this.left = left + 'px'
           this.sticky = true
         } else {
           this.sticky = false
@@ -41,10 +46,6 @@
         let y = window.scrollY /* 文档滚动距离 */
         return top + y /* 距离文档顶部 */
       },
-      height() {
-        let {height} = this.$refs.wrapper.getBoundingClientRect() /* sticky 的 wrapper 的高度 */
-        return height
-      },
     },
   }
 </script>
@@ -53,8 +54,8 @@
     &.sticky {
       position: fixed;
       top: 0;
-      left: 0;
-      width: 100%;
+      /*left: 0;*/
+      /*width: 100%;*/
     }
   }
 </style>
