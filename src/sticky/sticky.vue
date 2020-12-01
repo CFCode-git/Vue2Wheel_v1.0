@@ -1,6 +1,8 @@
 <template>
-  <div class="diff-sticky" ref="wrapper" :class="classes">
-    <slot></slot>
+  <div class="diff-sticky-wrapper" ref="wrapper">
+    <div class="diff-sticky" :class="classes">
+      <slot></slot>
+    </div>
   </div>
 </template>
 <script>
@@ -22,7 +24,8 @@
     created() {
     },
     mounted() {
-      let top = this.top()
+      let {top, height} = this.topAndHeight()
+      this.$refs.wrapper.style.height = height + 'px'
       window.addEventListener('scroll', () => {
         if (window.scrollY > top) {
           this.sticky = true
@@ -32,10 +35,10 @@
       })
     },
     methods: {
-      top() {
-        let {top} = this.$refs.wrapper.getBoundingClientRect() /*距离窗口顶部*/
+      topAndHeight() {
+        let {top, height} = this.$refs.wrapper.getBoundingClientRect() /*距离窗口顶部*/
         let y = window.scrollY /* 文档滚动距离 */
-        return top + y /* 距离文档顶部 */
+        return {top: top + y, height} /* 距离文档顶部 */
       },
     },
   }
