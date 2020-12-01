@@ -24,10 +24,11 @@
     created() {
     },
     mounted() {
-      let {top, height} = this.topAndHeight()
-      this.$refs.wrapper.style.height = height + 'px'
+      let top = this.top()
       window.addEventListener('scroll', () => {
         if (window.scrollY > top) {
+          let height = this.height()
+          this.$refs.wrapper.style.height = height + 'px'
           this.sticky = true
         } else {
           this.sticky = false
@@ -35,10 +36,14 @@
       })
     },
     methods: {
-      topAndHeight() {
-        let {top, height} = this.$refs.wrapper.getBoundingClientRect() /*距离窗口顶部*/
+      top() {
+        let {top} = this.$refs.wrapper.getBoundingClientRect() /*距离窗口顶部*/
         let y = window.scrollY /* 文档滚动距离 */
-        return {top: top + y, height} /* 距离文档顶部 */
+        return top + y /* 距离文档顶部 */
+      },
+      height() {
+        let {height} = this.$refs.wrapper.getBoundingClientRect() /* sticky 的 wrapper 的高度 */
+        return height
       },
     },
   }
