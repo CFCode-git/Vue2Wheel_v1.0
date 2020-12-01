@@ -2,7 +2,10 @@
   <div>
     <div>
       <diff-sticky distance="100">
-        <div style="border:1px solid red;">我是粘滞内容</div>
+        <div style="border:1px solid red;">
+          <img src="https://i.loli.net/2020/12/01/dTW9yUfAkHmOQ5s.png"
+               alt="">
+        </div>
       </diff-sticky>
     </div>
     <p>段落1</p>
