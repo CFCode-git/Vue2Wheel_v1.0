@@ -1,24 +1,23 @@
 <template>
-  <div>
-    <div>
+  <div style="display: flex;justify-content: center;align-items: center;">
+    <div style="width:600px;border:1px solid black;">
       <diff-sticky distance="100">
         <div style="border:1px solid red;">
           <img src="https://i.loli.net/2020/12/01/dTW9yUfAkHmOQ5s.png"
                alt="">
         </div>
       </diff-sticky>
+      <p>段落1</p>
+      <p>段落2</p>
+      <p>段落3</p>
+      <p>段落4</p>
+      <p>段落5</p>
+      <p>段落6</p>
+      <p>段落7</p>
+      <p>段落8</p>
+      <p>段落9</p>
     </div>
-    <p>段落1</p>
-    <p>段落2</p>
-    <p>段落3</p>
-    <p>段落4</p>
-    <p>段落5</p>
-    <p>段落6</p>
-    <p>段落7</p>
-    <p>段落8</p>
-    <p>段落9</p>
   </div>
-
 </template>
 
 <script>
@@ -37,6 +36,7 @@
 <style>
   * { margin: 0;padding: 0;box-sizing: border-box; }
   body {background: #fff;}
+  img { max-width: 100%; }
 </style>
 
 <style scoped lang="scss"></style>
