@@ -13,7 +13,8 @@
         sticky: false,
         left: undefined,
         width: undefined,
-        height: undefined
+        height: undefined,
+        timerId: null
       }
     },
     props: {},
@@ -41,17 +42,22 @@
         let y = window.scrollY /* 文档滚动距离 */
         return top + y /* 距离文档顶部 */
       },
-      _windowScrollHandler(){
-        let top = this.top()
-        if (window.scrollY > top) {
-          let {height, width, left} = this.$refs.wrapper.getBoundingClientRect() /* sticky 的 wrapper 的高度 */
-          this.height = height + 'px'
-          this.width = width + 'px'
-          this.left = left + 'px'
-          this.sticky = true
-        } else {
-          this.sticky = false
+      _windowScrollHandler() {
+        let x = () => {
+          let top = this.top()
+          if (window.scrollY > top) {
+            let {height, width, left} = this.$refs.wrapper.getBoundingClientRect() /* sticky 的 wrapper 的高度 */
+            this.height = height + 'px'
+            this.width = width + 'px'
+            this.left = left + 'px'
+            this.sticky = true
+          } else {
+            this.sticky = false
+          }
         }
+        // if (this.timerId) { window.clearTimeout(this.timerId) }
+        // this.timerId = setTimeout(x, 200)
+        x()
       }
     },
   }
