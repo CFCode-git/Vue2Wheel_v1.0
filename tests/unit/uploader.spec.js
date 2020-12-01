@@ -28,7 +28,7 @@ describe('Uploader.vue.', () => {
         },
         fileList: [],
       },
-      slots: {default: '<button id="x">upload</button>'},
+      slots: {default: '<button id="windowScrollHandler">upload</button>'},
       listeners: {
         'update:fileList': (fileList) => {
           wrapper.setProps({fileList: fileList})
@@ -43,7 +43,7 @@ describe('Uploader.vue.', () => {
         }
       }
     })
-    wrapper.find('#x').trigger('click')
+    wrapper.find('#windowScrollHandler').trigger('click')
     let inputWrapper = wrapper.find('input[type="file"]')
     let input = inputWrapper.element
     let file1 = new File(['xxx'], 'xxx.txt')

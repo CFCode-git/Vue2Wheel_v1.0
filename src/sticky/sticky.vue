@@ -28,7 +28,8 @@
     },
     mounted() {
       let top = this.top()
-      window.addEventListener('scroll', () => {
+      /* 不能放在methods里,否则window.onScroll调用的时候需要bind(this),而bind(this)会产生新的函数,导致无法 removeEventListener */
+      this.windowScrollHandler = () => {
         if (window.scrollY > top) {
           let {height, width, left} = this.$refs.wrapper.getBoundingClientRect() /* sticky 的 wrapper 的高度 */
           this.height = height + 'px'
@@ -38,7 +39,12 @@
         } else {
           this.sticky = false
         }
-      })
+      }
+      window.addEventListener('scroll', this.windowScrollHandler)
+
+    },
+    beforeDestroy() {
+      window.removeEventListener('scroll', this.windowScrollHandler)
     },
     methods: {
       top() {
