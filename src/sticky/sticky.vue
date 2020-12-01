@@ -20,16 +20,17 @@
       }
     },
     created() {
+    },
+    mounted() {
+      let top = this.top()
       window.addEventListener('scroll', () => {
-        if (window.scrollY > this.top()) {
+        if (window.scrollY > top) {
           console.log('滚过去了')
           this.sticky = true
         } else {
           this.sticky = false
         }
       })
-    },
-    mounted() {
     },
     methods: {
       top() {
