@@ -1,8 +1,8 @@
 {
   "name": "vue2wheel",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "这是一个UI框架",
-  "private": true,
+  "main": "dist/vue2wheel.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name vue2wheel src/index.js",
