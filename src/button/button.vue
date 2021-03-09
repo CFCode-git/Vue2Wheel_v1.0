@@ -34,7 +34,8 @@
   }
 </script>
 <style lang="scss" scoped>
-  @import 'var';
+  /*@import 'var';*/
+  @import '../../styles/_var.scss';
   $font-size: 14px;
   $button-height: 32px;
   $button-bg: white;
@@ -71,6 +72,5 @@
   .button-loading {
     @include spin;
   }
-
 
 </style>

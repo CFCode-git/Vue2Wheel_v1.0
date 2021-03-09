@@ -1,5 +1,6 @@
+const path = require('path')
 module.exports = {
-  base:'/Vue2Wheel_v1.0/',
+  //base:'/Vue2Wheel_v1.0/',
   title: 'Diff UI',
   description: '好用的 UI 框架',
   themeConfig: {
@@ -19,9 +20,10 @@ module.exports = {
       },
       {
         title: '组件',
-        collapsable:false,
+        collapsable: false,
         children: ['/components/button']
       },
     ]
-  }
+  },
 }
+console.log('---',path.resolve(__dirname, '../','../','styles'),'---')

@@ -1,5 +1,11 @@
 <template>
   <div style="display: flex;justify-content: center;align-items: center;">
+    <div>
+      <diff-button>默认按钮</diff-button>
+      <diff-button icon="setting">默认按钮</diff-button>
+      <diff-button loading>默认按钮</diff-button>
+      <diff-button disabled>默认按钮</diff-button>
+    </div>
     <div style="width:600px;border:1px solid black;">
       <p>段落1</p>
       <p>段落2</p>
@@ -160,10 +166,11 @@
 
 <script>
   import DiffSticky from './sticky/sticky'
+  import DiffButton from './button/button'
 
   export default {
     name: 'demo',
-    components: {DiffSticky},
+    components: {DiffSticky,DiffButton},
     data() {
       return {}
     },
