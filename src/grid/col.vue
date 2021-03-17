@@ -3,7 +3,6 @@
     <slot></slot>
   </div>
 </template>
-
 <script>
   let validator = (value) => {
     const keys = Object.keys(value)
@@ -48,8 +47,9 @@
       createClasses(obj, str = '') {
         if (!obj) return []
         let array = []
-        if (obj.span) {array.push(`col-${str}${obj.span}`)}
-        if (obj.offset) {array.push(`offset-${str}${obj.offset}`)}
+        if (obj.span !== '') {array.push(`col-${str}${obj.span}`)}
+        if (obj.offset !== '') {array.push(`offset-${str}${obj.offset}`)}
+        console.log(array)
         return array
       }
     }
@@ -66,7 +66,7 @@
       }
     }
     $class-prefix: offset-;
-    @for $n from 1 through 24 {
+    @for $n from 0 through 24 {
       &.#{$class-prefix}#{$n} {
         margin-left: ($n / 24)*100%;
       }
@@ -78,8 +78,8 @@
           width: ($n / 24)*100%;
         }
       }
-      $class-prefix: offset-phone-;
-      @for $n from 1 through 24 {
+      $class-prefix: offset-pad-;
+      @for $n from 0 through 24 {
         &.#{$class-prefix}#{$n} {
           margin-left: ($n / 24)*100%;
         }
@@ -93,7 +93,7 @@
         }
       }
       $class-prefix: offset-narrow-pc-;
-      @for $n from 1 through 24 {
+      @for $n from 0 through 24 {
         &.#{$class-prefix}#{$n} {
           margin-left: ($n / 24)*100%;
         }
@@ -107,7 +107,7 @@
         }
       }
       $class-prefix: offset-pc-;
-      @for $n from 1 through 24 {
+      @for $n from 0 through 24 {
         &.#{$class-prefix}#{$n} {
           margin-left: ($n / 24)*100%;
         }
@@ -121,7 +121,7 @@
         }
       }
       $class-prefix: offset-wide-pc-;
-      @for $n from 1 through 24 {
+      @for $n from 0 through 24 {
         &.#{$class-prefix}#{$n} {
           margin-left: ($n / 24)*100%;
         }
