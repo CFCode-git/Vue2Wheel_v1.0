@@ -24,6 +24,7 @@ module.exports = {
         children: [
           '/components/button',
           '/components/grid',
+          '/components/toast',
           '/components/sticky'
         ]
       },
