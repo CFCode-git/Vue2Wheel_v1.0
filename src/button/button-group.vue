@@ -20,6 +20,7 @@
   }
 </script>
 <style lang="scss" scoped>
+  @import '../../styles/_var.scss';
   .diff-button-group {
     display: inline-flex;
     vertical-align: middle; /*和别人对齐*/
@@ -30,12 +31,12 @@
         margin-left: 0;
       }
       &:first-child {
-        border-top-left-radius: var(--button-radius);
-        border-bottom-left-radius: var(--button-radius);
+        border-top-left-radius:$border-radius;
+        border-bottom-left-radius:$border-radius;
       }
       &:last-child {
-        border-top-right-radius: var(--button-radius);
-        border-bottom-right-radius: var(--button-radius);
+        border-top-right-radius:$border-radius;
+        border-bottom-right-radius:$border-radius;
       }
       &:hover {
         position: relative;

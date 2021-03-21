@@ -2,6 +2,7 @@
   <button class="diff-button"
           :class="{[`icon-${iconPosition}`]:true}"
           @click="$emit('click')"
+          :disabled="disabled"
   >
     <diff-icon v-if="icon && !loading" :name="icon"></diff-icon>
     <diff-icon class="button-loading" v-if="loading" name="loading"></diff-icon>
@@ -27,6 +28,10 @@
       loading: {
         type: Boolean,
         default: false
+      },
+      disabled:{
+        type:Boolean,
+        default:false
       }
     },
     mounted() {
@@ -67,6 +72,12 @@
     &.icon-right {
       > .diff-icon { order: 2; margin-left: .3em;margin-right: 0;}
       > .diff-content {order: 1;}
+    }
+    &[disabled]{
+      cursor:not-allowed;
+      background: #eeeeee;
+      color:#d7c1ab;
+      border-color:#d0d0d0;
     }
   }
   .button-loading {
