@@ -33,7 +33,6 @@
           return ['top', 'bottom', 'middle'].indexOf(value) >= 0
         }
       }
-
     },
     computed: {
       toastClasses() {
@@ -102,6 +101,7 @@
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 20;
     &.position-top { top: 0;
       .toast {
         border-top-left-radius: 0;
@@ -129,6 +129,6 @@
     color: white; padding: 0 16px;
     .message { padding: 8px 0; }
     .line { height: 100%; border-left: 1px solid #666; margin-left: 16px; }
-    .close { padding-left: 16px; flex-shrink: 0; }
+    .close { padding-left: 16px; flex-shrink: 0; cursor: pointer; }
   }
 </style>
