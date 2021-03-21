@@ -49,7 +49,6 @@
         let array = []
         if (obj.span !== '') {array.push(`col-${str}${obj.span}`)}
         if (obj.offset !== '') {array.push(`offset-${str}${obj.offset}`)}
-        console.log(array)
         return array
       }
     }
