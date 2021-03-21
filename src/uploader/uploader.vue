@@ -169,7 +169,7 @@
   }
 </script>
 <style scoped lang="scss">
-  @import 'var';
+  @import '../../styles/var';
   .diff-uploader {
     &-fileList {
       list-style: none;
