@@ -2,7 +2,7 @@
 title:Toast
 sidebarDepth:2
 ---
-# 弹出提示框 Toast
+# 提示组件 Toast  
 
 # 使用方法
 
