@@ -52,7 +52,6 @@
       }
     },
     mounted() {
-
       this.updateChildren()
       if (this.autoPlay) {
         this.playAutomatically()
@@ -67,7 +66,9 @@
         this.pause()
       },
       onMouseLeave() {
-        this.playAutomatically()
+        if(this.autoPlay){
+          this.playAutomatically()
+        }
       },
       select(newIndex) {
         this.lastSelectedIndex = this.selectedIndex
@@ -76,6 +77,7 @@
         this.$emit('update:selected', this.names[newIndex])
       },
       playAutomatically() {
+        console.log('automatic')
         if (this.timerId) return
         let run = () => {
           let index = this.names.indexOf(this.getSelected())
