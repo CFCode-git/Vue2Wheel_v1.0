@@ -24,8 +24,8 @@ function createToast({Vue, message, propsData,onClose}) {
   let Constructor = Vue.extend(Toast)
   let toast = new Constructor({propsData})
   toast.$slots.default = [message] // 给 toast 传插槽
-  toast.$mount()
+  toast.$mount() // toast 出现在内存里
   toast.$on('beforeClose',onClose)// 监听到 close ，执行 onClose回调
-  document.body.appendChild(toast.$el)
+  document.body.appendChild(toast.$el) // toast 出现在页面
   return toast
 }
