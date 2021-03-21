@@ -31,7 +31,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import 'var';
+  @import '../../styles/var';
   .diff-nav-item {
     padding: 10px 20px;
     position: relative;

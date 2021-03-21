@@ -62,7 +62,7 @@
 
 </script>
 <style scoped lang="scss">
-  @import 'var';
+  @import '../../styles/var';
   .diff-pager { display: flex; justify-content: flex-start; align-items: center;user-select: none;
     $width: 20px;
     $height: 20px;

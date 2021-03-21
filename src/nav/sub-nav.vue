@@ -108,7 +108,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import 'var';
+  @import '../../styles/var';
   .x-enter-active, .x-leave-active {
     transition: all 5s;
   }
