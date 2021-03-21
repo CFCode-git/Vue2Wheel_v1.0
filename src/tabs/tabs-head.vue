@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs-head">
+  <div class="tabs-head" ref="head">
     <slot></slot>
     <div class="line" ref="lineRef"></div>
     <!--    v-if 控制div是否显示在dom里-->
@@ -19,11 +19,12 @@
       this.eventBus &&
       this.eventBus.$on('update:selected', (item, vm) => {
         this.$nextTick(() => {
+          let {left:headLeft} = this.$refs.head.getBoundingClientRect()
           let {width, left} = vm.$el.getBoundingClientRect()
+          console.log(width,left)
           this.$refs.lineRef.style.width = `${width}px`
-          this.$refs.lineRef.style.left = `${left}px`
+          this.$refs.lineRef.style.left = `${left-headLeft}px`
         })
-
       })
     },
   }

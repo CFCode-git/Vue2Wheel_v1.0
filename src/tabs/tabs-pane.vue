@@ -11,7 +11,7 @@
       return {active: false}
     },
     props: {
-      name: {type: String, require: true}
+      name: {type: String | Number, require: true}
     },
     computed: {
       classes() {
