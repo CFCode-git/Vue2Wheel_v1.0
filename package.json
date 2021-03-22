@@ -1,6 +1,6 @@
 {
   "name": "vue2wheel",
-  "version": "0.0.4",
+  "version": "0.1.1",
   "description": "这是一个UI框架",
   "main": "dist/vue2wheel.umd.min.js",
   "scripts": {

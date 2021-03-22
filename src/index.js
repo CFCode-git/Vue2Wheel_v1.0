@@ -30,4 +30,6 @@ export {default as Sticky} from './sticky/sticky'
 export {default as Table} from './table/table'
 export {default as Uploader} from './uploader/uploader'
 export {default as Validator} from './validator'
+export {default as Toast} from './toast/toast'
+export {default as ToastPlugin} from './plugin'
 

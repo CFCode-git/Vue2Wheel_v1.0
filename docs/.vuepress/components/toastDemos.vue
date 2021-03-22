@@ -80,14 +80,13 @@
     <div class="demo">
       <h3>注意</h3>
       <div>
-        <p>toast 组件与其他组件不同，需要使用插件形式引入，即 Vue.use(Plugin)</p>
+        <p>toast 组件与其他组件不同，需要使用插件形式引入，即 Vue.use(ToastPlugin)</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import WIcon from '../../../src/icon/icon'
   import mixin from '../mixin'
   import Demo from './demo'
   import Button from '../../../src/button/button'
@@ -96,13 +95,16 @@
     name: 'toast-demo',
     mixins: [mixin],
     components: {
-      WIcon,
       Demo,
       'diff-button': Button
     },
     data() {
       return {
         codeDemo1: `
+          import Vue from 'vue'
+          import {ToastPlugin} from 'vue2wheel'
+          Vue.use(ToastPlugin)
+
           <diff-button @click="usageClick1">弹出提示</diff-button>
           <diff-button @click="usageClick2">弹出提示多行内容</diff-button>
 
